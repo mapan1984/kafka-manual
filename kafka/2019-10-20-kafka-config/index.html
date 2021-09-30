@@ -1,0 +1,997 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="kafka 使用手册">
+      
+      
+      
+        <meta name="author" content="mapan">
+      
+      
+        <link rel="canonical" href="https://mapan1984.github.io/kafka/2019-10-20-kafka-config/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
+    
+    
+      
+        <title>2. kafka config - kafka 使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8b42a75e.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kafka" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            kafka 使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. kafka config
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/mapan1984/kafka-manual/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    kafka 使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/mapan1984/kafka-manual/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        介绍
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            Kafka-manual
+          </a>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kafka-manual" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            Kafka-manual
+          </a>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2020-04-01-kafka-tips/" class="md-nav__link">
+        1. kafka tips
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            2. kafka config
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        2. kafka config
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jvm" class="md-nav__link">
+    JVM
+  </a>
+  
+    <nav class="md-nav" aria-label="JVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g1" class="md-nav__link">
+    使用 G1 垃圾回收器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    堆内存
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker" class="md-nav__link">
+    Broker 参数配置
+  </a>
+  
+    <nav class="md-nav" aria-label="Broker 参数配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    网络和ios操作线程配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log 数据文件刷盘策略
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    日志保留策略配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    replica复制配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分区数量配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    replica 数配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica-lag" class="md-nav__link">
+    replica lag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-rebalance" class="md-nav__link">
+    auto rebalance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offset-retention" class="md-nav__link">
+    offset retention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    生产者参数配置
+  </a>
+  
+    <nav class="md-nav" aria-label="生产者参数配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    生产者不丢失数据保证
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    幂等性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    事务性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    请求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    消费者参数配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    支持的消息大小
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2020-10-28-kafka-upgrade/" class="md-nav__link">
+        3. kafka upgrade
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jvm" class="md-nav__link">
+    JVM
+  </a>
+  
+    <nav class="md-nav" aria-label="JVM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#g1" class="md-nav__link">
+    使用 G1 垃圾回收器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    堆内存
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker" class="md-nav__link">
+    Broker 参数配置
+  </a>
+  
+    <nav class="md-nav" aria-label="Broker 参数配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    网络和ios操作线程配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log 数据文件刷盘策略
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    日志保留策略配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    replica复制配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分区数量配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    replica 数配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replica-lag" class="md-nav__link">
+    replica lag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-rebalance" class="md-nav__link">
+    auto rebalance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offset-retention" class="md-nav__link">
+    offset retention
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    生产者参数配置
+  </a>
+  
+    <nav class="md-nav" aria-label="生产者参数配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    生产者不丢失数据保证
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    幂等性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    事务性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    请求
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    消费者参数配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    支持的消息大小
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/kafka/2019-10-20-kafka-config.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="kafka">kafka 常用配置参数</h1>
+<h2 id="jvm">JVM</h2>
+<h3 id="g1">使用 G1 垃圾回收器</h3>
+<pre><code>-XX:+UseG1GC
+</code></pre>
+<h3 id="_1">堆内存</h3>
+<pre><code>KAFKA_HEAP_OPTS='-Xmx16G -Xms16G'   # 大小为主机内存的 50%
+</code></pre>
+<h2 id="broker">Broker 参数配置</h2>
+<h3 id="ios">网络和ios操作线程配置</h3>
+<pre><code>num.network.threads=9
+</code></pre>
+<p>broker处理消息的最大线程数(主要处理网络io，读写缓冲区数据，基本没有io等待，配置线程数量为cpu核数加1)</p>
+<pre><code>num.io.threads=16
+</code></pre>
+<p>broker处理磁盘IO的线程数(处理磁盘io操作，高峰期可能有些io等待，因此配置需要大些。配置线程数量为cpu核数2倍，最大不超过3倍)</p>
+<pre><code>socket.request.max.bytes=2147483600
+</code></pre>
+<p>socket server可接受数据大小(防止OOM异常)，根据自己业务数据包的大小适当调大。这里取值是int类型的，而受限于java int类型的取值范围</p>
+<blockquote>
+<p>java int的取值范围为（-2147483648~2147483647）</p>
+</blockquote>
+<h3 id="log">log 数据文件刷盘策略</h3>
+<pre><code># 每当producer写入10000条消息时，刷数据到磁盘
+log.flush.interval.messages=10000
+
+# 每间隔1秒钟时间，刷数据到磁盘
+log.flush.interval.ms=1000
+</code></pre>
+<p>为了大幅度提高producer写入吞吐量，需要定期批量写文件。一般无需改动，如果topic的数据量较小可以考虑减少 <code>log.flush.interval.ms</code> 和 <code>log.flush.interval.messages</code> 来强制刷写数据，减少可能由于缓存数据未写盘带来的不一致。推荐配置分别message 10000，间隔1s。</p>
+<blockquote>
+<p>Kafka官方并不建议通过Broker端的log.flush.interval.messages和log.flush.interval.ms来强制写盘，认为数据的可靠性应该通过Replica来保证，而强制Flush数据到磁盘会对整体性能产生影响。</p>
+</blockquote>
+<h3 id="_2">日志保留策略配置</h3>
+<pre><code># 日志保留时长
+log.retention.hours=72
+</code></pre>
+<p>日志建议保留三天，也可以更短</p>
+<pre><code># 段文件大小
+log.segment.bytes=1073741824
+</code></pre>
+<p>段文件配置1GB，有利于快速回收磁盘空间，重启kafka加载也会加快。</p>
+<blockquote>
+<p>kafka启动时是单线程扫描目录(log.dir)下所有数据文件，如果段文件过小，则文件数量比较多</p>
+</blockquote>
+<h3 id="replica">replica复制配置</h3>
+<pre><code># 拉取线程数：fetchers 配置多可以提高follower的I/O并发度，单位时间内leader持有更多请求，相应负载会增大，需要根据机器硬件资源做权衡，建议适当调大；
+num.replica.fetchers=3
+
+# 拉取消息最小字节：一般无需更改，默认值即可；
+replica.fetch.min.bytes=1
+
+# 拉取消息最大字节：默认为1MB，根据业务情况调整
+replica.fetch.max.bytes=5242880
+
+# 拉取消息等待时间：决定 follower 的拉取频率，频率过高，leader会积压大量无效请求情况，无法进行数据同步，导致cpu飙升。配置时谨慎使用，建议默认值，无需配置。
+replica.fetch.wait.max.ms
+</code></pre>
+<h3 id="_3">分区数量配置</h3>
+<pre><code>num.partitions=1
+</code></pre>
+<p>默认 partition 数量 1，如果topic在创建时没有指定partition数量，默认使用此值。Partition的数量选取也会直接影响到Kafka集群的吞吐性能，配置过小会影响消费性能。</p>
+<h3 id="replica_1">replica 数配置</h3>
+<pre><code>default.replication.factor=1
+</code></pre>
+<p>这个参数指新创建一个topic时，默认的Replica数量，Replica过少会影响数据的可用性，太多则会白白浪费存储资源，一般建议在2~3为宜。</p>
+<h3 id="replica-lag">replica lag</h3>
+<pre><code>replica.lag.time.max.ms=10000
+replica.lag.max.messages=4000
+</code></pre>
+<h3 id="auto-rebalance">auto rebalance</h3>
+<pre><code>auto.leader.rebalance.enable=true
+leader.imbalance.check.interval.seconds=300
+leader.imbalance.per.broker.percentage=10
+</code></pre>
+<h3 id="offset-retention">offset retention</h3>
+<pre><code>offsets.retention.check.interval.ms = 600000
+offsets.retention.minutes = 1440
+</code></pre>
+<h2 id="_4">生产者参数配置</h2>
+<pre><code># 内存缓冲大小，单位 byte
+buffer.memory=33554432
+</code></pre>
+<p>在 Producer 端用来存放尚未发送出去的 Message 的缓冲区大小，默认 32MB。内存缓冲区内的消息以一个个 batch 的形式组织，每个 batch 内包含多条消息，Producer 会把多个 batch 打包成一个 request 发送到 kafka 服务器上。内存缓冲区满了之后可以选择阻塞发送或抛出异常，由 <code>block.on.buffer.full</code> 的配置来决定。
+    * 如果选择阻塞，在消息持续发送过程中，当缓冲区被填满后，producer立即进入阻塞状态直到空闲内存被释放出来，这段时间不能超过 <code>max.block.ms</code> 设置的值，一旦超过，producer则会抛出 <code>TimeoutException</code> 异常，因为Producer是线程安全的，若一直报TimeoutException，需要考虑调高buffer.memory 了。</p>
+<pre><code>batch.size=16384
+</code></pre>
+<p>Producer会把发往同一个 topic partition 的多个消息进行合并，<code>batch.size</code> 指明了合并后 batch 大小的上限。如果这个值设置的太小，可能会导致所有的Request都不进行Batch。</p>
+<pre><code>linger.ms=0
+</code></pre>
+<p>producer 合并的消息的大小未达到 <code>batch.size</code>，但如果存在时间达到 <code>linger.ms</code>，也会进行发送。</p>
+<pre><code>#  最大请求大小
+max.request.size
+</code></pre>
+<p>决定了每次发送给Kafka服务器请求的最大大小，同时也会限制你一条消息的最大大小也不能超过这个参数设置的值，这个其实可以根据你自己的消息的大小来灵活的调整</p>
+<pre><code># 发送失败重试次数
+retries
+# 每次重试间隔时间
+retries.backoff.ms
+
+# 压缩类型
+compression.type=none
+</code></pre>
+<p>默认发送不进行压缩，推荐配置一种适合的压缩算法，可以大幅度的减缓网络压力和Broker的存储压力。</p>
+<pre><code>acks=1
+</code></pre>
+<p>这个配置可以设定发送消息后是否需要Broker端返回确认，设置时需要权衡数据可靠性和吞吐量。</p>
+<p><code>acks</code>:
+    * 0：表示 producer 请求立即返回，不需要等待 leader 的任何确认
+    * -1：表示分区 leader 必须等待消息被成功写入到所有的 ISR 副本中才认为 producer 成功
+    * 1：表示 leader 副本必须应答此 producer 请求并写入消息到本地日志，之后 producer 请求被认为成功</p>
+<h3 id="_5">生产者不丢失数据保证</h3>
+<pre><code>block.on.buffer.full = true
+</code></pre>
+<p>生产者消息在实际发送之前是保留在 buffer 中，buffer 满之后生产等待，而不是抛出异常</p>
+<pre><code>acks=all
+</code></pre>
+<p>所有 follower 都响应后才认为消息提交成功（需要注意 broker 的 <code>min.insync.replicas</code> 参数）</p>
+<pre><code>retries=Integer.MAX_VALUE
+</code></pre>
+<p>发送失败后持续重试（单独设置这个可能会造成消息重复发送）</p>
+<pre><code>max.in.flight.requests.per.connection=1
+</code></pre>
+<p>单个线程在单个连接上能够发送的未响应请求个数，这个参数设置为 1 可以避免消息乱序，同时可以保证在 retry 是不会重复发送消息，但是会降低 producer io 线程的吞吐量</p>
+<pre><code>unclean.leader.election.enable=false
+</code></pre>
+<p>关闭 unclean leader 选举，即不允许非 ISR 中的副本被选举为 leader</p>
+<h3 id="_6">幂等性</h3>
+<pre><code>enable.idempotence
+</code></pre>
+<p>单个会话，单个 partition 幂等性，重复发送数据时 exactly once</p>
+<p>producer id, sequence number</p>
+<p>producer id, topic, partition, sequence number</p>
+<h3 id="_7">事务性</h3>
+<pre><code>transactional.id
+</code></pre>
+<p>生产者事务 id</p>
+<pre><code class="language-java">Properties props = new Properties();
+props.put(&quot;key.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;value.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);
+props.put(&quot;client.id&quot;, &quot;ProducerTranscationnalExample&quot;);
+props.put(&quot;bootstrap.servers&quot;, &quot;localhost:9092&quot;);
+props.put(&quot;transactional.id&quot;, &quot;test-transactional&quot;);
+props.put(&quot;acks&quot;, &quot;all&quot;);
+KafkaProducer producer = new KafkaProducer(props);
+producer.initTransactions();
+
+try {
+    String msg = &quot;matt test&quot;;
+    producer.beginTransaction();
+    producer.send(new ProducerRecord(topic, &quot;0&quot;, msg.toString()));
+    producer.send(new ProducerRecord(topic, &quot;1&quot;, msg.toString()));
+    producer.send(new ProducerRecord(topic, &quot;2&quot;, msg.toString()));
+    producer.commitTransaction();
+} catch (ProducerFencedException e1) {
+    e1.printStackTrace();
+    producer.close();
+} catch (KafkaException e2) {
+    e2.printStackTrace();
+    producer.abortTransaction();
+}
+producer.close();
+</code></pre>
+<h3 id="_8">请求</h3>
+<h2 id="_9">消费者参数配置</h2>
+<pre><code>num.consumer.fetchers=1
+</code></pre>
+<p>启动Consumer的个数，适当增加可以提高并发度。</p>
+<pre><code>fetch.min.bytes=1
+</code></pre>
+<p>每次Fetch Request至少要拿到多少字节的数据才可以返回。</p>
+<pre><code>fetch.wait.max.ms=100
+</code></pre>
+<p>在Fetch Request获取的数据至少达到 <code>fetch.min.bytes</code> 之前，允许等待的最大时长。</p>
+<pre><code>session.timeout.ms=10000
+</code></pre>
+<p>会话超时时间，如果发送心跳时间超过这个时间，broker 就会认为消费者掉线</p>
+<pre><code>heartbeat.interval.ms=3000
+</code></pre>
+<p>发送心跳间隔时间，推荐不要高于 <code>session.timeout.ms</code> 的1/3</p>
+<pre><code>enable.auto.commit
+</code></pre>
+<p>是否启用自动提交。</p>
+<pre><code>auto.commit.interval.ms
+</code></pre>
+<p>自动提交间隔</p>
+<pre><code>max.poll.interval.ms=300000
+</code></pre>
+<p><code>poll()</code> 调用的最大时间间隔，如果距离上一次 <code>poll()</code> 调用的时间超过 <code>max.poll.interval.ms</code>，消费者会被认为失败</p>
+<pre><code>max.poll.records=500
+</code></pre>
+<p>单次 <code>poll()</code> 调用可以拉取的最多消息</p>
+<h2 id="_10">支持的消息大小</h2>
+<pre><code># producer
+max.request.size
+
+# broker
+message.max.bytes
+# replica fetcher
+# 不是绝对的最大值，如果消息超过这个设定，最大值仍由 message.max.bytes, max.message.bytes 决定 (?)
+replica.fetch.max.bytes
+
+# topic
+max.message.bytes
+
+# consumer
+fetch.message.max.bytes
+</code></pre>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../2020-04-01-kafka-tips/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 1. kafka tips" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              1. kafka tips
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2020-10-28-kafka-upgrade/" class="md-footer__link md-footer__link--next" aria-label="下一页: 3. kafka upgrade" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              3. kafka upgrade
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      
+    
+  </body>
+</html>
