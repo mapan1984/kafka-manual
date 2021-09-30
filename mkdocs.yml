@@ -1,0 +1,31 @@
+site_name: kafka 使用手册
+site_url: https://mapan1984.github.io/
+repo_url: https://github.com/mapan1984/kafka-manual/
+site_description: kafka 使用手册
+site_author: mapan
+
+nav:
+  - 介绍: index.md
+  - Kafka-manual:
+    - kafka/index.md
+    - 1. kafka tips: kafka/2020-04-01-kafka-tips.md
+    - 2. kafka config: kafka/2019-10-20-kafka-config.md
+    - 3. kafka upgrade: kafka/2020-10-28-kafka-upgrade.md
+
+theme:
+  # name: readthedocs
+  name: material
+  palette:
+    scheme: slate
+    primary: blue grey
+    accent: deep orange
+  language: 'zh'
+
+plugins:
+  - section-index
+  - search:
+      lang:
+        - en
+        - ja
+
+extra_css: []
