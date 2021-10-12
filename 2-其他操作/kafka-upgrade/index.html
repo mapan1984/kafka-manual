@@ -13,21 +13,21 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
     
     
       
-        <title>Kafka-manual - kafka 使用手册</title>
+        <title>Kafka 滚动升级 - kafka 使用手册</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8b42a75e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8b42a75e.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -63,7 +63,7 @@
     <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
   
     
-    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -84,7 +84,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+    <a href="../.." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kafka-manual
+              Kafka 滚动升级
             
           </span>
         </div>
@@ -184,7 +184,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+    <a href="../.." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -216,8 +216,8 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        介绍
+      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+        1. 基础操作
       </a>
     </li>
   
@@ -244,22 +244,16 @@
         <label class="md-nav__link" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
+            2. 其他操作
           
-            Kafka-manual
-          </a>
         </label>
       
-      <nav class="md-nav" aria-label="Kafka-manual" data-md-level="1">
+      <nav class="md-nav" aria-label="2. 其他操作" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
+            2. 其他操作
           
-            Kafka-manual
-          </a>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -267,11 +261,70 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="2020-04-01-kafka-tips/" class="md-nav__link">
-        1. kafka tips
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            1. 版本升级
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        1. 版本升级
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    第一步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    第二步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    注意事项
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -283,22 +336,8 @@
   
   
     <li class="md-nav__item">
-      <a href="2019-10-20-kafka-config/" class="md-nav__link">
-        2. kafka config
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="2020-10-28-kafka-upgrade/" class="md-nav__link">
-        3. kafka upgrade
+      <a href="../kafka-proxy/" class="md-nav__link">
+        2. 转发服务
       </a>
     </li>
   
@@ -307,6 +346,21 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        3. 常用配置
+      </a>
     </li>
   
 
@@ -330,6 +384,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    第一步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    第二步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    注意事项
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -340,12 +423,66 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/kafka/index.md" title="编辑此页" class="md-content__button md-icon">
+                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/2-其他操作/kafka-upgrade.md" title="编辑此页" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="kafka">kafka 操作</h1>
+                <h1 id="kafka">kafka 滚动升级</h1>
+<p>kafka 滚动升级参考<a href="https://kafka.apache.org/11/documentation.html#upgrade">官方文档</a>，升级过程中需要进行两次滚动重启节点操作，可以保证升级过程中集群服务不中断。</p>
+<p>下面以 0.9.0.X 升级到 1.1.1 为例，假设 kafka 安装在 <code>/usr/local/kafka</code> 下，并用 systemd 管理：</p>
+<h2 id="_1">第一步</h2>
+<p>需要依次替换节点 kafka 到 1.1.1 版本，替换过程中保留节点原有 kafka 配置，并新增配置指定 <code>inter.broker.protocol.version=0.9.0.X</code>，<code>log.message.format.version=0.9.0.X</code> 与现有集群版本兼容，具体操作步骤如下：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 下载 1.1.1 版本 kafka</span>
+wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz -O /tmp/kafka_2.12-1.1.1.tgz
+wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz.sha512 -O /tmp/kafka_2.12-1.1.1.tgz.sha512
+
+<span class="c1"># 校验 kafka 包</span>
+<span class="c1"># cd /tmp</span>
+<span class="c1"># [[ `md5sum kafka_1.1.1.tar.gz` == `cat kafka_1.1.1.md` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
+<span class="c1"># [[ `shasum -a512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
+<span class="c1"># [[ `openssl sha512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
+
+<span class="c1"># 校验成功后解压 kafka 包</span>
+tar -zxvf /tmp/kafka_2.12-1.1.1.tgz -C /tmp
+
+<span class="c1"># 保留原有配置</span>
+mv /tmp/kafka/config /tmp/kafka/config.back
+cp -r /usr/local/kafka/config /tmp/kafka/
+
+<span class="c1"># 指定通信协议与消息格式</span>
+<span class="nb">echo</span> inter.broker.protocol.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
+<span class="nb">echo</span> log.message.format.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
+
+<span class="c1"># 替换 kafka 包</span>
+mv /usr/local/kafka /usr/local/kafka.back
+cp -r /tmp/kafka /usr/local/
+
+<span class="c1"># 重启 kafka 节点</span>
+<span class="c1"># service kafka-server restart</span>
+systemctl restart kafka
+</code></pre></div>
+<h2 id="_2">第二步</h2>
+<p>Kafka 版本升级有通信协议和消息格式的变化，经过上一步的替换，集群上的 kafka 包已经替换成 1.1.1 版本，通信协议和消息格式仍然指定为 0.9.0.X 版本，之后需要对这两项配置进行更新，但需要注意以下两点：</p>
+<ol>
+<li>更改 <code>log.message.format.version</code> 之前，所有消费者必须升级到支持 1.1.1 或者之后的版本</li>
+<li><code>inter.broker.protocol.version</code>, <code>log.message.format.version</code> 更改并重启生效之后，kafka 版本不能进行降级回退</li>
+</ol>
+<p>操作步骤：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 指定通信协议与消息格式</span>
+sed -i <span class="s2">&quot;s/inter.broker.protocol.version=0.9.0.X/inter.broker.protocol.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
+sed -i <span class="s2">&quot;s/log.message.format.version=0.9.0.X/log.message.format.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
+
+<span class="c1"># 重启 kafka 节点</span>
+<span class="c1"># service kafka-server restart</span>
+systemctl restart kafka
+</code></pre></div>
+<h2 id="_3">注意事项</h2>
+<ul>
+<li><a href="https://kafka.apache.org/21/documentation.html#upgrade_10_performance_impact">0.10.0.0 之后消息格式改变，如果客户端版本低于 0.10.0.0 会带来性能损失</a></li>
+</ul>
+                
+                  
                 
               
               
@@ -365,7 +502,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="上一页: 介绍" rel="prev">
+        <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 1. 基础操作" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -374,20 +511,20 @@
               <span class="md-footer__direction">
                 上一页
               </span>
-              介绍
+              1. 基础操作
             </div>
           </div>
         </a>
       
       
         
-        <a href="2020-04-01-kafka-tips/" class="md-footer__link md-footer__link--next" aria-label="下一页: 1. kafka tips" rel="next">
+        <a href="../kafka-proxy/" class="md-footer__link md-footer__link--next" aria-label="下一页: 2. 转发服务" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              1. kafka tips
+              2. 转发服务
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -418,10 +555,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
       
     
   </body>
