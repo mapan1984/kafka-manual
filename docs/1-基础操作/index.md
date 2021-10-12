@@ -1,23 +1,29 @@
-# kafka 命令行操作
+# kafka 基础操作
 
-### 预设环境变量
+## 预设环境变量
 
 预设置环境变量，方便操作：
 
 ``` sh
+# 将 kafka 命令脚本路径加入到 PATH
 export KAFKA_HOME=/usr/local/kafka
 export PATH="$PATH:${KAFKA_HOME}/bin"
+
 # zk 连接地址
 export ZK_CONNECT="$(hostname):2181"
+
 # kafka 连接地址
 export BOOTSTRAP_SERVER="$(hostname):9092"
 
 # 如果有 jaas 认证
 export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_server_jaas.conf"
+
+# 如果 broker 通过在 kafka-run-class.sh 文件内设置 JMX_PORT，则这里需要设置成不同的 port
+# (一般 broker 开启 JMX_PORT 最好在 kafka-server-start.sh 文件内设置，kafka-run-class.sh 文件内的修改会影响到所有命令脚本)
 export JMX_PORT=9997
 ```
 
-### 基本操作
+## 基本操作
 
 创建 topic
 
@@ -47,7 +53,7 @@ export JMX_PORT=9997
 
     $ kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
 
-### 消费者选项
+## 消费者选项
 
 * 使用 zookeeper 保存消费组数据: `--zookeeper localhost:2181`
 * 使用 __consumer_offsets 保存消费组数据: `--bootstrap-server localhost:9092`
@@ -77,7 +83,7 @@ property
 
     $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0
 
-### 列出所有 topic 详情
+## 列出所有 topic 详情
 
 ``` sh
 kafka-topics.sh --list --zookeeper ${ZK_CONNECT} > topics.data
@@ -87,7 +93,7 @@ do
 done < topics.data
 ```
 
-### 列出所有 consumer 详情
+## 列出所有 consumer 详情
 
 ZK
 
@@ -128,7 +134,7 @@ do
 done < kf.data
 ```
 
-### 重分区/修改副本数
+## 重分区/修改副本数
 
 获取当前 broker id 列表：
 
@@ -202,7 +208,7 @@ done < kf.data
 参考：
 - https://kafka.apache.org/documentation/#rep-throttle
 
-### 读取 __consumer_offsets
+## 读取 __consumer_offsets
 
 0.11.0.0之前版本
 
@@ -220,7 +226,7 @@ done < kf.data
 
     Math.abs(groupID.hashCode()) % numPartitions
 
-### 修改 topic 参数
+## 修改 topic 参数
 
 保留大小
 
@@ -242,7 +248,7 @@ done < kf.data
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config retention.ms
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=compact
 
-### 查看日志/索引文件
+## 查看日志/索引文件
 
 查看日志文件
 
@@ -252,11 +258,30 @@ done < kf.data
 
     $ kafka-run-class.sh kafka.tools.DumpLogSegments --files 0000000000000045.timeindex
 
-### 重新平衡 leader
+## 重新平衡 leader
+
+触发集群内所有 topic partition 的最优 leader 选举:
 
     $ kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT}
 
-### 删除消费组
+触发 `partitions.json` 文件指定的 topic partition 的最优 leader 选举:
+
+    kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT} --path-to-json-file partitions.json
+
+`partitions.json` 文件内容如下：
+
+``` json
+{
+    "partitions": [
+        {
+            "partition": 45,
+            "topic": "a8a3cbf02a7e4aa7b1b52ab5297f9066__sku2ava_rec"
+        }
+    ]
+}
+```
+
+## 删除消费组
 
 KF 类型
 
@@ -266,17 +291,17 @@ ZK 类型
 
     $ kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --delete --group console-consumer-38645
 
-### 查看请求使用的 API Version
+## 查看请求使用的 API Version
 
     $ kafka-broker-api-versions.sh  --bootstrap-server ${BOOTSTRAP_SERVER}
 
-### 查看副本同步 lag
+## 查看副本同步 lag
 
     kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
 
     kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
 
-### 查看 topic offset
+## 查看 topic offset
 
 最终的 offset
 
@@ -286,12 +311,7 @@ ZK 类型
 
     $ kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list ${BOOTSTRAP_SERVER} --time -2 --topic test
 
-### 设置 consumer current offset
+## 设置 consumer current offset
 
     $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
 
-### SCRAM 用户
-
-    kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --add-config 'SCRAM-SHA-256=[password=admin_pass],SCRAM-SHA-512=[password=admin_pass]' --entity-type users --entity-name admin
-
-    kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --delete-config 'SCRAM-SHA-512' --entity-type users --entity-name admin
