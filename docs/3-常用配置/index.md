@@ -47,12 +47,19 @@ socket server可接受数据大小(防止OOM异常)，根据自己业务数据�
 
 日志建议保留三天，也可以更短
 
+### 日志文件
+
     # 段文件大小
     log.segment.bytes=1073741824
 
 段文件配置1GB，有利于快速回收磁盘空间，重启kafka加载也会加快。
 
-> kafka启动时是单线程扫描目录(log.dir)下所有数据文件，如果段文件过小，则文件数量比较多
+kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过小，则文件数量比较多。
+
+    # 启动时每个文件夹对应的线程数
+    num.recovery.threads.per.data.dir=1
+
+增加 `num.recovery.threads.per.data.dir` 也可以提高加载速度。
 
 ### replica复制配置
 

@@ -9,16 +9,29 @@ nav:
   - 2. 其他操作:
     - 1. 版本升级: '2-其他操作/kafka-upgrade.md'
     - 2. 转发服务: '2-其他操作/kafka-proxy.md'
+    - 3. 手动迁移分区数据: '2-其他操作/kafka-move-partiton.md'
   - 3. 常用配置: '3-常用配置/index.md'
+  - 4. 监控: '4-监控/index.md'
 
 theme:
   # name: readthedocs
   name: material
-  palette:
-    scheme: slate
-    primary: blue grey
-    accent: deep orange
   language: 'zh'
+  # palette:
+  #   scheme: slate
+  #   primary: blue grey
+  #   accent: deep orange
+  palette: 
+    - scheme: default
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate 
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
 
 plugins:
   - section-index
@@ -35,3 +48,4 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
+  - tables
