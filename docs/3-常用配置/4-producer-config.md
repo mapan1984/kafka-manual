@@ -67,9 +67,24 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
 
 单个会话，单个 partition 幂等性，重复发送数据时 exactly once
 
-producer id, sequence number
+``` java
+Properties props = new Properties();
+props.put("enable.idempotence", "true");
+props.put("acks", "all");  // 当 enable.idempotence 为 true，这里默认为 all
+props.put("bootstrap.servers", "localhost:9092");
+props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-producer id, topic, partition, sequence number
+KafkaProducer producer = new KafkaProducer(props);
+```
+
+kafka 可以通过设置 `ack`, `retries` 等参数保证消息不丢失，但是无法消息不重复（即 at least once）。
+
+幂等性解决消息重复的问题，即多次发送同一条消息到 server 端，server 只会记录一次，之后重复发送的消息会被丢弃。
+
+为了消息是否重复，Kafka 使用 `producer_id` + `sequence_number` 标记每条消息，由 topic partiton 所在 leader 进行判断并去重。
+
+每个 producer 在初始化时，会向 server 端申请一个唯一的 `producer_id`。之后发送的每条消息，都会关联一个从 0 开始递增的 `sequence_number`，每个 topic partition 都会维护一个单独的 `sequence_number`。
 
 ## 事务性
 
@@ -106,6 +121,3 @@ try {
 }
 producer.close();
 ```
-
-## 请求
-

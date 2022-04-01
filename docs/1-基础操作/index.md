@@ -313,5 +313,11 @@ ZK 类型
 
 ## 设置 consumer current offset
 
+设置到指定的 offset：
+
+    $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-offset 6250 --topic $topic --execute
+
+根据时间设置，设置到大于等于该时间的第一个 offset：
+
     $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
 

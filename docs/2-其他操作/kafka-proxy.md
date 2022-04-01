@@ -7,9 +7,10 @@ tags: [kafka, proxy]
 
 进行生产或者消费活动时，kafka 客户端会主动获取集群的元信息，元信息包含 broker id 与 broker 地址之间的对应关系，以及 topic 的 partition, replica, leader 信息。当具体读/写某个 topic 的某个 partition 时，客户端必须根据元信息找到代表该 partition leader 的 broker id，再根据 broker id 找到 broker 的地址。
 
-配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在连接时没有问题，但是第一次连接成功后，客户端主动获取的集群 broker 地址可能还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。
+配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在初次连接时没有问题，但是第一次连接成功后，客户端主动获取到的集群 broker 地址还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。
 
-解决这个问题的关键是让客户端连接成功后，主动获取的集群 broker 地址还是指向代理 IP，有 2 种配置方法：
+解决这个问题的关键是让客户端初次连接成功后，主动获取到的集群 broker 地址还是指向代理 IP，有 2 种解决方法：
+
 1. 修改 kafka listeners 的地址为 kafka broker 节点的 hostname，然后在客户端所在的主机配置 `/etc/hosts` 文件，添加 kafka listeners 配置的 hostname，并将对应的 IP 配置为代理 IP
 2. 修改 kafka `advertised.listeners` 的地址为代理 IP，等于直接向客户端宣告通过代理地址访问自己
 
@@ -32,7 +33,7 @@ kafka broker 注册的地址可以在 zookeeper 的 `/brokers/ids/<broker_id>` �
 
 ### 配置 kafka broker 监听地址/端口
 
-修改每个 kafka broker 的配置文件 `server.properties`：
+修改每个 kafka broker 的配置文件 `server.properties`，将监听地址改为该节点的 hostname，例如 kafka1 上配置：
 
     listeners=PLAINTEXT://kafka1:9092
     #advertised.listeners=PLAINTEXT://kafka1:9092
@@ -144,6 +145,7 @@ control.plane.listener.name=BROKER_CONTROL
 ```
 
 这里每个 broker 开放了 3 个监听端口，以 kafka1 节点为例：
+
 1. BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 `kafka1:9090`，`kafka1` 也可以用 kafka1 节点的内网 ip
 2. BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 `kafka1:9091`，`kafka1` 也可以用 kafka1 节点的内网 ip
 3. EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 `106.75.143.227:9092`，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。
