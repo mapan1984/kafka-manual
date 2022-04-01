@@ -366,10 +366,10 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    步骤
+    步骤示例
   </a>
   
-    <nav class="md-nav" aria-label="步骤">
+    <nav class="md-nav" aria-label="步骤示例">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -447,10 +447,123 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            3. 常用配置
+          </a>
+        </label>
+      
+      <nav class="md-nav" aria-label="3. 常用配置" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            3. 常用配置
+          </a>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
-        3. 常用配置
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+        1. jvm config
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+        2. borker config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+        3. topic config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+        4. producer config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+        5. consumer config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+        6. other
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -511,10 +624,10 @@
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    步骤
+    步骤示例
   </a>
   
-    <nav class="md-nav" aria-label="步骤">
+    <nav class="md-nav" aria-label="步骤示例">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -592,13 +705,13 @@
 <p>目前遇到 2 类使用场景：</p>
 <ol>
 <li>Kafka 单个节点上挂载多块磁盘，磁盘使用率不均匀，有的磁盘已经 100% 了，有的磁盘还有大量空余，这时可以从使用率高的磁盘移动部分分区到使用率低的磁盘上。</li>
-<li>kafka 单个节点故障，数据丢失，但是 topic 分区 leader 并未切换，leader 为 <code>-1</code>，如果分区副本数据还在，此时可以将分区副本数据手动移动到 leader 节点上，恢复数据。</li>
+<li>kafka 单个节点磁盘故障，数据丢失，但是 topic 分区 leader 并未切换，leader 为 <code>-1</code>，如果分区副本数据还在，此时可以将分区副本数据手动移动到 leader 节点上，恢复数据。</li>
 </ol>
 <blockquote>
-<p>注意：这里的分区还在原来的 broker 上，操作只是在同一个 broker 不同数据目录下移动分区或者在分区所在 leader, follower broker 之间移动分区数据。如果想在 broker 之间迁移分区，请参考「基础操作」里的「分区重分配」操作。</p>
+<p>注意：这里并不会改变分区在 broker 上的分布情况，移动后分区还在原来的 broker 上。操作只是在同一个 broker 不同数据目录下移动分区，或者在分区 leader, follower 所在 broker 之间复制分区数据。如果想改变分区在 broker 上的分布情况，将分区移动到原来没有分布的 broker 上，请参考「基础操作」里的「分区重分配」说明。</p>
 </blockquote>
 <h2 id="_2">原理</h2>
-<p>kafka 数据目录由配置项 <code>log.dirs</code>(或 <code>log.dir</code>) 指定，目录下结构如下：</p>
+<p>kafka 数据目录由配置项 <code>log.dirs</code>(或 <code>log.dir</code>) 指定，数据目录结构如下：</p>
 <div class="highlight"><pre><span></span><code>- &lt;log.dirs&gt;
     - &lt;topic.name&gt;-&lt;partition.id&gt;
         - &lt;segment.offset&gt;.log
@@ -622,32 +735,36 @@
 </ol>
 </li>
 </ol>
-<p><code>log.dir</code> 目录下除了以 <code>&lt;topic.name&gt;-&lt;partition.id&gt;</code> 为名的数据目录，还有 4 个记录 topic partition offset 的文件:
-1. cleaner-offset-checkpoint
-2. log-start-offset-checkpoint
-3. recovery-point-offset-checkpoint
-4. replication-offset-checkpoint</p>
+<p><code>log.dir</code> 目录下除了以 <code>&lt;topic.name&gt;-&lt;partition.id&gt;</code> 为名的数据目录，还有 4 个记录 topic partition offset 的文件:</p>
+<ol>
+<li><code>cleaner-offset-checkpoint</code></li>
+<li><code>log-start-offset-checkpoint</code></li>
+<li><code>recovery-point-offset-checkpoint</code></li>
+<li><code>replication-offset-checkpoint</code></li>
+</ol>
 <p>这些文件内容格式为：</p>
 <div class="highlight"><pre><span></span><code>0
 &lt;record_partition_num&gt;
 &lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
 &lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
 &lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
-&lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
-&lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
-&lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
-&lt;topic&gt; &lt;partition.id&gt; &lt;offset&gt;
+...
 ...
 </code></pre></div>
-<p><code>&lt;record_partition_num&gt;</code> 为文件中记录的条数，下面的每一条记录为 topic 名，partition，对应 offset。</p>
-<p>移动分区数据，就是停止 kafka 服务，打包 <code>&lt;topic.name&gt;-&lt;partition.id&gt;</code> 目录数据，移动到其他目录，并修改对应目录的 <code>recovery-point-offset-checkpoint</code> 和 <code>replication-offset-checkpoint</code> 文件</p>
-<h2 id="_3">步骤</h2>
+<p><code>&lt;record_partition_num&gt;</code> 为文件中记录的条数，下面的每一条记录为以空格分隔的 topic 名，partition，和对应 offset。</p>
+<p>移动分区数据，就是停止 kafka 服务，打包 <code>&lt;topic.name&gt;-&lt;partition.id&gt;</code> 目录数据，移动到其他目录，并修改对应目录的 <code>recovery-point-offset-checkpoint</code> 和 <code>replication-offset-checkpoint</code> 文件记录</p>
+<h2 id="_3">步骤示例</h2>
 <p>假设有 2 个磁盘 <code>/data1/kafka-logs/</code> 和 <code>/data2/kafka-logs</code>，需要把 <code>/data1/kafka-logs/</code> 下 <code>test_topic</code> 分区 1 移动到 <code>/data2/kafka-logs/</code></p>
 <h3 id="1">1. 停止节点服务</h3>
 <h3 id="2">2. 移动分区数据</h3>
+<p>打包数据目录：</p>
 <div class="highlight"><pre><span></span><code>cd /data1/kafka-logs/
 tar zcvf test_topic-1.tar.gz test_topic-1
-mv test_topic-1.tar.gz /data2/kafka-logs/
+</code></pre></div>
+<p>如果 2 块磁盘是同一个 broker 下</p>
+<div class="highlight"><pre><span></span><code>mv test_topic-1.tar.gz /data2/kafka-logs/
+rm test_topic-1.tar.gz
+rm -rf test_topic-1
 </code></pre></div>
 <h3 id="3-offset">3. 修改 offset 文件</h3>
 <p>进入 <code>/data1/kafka-logs</code> 目录查看 <code>replication-offset-checkpoint</code>, <code>replication-offset-checkpoint</code> 文件，假设内容如下:</p>

@@ -13,14 +13,14 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
     
     
       
-        <title>Kafka 滚动升级 - kafka 使用手册</title>
+        <title>4. producer config - kafka 使用手册</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kafka" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kafka 滚动升级
+              4. producer config
             
           </span>
         </div>
@@ -251,14 +251,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       
       
@@ -283,70 +281,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
-            1. 版本升级
-          </a>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         1. 版本升级
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    第一步
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    第二步
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    注意事项
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -358,7 +297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-proxy/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
         2. 转发服务
       </a>
     </li>
@@ -372,7 +311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-move-partiton/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
         3. 手动迁移分区数据
       </a>
     </li>
@@ -392,12 +331,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -405,7 +346,7 @@
         <label class="md-nav__link" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -416,7 +357,7 @@
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -430,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+      <a href="../1-jvm-config/" class="md-nav__link">
         1. jvm config
       </a>
     </li>
@@ -444,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+      <a href="../2-broker-config/" class="md-nav__link">
         2. borker config
       </a>
     </li>
@@ -458,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+      <a href="../3-topic-config/" class="md-nav__link">
         3. topic config
       </a>
     </li>
@@ -470,11 +411,70 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            4. producer config
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         4. producer config
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    生产者不丢失数据保证
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    幂等性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    事务性
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -486,7 +486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+      <a href="../5-consumer-config/" class="md-nav__link">
         5. consumer config
       </a>
     </li>
@@ -500,7 +500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+      <a href="../6-other/" class="md-nav__link">
         6. other
       </a>
     </li>
@@ -555,22 +555,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    第一步
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    第二步
+    生产者不丢失数据保证
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    注意事项
+    幂等性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    事务性
   </a>
   
 </li>
@@ -587,66 +587,107 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/2-其他操作/kafka-upgrade.md" title="编辑此页" class="md-content__button md-icon">
+                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/3-常用配置/4-producer-config.md" title="编辑此页" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="kafka">kafka 滚动升级</h1>
-<p>kafka 滚动升级参考<a href="https://kafka.apache.org/11/documentation.html#upgrade">官方文档</a>，升级过程中需要进行两次滚动重启节点操作，可以保证升级过程中集群服务不中断。</p>
-<p>下面以 0.9.0.X 升级到 1.1.1 为例，假设 kafka 安装在 <code>/usr/local/kafka</code> 下，并用 systemd 管理：</p>
-<h2 id="_1">第一步</h2>
-<p>需要依次替换节点 kafka 到 1.1.1 版本，替换过程中保留节点原有 kafka 配置，并新增配置指定 <code>inter.broker.protocol.version=0.9.0.X</code>，<code>log.message.format.version=0.9.0.X</code> 与现有集群版本兼容，具体操作步骤如下：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 下载 1.1.1 版本 kafka</span>
-wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz -O /tmp/kafka_2.12-1.1.1.tgz
-wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz.sha512 -O /tmp/kafka_2.12-1.1.1.tgz.sha512
-
-<span class="c1"># 校验 kafka 包</span>
-<span class="c1"># cd /tmp</span>
-<span class="c1"># [[ `md5sum kafka_1.1.1.tar.gz` == `cat kafka_1.1.1.md` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
-<span class="c1"># [[ `shasum -a512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
-<span class="c1"># [[ `openssl sha512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
-
-<span class="c1"># 校验成功后解压 kafka 包</span>
-tar -zxvf /tmp/kafka_2.12-1.1.1.tgz -C /tmp
-
-<span class="c1"># 保留原有配置</span>
-mv /tmp/kafka/config /tmp/kafka/config.back
-cp -r /usr/local/kafka/config /tmp/kafka/
-
-<span class="c1"># 指定通信协议与消息格式</span>
-<span class="nb">echo</span> inter.broker.protocol.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
-<span class="nb">echo</span> log.message.format.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
-
-<span class="c1"># 替换 kafka 包</span>
-mv /usr/local/kafka /usr/local/kafka.back
-cp -r /tmp/kafka /usr/local/
-
-<span class="c1"># 重启 kafka 节点</span>
-<span class="c1"># service kafka-server restart</span>
-systemctl restart kafka
+                <h1 id="_1">生产者参数配置</h1>
+<div class="highlight"><pre><span></span><code># 内存缓冲大小，单位 byte
+buffer.memory=33554432
 </code></pre></div>
-<h2 id="_2">第二步</h2>
-<p>Kafka 版本升级有通信协议和消息格式的变化，经过上一步的替换，集群上的 kafka 包已经替换成 1.1.1 版本，通信协议和消息格式仍然指定为 0.9.0.X 版本，之后需要对这两项配置进行更新，但需要注意以下两点：</p>
-<ol>
-<li>更改 <code>log.message.format.version</code> 之前，所有消费者必须升级到支持 1.1.1 或者之后的版本</li>
-<li><code>inter.broker.protocol.version</code>, <code>log.message.format.version</code> 更改并重启生效之后，kafka 版本不能进行降级回退</li>
-</ol>
-<p>操作步骤：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 指定通信协议与消息格式</span>
-sed -i <span class="s2">&quot;s/inter.broker.protocol.version=0.9.0.X/inter.broker.protocol.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
-sed -i <span class="s2">&quot;s/log.message.format.version=0.9.0.X/log.message.format.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
-
-<span class="c1"># 重启 kafka 节点</span>
-<span class="c1"># service kafka-server restart</span>
-systemctl restart kafka
+<p>在 Producer 端用来存放尚未发送出去的 Message 的缓冲区大小，默认 32MB。内存缓冲区内的消息以一个个 batch 的形式组织，每个 batch 内包含多条消息，Producer 会把多个 batch 打包成一个 request 发送到 kafka 服务器上。内存缓冲区满了之后可以选择阻塞发送或抛出异常，由 <code>block.on.buffer.full</code> 的配置来决定。
+    * 如果选择阻塞，在消息持续发送过程中，当缓冲区被填满后，producer立即进入阻塞状态直到空闲内存被释放出来，这段时间不能超过 <code>max.block.ms</code> 设置的值，一旦超过，producer则会抛出 <code>TimeoutException</code> 异常，因为Producer是线程安全的，若一直报TimeoutException，需要考虑调高buffer.memory 了。</p>
+<div class="highlight"><pre><span></span><code>batch.size=16384
 </code></pre></div>
-<h2 id="_3">注意事项</h2>
-<ul>
-<li><a href="https://kafka.apache.org/21/documentation.html#upgrade_10_performance_impact">0.10.0.0 之后消息格式改变，如果客户端版本低于 0.10.0.0 会带来性能损失</a></li>
-</ul>
-                
-                  
+<p>Producer会把发往同一个 topic partition 的多个消息进行合并，<code>batch.size</code> 指明了合并后 batch 大小的上限。如果这个值设置的太小，可能会导致所有的Request都不进行Batch。</p>
+<div class="highlight"><pre><span></span><code>linger.ms=0
+</code></pre></div>
+<p>producer 合并的消息的大小未达到 <code>batch.size</code>，但如果存在时间达到 <code>linger.ms</code>，也会进行发送。</p>
+<div class="highlight"><pre><span></span><code>#  最大请求大小
+max.request.size
+</code></pre></div>
+<p>决定了每次发送给Kafka服务器请求的最大大小，同时也会限制你一条消息的最大大小也不能超过这个参数设置的值，这个其实可以根据你自己的消息的大小来灵活的调整</p>
+<div class="highlight"><pre><span></span><code># 发送失败重试次数
+retries
+# 每次重试间隔时间
+retries.backoff.ms
+
+# 压缩类型
+compression.type=none
+</code></pre></div>
+<p>默认发送不进行压缩，推荐配置一种适合的压缩算法，可以大幅度的减缓网络压力和Broker的存储压力。</p>
+<div class="highlight"><pre><span></span><code>acks=1
+</code></pre></div>
+<p>这个配置可以设定发送消息后是否需要Broker端返回确认，设置时需要权衡数据可靠性和吞吐量。</p>
+<p><code>acks</code>:
+    * 0：表示 producer 请求立即返回，不需要等待 leader 的任何确认
+    * -1：表示分区 leader 必须等待消息被成功写入到所有的 ISR 副本中才认为 producer 成功
+    * 1：表示 leader 副本必须应答此 producer 请求并写入消息到本地日志，之后 producer 请求被认为成功</p>
+<h2 id="_2">生产者不丢失数据保证</h2>
+<div class="highlight"><pre><span></span><code>block.on.buffer.full = true
+</code></pre></div>
+<p>生产者消息在实际发送之前是保留在 buffer 中，buffer 满之后生产等待，而不是抛出异常</p>
+<div class="highlight"><pre><span></span><code>acks=all
+</code></pre></div>
+<p>所有 follower 都响应后才认为消息提交成功（需要注意 broker 的 <code>min.insync.replicas</code> 参数）</p>
+<div class="highlight"><pre><span></span><code>retries=Integer.MAX_VALUE
+</code></pre></div>
+<p>发送失败后持续重试（单独设置这个可能会造成消息重复发送）</p>
+<div class="highlight"><pre><span></span><code>max.in.flight.requests.per.connection=1
+</code></pre></div>
+<p>单个线程在单个连接上能够发送的未响应请求个数，这个参数设置为 1 可以避免消息乱序，同时可以保证在 retry 是不会重复发送消息，但是会降低 producer io 线程的吞吐量</p>
+<div class="highlight"><pre><span></span><code>unclean.leader.election.enable=false
+</code></pre></div>
+<p>关闭 unclean leader 选举，即不允许非 ISR 中的副本被选举为 leader</p>
+<h2 id="_3">幂等性</h2>
+<div class="highlight"><pre><span></span><code>enable.idempotence
+</code></pre></div>
+<p>单个会话，单个 partition 幂等性，重复发送数据时 exactly once</p>
+<div class="highlight"><pre><span></span><code><span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;enable.idempotence&quot;</span><span class="p">,</span> <span class="s">&quot;true&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;acks&quot;</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>  <span class="c1">// 当 enable.idempotence 为 true，这里默认为 all</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;key.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;value.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+
+<span class="n">KafkaProducer</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
+</code></pre></div>
+<p>kafka 可以通过设置 <code>ack</code>, <code>retries</code> 等参数保证消息不丢失，但是无法消息不重复（即 at least once）。</p>
+<p>幂等性解决消息重复的问题，即多次发送同一条消息到 server 端，server 只会记录一次，之后重复发送的消息会被丢弃。</p>
+<p>为了消息是否重复，Kafka 使用 <code>producer_id</code> + <code>sequence_number</code> 标记每条消息，由 topic partiton 所在 leader 进行判断并去重。</p>
+<p>每个 producer 在初始化时，会向 server 端申请一个唯一的 <code>producer_id</code>。之后发送的每条消息，都会关联一个从 0 开始递增的 <code>sequence_number</code>，每个 topic partition 都会维护一个单独的 <code>sequence_number</code>。</p>
+<h2 id="_4">事务性</h2>
+<p>生产者事务 id</p>
+<div class="highlight"><pre><span></span><code>transactional.id
+</code></pre></div>
+<p>设置事务 id 后，<code>enable.idempotence</code> 默认开启</p>
+<div class="highlight"><pre><span></span><code><span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;key.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;value.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;client.id&quot;</span><span class="p">,</span> <span class="s">&quot;ProducerTranscationnalExample&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:9092&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;transactional.id&quot;</span><span class="p">,</span> <span class="s">&quot;test-transactional&quot;</span><span class="p">);</span>
+<span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;acks&quot;</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>
+<span class="n">KafkaProducer</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaProducer</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
+<span class="n">producer</span><span class="p">.</span><span class="na">initTransactions</span><span class="p">();</span>
+
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;matt test&quot;</span><span class="p">;</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">beginTransaction</span><span class="p">();</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span> <span class="n">ProducerRecord</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="na">toString</span><span class="p">()));</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span> <span class="n">ProducerRecord</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="na">toString</span><span class="p">()));</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="k">new</span> <span class="n">ProducerRecord</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="s">&quot;2&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="na">toString</span><span class="p">()));</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">commitTransaction</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">ProducerFencedException</span> <span class="n">e1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">e1</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">KafkaException</span> <span class="n">e2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">e2</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+    <span class="n">producer</span><span class="p">.</span><span class="na">abortTransaction</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+</code></pre></div>
                 
               
               
@@ -666,7 +707,7 @@ systemctl restart kafka
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 1. 基础操作" rel="prev">
+        <a href="../3-topic-config/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3. topic config" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -675,20 +716,20 @@ systemctl restart kafka
               <span class="md-footer__direction">
                 上一页
               </span>
-              1. 基础操作
+              3. topic config
             </div>
           </div>
         </a>
       
       
         
-        <a href="../kafka-proxy/" class="md-footer__link md-footer__link--next" aria-label="下一页: 2. 转发服务" rel="next">
+        <a href="../5-consumer-config/" class="md-footer__link md-footer__link--next" aria-label="下一页: 5. consumer config" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              2. 转发服务
+              5. consumer config
             </div>
           </div>
           <div class="md-footer__button md-icon">

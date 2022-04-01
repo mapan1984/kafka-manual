@@ -13,14 +13,14 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
     
     
       
-        <title>Kafka 滚动升级 - kafka 使用手册</title>
+        <title>2. borker config - kafka 使用手册</title>
       
     
     
@@ -71,7 +71,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kafka" class="md-skip">
+        <a href="#broker" class="md-skip">
           跳转至
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kafka 滚动升级
+              2. borker config
             
           </span>
         </div>
@@ -251,14 +251,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       
       
@@ -283,70 +281,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-nav__icon md-icon"></span>
-          
-            <a href="./" class="md-nav__link md-nav__link--active"
-              style="margin: initial; padding: initial; pointer-events: initial">
-          
-            1. 版本升级
-          </a>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         1. 版本升级
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    第一步
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    第二步
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    注意事项
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -358,7 +297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-proxy/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
         2. 转发服务
       </a>
     </li>
@@ -372,7 +311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-move-partiton/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
         3. 手动迁移分区数据
       </a>
     </li>
@@ -392,12 +331,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -405,7 +346,7 @@
         <label class="md-nav__link" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -416,7 +357,7 @@
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -430,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+      <a href="../1-jvm-config/" class="md-nav__link">
         1. jvm config
       </a>
     </li>
@@ -442,11 +383,133 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="./" class="md-nav__link md-nav__link--active"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            2. borker config
+          </a>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         2. borker config
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#broker-id-and-rack" class="md-nav__link">
+    broker id and rack
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    网络和 io 操作线程配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log 数据文件刷盘策略
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    日志保留策略配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    日志文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    replica复制配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分区数量配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    replica 数配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica-lag" class="md-nav__link">
+    replica lag
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-rebalance" class="md-nav__link">
+    auto rebalance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offset-retention" class="md-nav__link">
+    offset retention
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    时间戳
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -458,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+      <a href="../3-topic-config/" class="md-nav__link">
         3. topic config
       </a>
     </li>
@@ -472,7 +535,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+      <a href="../4-producer-config/" class="md-nav__link">
         4. producer config
       </a>
     </li>
@@ -486,7 +549,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+      <a href="../5-consumer-config/" class="md-nav__link">
         5. consumer config
       </a>
     </li>
@@ -500,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+      <a href="../6-other/" class="md-nav__link">
         6. other
       </a>
     </li>
@@ -555,22 +618,85 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#broker-id-and-rack" class="md-nav__link">
+    broker id and rack
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    网络和 io 操作线程配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    log 数据文件刷盘策略
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    第一步
+    日志保留策略配置
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
-    第二步
+    日志文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    replica复制配置
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    注意事项
+    分区数量配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    replica 数配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica-lag" class="md-nav__link">
+    replica lag
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-rebalance" class="md-nav__link">
+    auto rebalance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offset-retention" class="md-nav__link">
+    offset retention
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    时间戳
   </a>
   
 </li>
@@ -587,66 +713,112 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/2-其他操作/kafka-upgrade.md" title="编辑此页" class="md-content__button md-icon">
+                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/3-常用配置/2-broker-config.md" title="编辑此页" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="kafka">kafka 滚动升级</h1>
-<p>kafka 滚动升级参考<a href="https://kafka.apache.org/11/documentation.html#upgrade">官方文档</a>，升级过程中需要进行两次滚动重启节点操作，可以保证升级过程中集群服务不中断。</p>
-<p>下面以 0.9.0.X 升级到 1.1.1 为例，假设 kafka 安装在 <code>/usr/local/kafka</code> 下，并用 systemd 管理：</p>
-<h2 id="_1">第一步</h2>
-<p>需要依次替换节点 kafka 到 1.1.1 版本，替换过程中保留节点原有 kafka 配置，并新增配置指定 <code>inter.broker.protocol.version=0.9.0.X</code>，<code>log.message.format.version=0.9.0.X</code> 与现有集群版本兼容，具体操作步骤如下：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 下载 1.1.1 版本 kafka</span>
-wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz -O /tmp/kafka_2.12-1.1.1.tgz
-wget https://archive.apache.org/dist/kafka/1.1.1/kafka_2.12-1.1.1.tgz.sha512 -O /tmp/kafka_2.12-1.1.1.tgz.sha512
+                <h1 id="broker">Broker 参数配置</h1>
+<h2 id="broker-id-and-rack">broker id and rack</h2>
+<div class="highlight"><pre><span></span><code># integer 类型，默认 -1。
+# 手动设置应该从 0 开始，每个 broker 依次 +1，手动设置的值不能超过 reserved.broker.max.id
+broker.id=0
 
-<span class="c1"># 校验 kafka 包</span>
-<span class="c1"># cd /tmp</span>
-<span class="c1"># [[ `md5sum kafka_1.1.1.tar.gz` == `cat kafka_1.1.1.md` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
-<span class="c1"># [[ `shasum -a512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
-<span class="c1"># [[ `openssl sha512 kafka_2.12-1.1.1.tgz` == `cat kafka_2.12-1.1.1.tgz.sha512` ]] &amp;&amp; echo &#39;ok&#39; || echo &#39;no&#39;</span>
+# 如果配置文件中没有指定 broker.id，broker 会自动生成一个 broker.id，默认从 reserved.broker.max.id+1 开始
+reserved.broker.max.id=1000
 
-<span class="c1"># 校验成功后解压 kafka 包</span>
-tar -zxvf /tmp/kafka_2.12-1.1.1.tgz -C /tmp
-
-<span class="c1"># 保留原有配置</span>
-mv /tmp/kafka/config /tmp/kafka/config.back
-cp -r /usr/local/kafka/config /tmp/kafka/
-
-<span class="c1"># 指定通信协议与消息格式</span>
-<span class="nb">echo</span> inter.broker.protocol.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
-<span class="nb">echo</span> log.message.format.version<span class="o">=</span><span class="m">0</span>.9.0.X &gt;&gt; /tmp/kafka/config/server.properties
-
-<span class="c1"># 替换 kafka 包</span>
-mv /usr/local/kafka /usr/local/kafka.back
-cp -r /tmp/kafka /usr/local/
-
-<span class="c1"># 重启 kafka 节点</span>
-<span class="c1"># service kafka-server restart</span>
-systemctl restart kafka
+# string 类型，默认 null。
+# topic partition 的 replica 分布在不同的 broker 上，但这些 broker 可能在同一个机架/机房/区域内，
+# 如果想让 replica 在不同机架/机房/区域内分布，可以将不同机架/机房/区域的 broker 配置不同的 broker.rack，
+# 配置后，topic partition 的 replica 会分布在不同的 broker.rack
+broker.rack=null
 </code></pre></div>
-<h2 id="_2">第二步</h2>
-<p>Kafka 版本升级有通信协议和消息格式的变化，经过上一步的替换，集群上的 kafka 包已经替换成 1.1.1 版本，通信协议和消息格式仍然指定为 0.9.0.X 版本，之后需要对这两项配置进行更新，但需要注意以下两点：</p>
+<h2 id="io">网络和 io 操作线程配置</h2>
+<div class="highlight"><pre><span></span><code>num.network.threads=9
+</code></pre></div>
+<p>broker处理消息的最大线程数(主要处理网络io，读写缓冲区数据，基本没有io等待，配置线程数量为cpu核数加1)</p>
+<div class="highlight"><pre><span></span><code>num.io.threads=16
+</code></pre></div>
+<p>broker处理磁盘IO的线程数(处理磁盘io操作，高峰期可能有些io等待，因此配置需要大些。配置线程数量为cpu核数2倍，最大不超过3倍)</p>
+<div class="highlight"><pre><span></span><code>socket.request.max.bytes=2147483600
+</code></pre></div>
+<p>socket server可接受数据大小(防止OOM异常)，根据自己业务数据包的大小适当调大。这里取值是int类型的，而受限于java int类型的取值范围</p>
+<blockquote>
+<p>java int的取值范围为（-2147483648~2147483647）</p>
+</blockquote>
+<h2 id="log">log 数据文件刷盘策略</h2>
+<div class="highlight"><pre><span></span><code># 每当producer写入10000条消息时，刷数据到磁盘
+log.flush.interval.messages=10000
+
+# 每间隔1秒钟时间，刷数据到磁盘
+log.flush.interval.ms=1000
+</code></pre></div>
+<p>为了大幅度提高producer写入吞吐量，需要定期批量写文件。一般无需改动，如果topic的数据量较小可以考虑减少 <code>log.flush.interval.ms</code> 和 <code>log.flush.interval.messages</code> 来强制刷写数据，减少可能由于缓存数据未写盘带来的不一致。推荐配置分别message 10000，间隔1s。</p>
+<blockquote>
+<p>Kafka官方并不建议通过Broker端的log.flush.interval.messages和log.flush.interval.ms来强制写盘，认为数据的可靠性应该通过Replica来保证，而强制Flush数据到磁盘会对整体性能产生影响。</p>
+</blockquote>
+<h2 id="_1">日志保留策略配置</h2>
+<div class="highlight"><pre><span></span><code># 日志保留时长
+log.retention.hours=72
+</code></pre></div>
+<p>日志建议保留三天，也可以更短</p>
+<h2 id="_2">日志文件</h2>
+<div class="highlight"><pre><span></span><code># 段文件大小
+log.segment.bytes=1073741824
+</code></pre></div>
+<p>段文件配置1GB，有利于快速回收磁盘空间，重启kafka加载也会加快。</p>
+<p>kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过小，则文件数量比较多。</p>
+<div class="highlight"><pre><span></span><code># 启动时每个文件夹对应的线程数
+num.recovery.threads.per.data.dir=1
+</code></pre></div>
+<p>增加 <code>num.recovery.threads.per.data.dir</code> 也可以提高加载速度。</p>
+<h2 id="replica">replica复制配置</h2>
+<div class="highlight"><pre><span></span><code># 拉取线程数：fetchers 配置多可以提高follower的I/O并发度，单位时间内leader持有更多请求，相应负载会增大，需要根据机器硬件资源做权衡，建议适当调大；
+num.replica.fetchers=3
+
+# 拉取消息最小字节：一般无需更改，默认值即可；
+replica.fetch.min.bytes=1
+
+# 拉取消息最大字节：默认为1MB，根据业务情况调整
+replica.fetch.max.bytes=5242880
+
+# 拉取消息等待时间：决定 follower 的拉取频率，频率过高，leader会积压大量无效请求情况，无法进行数据同步，导致cpu飙升。配置时谨慎使用，建议默认值，无需配置。
+replica.fetch.wait.max.ms
+</code></pre></div>
+<h2 id="_3">分区数量配置</h2>
+<div class="highlight"><pre><span></span><code>num.partitions=1
+</code></pre></div>
+<p>默认 partition 数量 1，如果topic在创建时没有指定partition数量，默认使用此值。Partition的数量选取也会直接影响到Kafka集群的吞吐性能，配置过小会影响消费性能。</p>
+<h2 id="replica_1">replica 数配置</h2>
+<div class="highlight"><pre><span></span><code>default.replication.factor=1
+</code></pre></div>
+<p>这个参数指新创建一个topic时，默认的Replica数量，Replica过少会影响数据的可用性，太多则会白白浪费存储资源，一般建议在2~3为宜。</p>
+<h2 id="replica-lag">replica lag</h2>
+<div class="highlight"><pre><span></span><code>replica.lag.time.max.ms=10000
+replica.lag.max.messages=4000
+</code></pre></div>
+<h2 id="auto-rebalance">auto rebalance</h2>
+<div class="highlight"><pre><span></span><code>auto.leader.rebalance.enable=true
+leader.imbalance.check.interval.seconds=300
+leader.imbalance.per.broker.percentage=10
+</code></pre></div>
+<h2 id="offset-retention">offset retention</h2>
+<div class="highlight"><pre><span></span><code>offsets.retention.check.interval.ms = 600000
+offsets.retention.minutes = 1440
+</code></pre></div>
+<h2 id="_4">时间戳</h2>
+<p>0.10.0.0 版本后，kafka 消息增加了 timestamp 字段。</p>
+<div class="highlight"><pre><span></span><code>log.message.timestamp.type=CreateTime/LogAppendTime
+</code></pre></div>
+<p>producer 写入的消息可以设置 timestamp 字段，(如果没有指定，则使用 producer 客户端的当前时间)。</p>
+<p>时间戳有 2 中类型：</p>
 <ol>
-<li>更改 <code>log.message.format.version</code> 之前，所有消费者必须升级到支持 1.1.1 或者之后的版本</li>
-<li><code>inter.broker.protocol.version</code>, <code>log.message.format.version</code> 更改并重启生效之后，kafka 版本不能进行降级回退</li>
+<li><code>CreateTime</code>: </li>
+<li><code>LogAppendTime</code>: 使用 broker 当前时间覆盖 消息携带的 timestamp，</li>
 </ol>
-<p>操作步骤：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 指定通信协议与消息格式</span>
-sed -i <span class="s2">&quot;s/inter.broker.protocol.version=0.9.0.X/inter.broker.protocol.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
-sed -i <span class="s2">&quot;s/log.message.format.version=0.9.0.X/log.message.format.version=1.1-IV0/g&quot;</span> /usr/local/kafka/config/server.properties
-
-<span class="c1"># 重启 kafka 节点</span>
-<span class="c1"># service kafka-server restart</span>
-systemctl restart kafka
+<p>时间戳类型为 <code>CreateTime</code>，允许 create time 与当前时间最大的时间差：</p>
+<div class="highlight"><pre><span></span><code>log.message.timestamp.difference.max.ms=9223372036854775807
 </code></pre></div>
-<h2 id="_3">注意事项</h2>
-<ul>
-<li><a href="https://kafka.apache.org/21/documentation.html#upgrade_10_performance_impact">0.10.0.0 之后消息格式改变，如果客户端版本低于 0.10.0.0 会带来性能损失</a></li>
-</ul>
-                
-                  
                 
               
               
@@ -666,7 +838,7 @@ systemctl restart kafka
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 1. 基础操作" rel="prev">
+        <a href="../1-jvm-config/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 1. jvm config" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -675,20 +847,20 @@ systemctl restart kafka
               <span class="md-footer__direction">
                 上一页
               </span>
-              1. 基础操作
+              1. jvm config
             </div>
           </div>
         </a>
       
       
         
-        <a href="../kafka-proxy/" class="md-footer__link md-footer__link--next" aria-label="下一页: 2. 转发服务" rel="next">
+        <a href="../3-topic-config/" class="md-footer__link md-footer__link--next" aria-label="下一页: 3. topic config" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              2. 转发服务
+              3. topic config
             </div>
           </div>
           <div class="md-footer__button md-icon">

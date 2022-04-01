@@ -13,19 +13,21 @@
         <meta name="author" content="mapan">
       
       
-      <link rel="icon" href="/kafka-manual/assets/images/favicon.png">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/0-os-config/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.0">
     
     
       
-        <title>kafka 使用手册</title>
+        <title>OS - kafka 使用手册</title>
       
     
     
-      <link rel="stylesheet" href="/kafka-manual/assets/stylesheets/main.8b42a75e.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8b42a75e.min.css">
       
         
-        <link rel="stylesheet" href="/kafka-manual/assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -59,7 +61,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
   
     
-    <script>function __prefix(e){return new URL("/kafka-manual/",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -67,6 +69,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#os" class="md-skip">
+          跳转至
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -77,7 +84,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/kafka-manual/." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+    <a href="../.." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -96,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              OS
             
           </span>
         </div>
@@ -199,7 +206,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/kafka-manual/." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+    <a href="../.." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -231,7 +238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-nav__link">
+      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" class="md-nav__link">
         1. 基础操作
       </a>
     </li>
@@ -276,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         1. 版本升级
       </a>
     </li>
@@ -290,7 +297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
         2. 转发服务
       </a>
     </li>
@@ -304,7 +311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
         3. 手动迁移分区数据
       </a>
     </li>
@@ -337,7 +344,7 @@
         <label class="md-nav__link" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -348,7 +355,7 @@
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
           
-            <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+            <a href="../" class="md-nav__link"
               style="margin: initial; padding: initial; pointer-events: initial">
           
             3. 常用配置
@@ -362,7 +369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+      <a href="../1-jvm-config/" class="md-nav__link">
         1. jvm config
       </a>
     </li>
@@ -376,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+      <a href="../2-broker-config/" class="md-nav__link">
         2. borker config
       </a>
     </li>
@@ -390,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+      <a href="../3-topic-config/" class="md-nav__link">
         3. topic config
       </a>
     </li>
@@ -404,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+      <a href="../4-producer-config/" class="md-nav__link">
         4. producer config
       </a>
     </li>
@@ -418,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+      <a href="../5-consumer-config/" class="md-nav__link">
         5. consumer config
       </a>
     </li>
@@ -432,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+      <a href="../6-other/" class="md-nav__link">
         6. other
       </a>
     </li>
@@ -454,7 +461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/kafka-manual/4-%E7%9B%91%E6%8E%A7/" class="md-nav__link">
+      <a href="../../4-%E7%9B%91%E6%8E%A7/" class="md-nav__link">
         4. 监控
       </a>
     </li>
@@ -468,11 +475,67 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    文件描述符限制
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vmmax_map_count" class="md-nav__link">
+    vm.max_map_count
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
+                
+                  <a href="https://github.com/mapan1984/kafka-manual/edit/master/docs/3-常用配置/0-os-config.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="os">OS</h1>
+<h2 id="_1">文件描述符限制</h2>
+<h2 id="vmmax_map_count">vm.max_map_count</h2>
+<p>取保有足够的虚拟内存可用于 <code>mmap</code>ped 文件</p>
+<div class="highlight"><pre><span></span><code>sysctl -w vm.max_map_count=262144
+</code></pre></div>
+<p>在 <code>/etc/sysctl.conf</code> 通过修改 <code>vm.max_map_count</code> 永久设置</p>
+                
+              
+              
+                
+
 
               
             </article>
@@ -505,10 +568,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "/kafka-manual/", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "/kafka-manual/assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
     
     
-      <script src="/kafka-manual/assets/javascripts/bundle.4fc53ad4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4fc53ad4.min.js"></script>
       
     
   </body>

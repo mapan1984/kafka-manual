@@ -447,10 +447,123 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            3. 常用配置
+          </a>
+        </label>
+      
+      <nav class="md-nav" aria-label="3. 常用配置" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          
+            <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link"
+              style="margin: initial; padding: initial; pointer-events: initial">
+          
+            3. 常用配置
+          </a>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link">
-        3. 常用配置
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+        1. jvm config
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+        2. borker config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+        3. topic config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+        4. producer config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+        5. consumer config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+        6. other
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -589,10 +702,12 @@
                 
                 <h1 id="kafka-nginx">kafka 外网 nginx 代理访问集群</h1>
 <p>进行生产或者消费活动时，kafka 客户端会主动获取集群的元信息，元信息包含 broker id 与 broker 地址之间的对应关系，以及 topic 的 partition, replica, leader 信息。当具体读/写某个 topic 的某个 partition 时，客户端必须根据元信息找到代表该 partition leader 的 broker id，再根据 broker id 找到 broker 的地址。</p>
-<p>配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在连接时没有问题，但是第一次连接成功后，客户端主动获取的集群 broker 地址可能还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。</p>
-<p>解决这个问题的关键是让客户端连接成功后，主动获取的集群 broker 地址还是指向代理 IP，有 2 种配置方法：
-1. 修改 kafka listeners 的地址为 kafka broker 节点的 hostname，然后在客户端所在的主机配置 <code>/etc/hosts</code> 文件，添加 kafka listeners 配置的 hostname，并将对应的 IP 配置为代理 IP
-2. 修改 kafka <code>advertised.listeners</code> 的地址为代理 IP，等于直接向客户端宣告通过代理地址访问自己</p>
+<p>配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在初次连接时没有问题，但是第一次连接成功后，客户端主动获取到的集群 broker 地址还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。</p>
+<p>解决这个问题的关键是让客户端初次连接成功后，主动获取到的集群 broker 地址还是指向代理 IP，有 2 种解决方法：</p>
+<ol>
+<li>修改 kafka listeners 的地址为 kafka broker 节点的 hostname，然后在客户端所在的主机配置 <code>/etc/hosts</code> 文件，添加 kafka listeners 配置的 hostname，并将对应的 IP 配置为代理 IP</li>
+<li>修改 kafka <code>advertised.listeners</code> 的地址为代理 IP，等于直接向客户端宣告通过代理地址访问自己</li>
+</ol>
 <p>kafka broker 注册的地址可以在 zookeeper 的 <code>/brokers/ids/&lt;broker_id&gt;</code> 路径下查看。</p>
 <h2 id="_1">准备信息</h2>
 <ol>
@@ -612,7 +727,7 @@
 </ol>
 <h2 id="1-hosts">方法1：利用 hosts 文件</h2>
 <h3 id="kafka-broker">配置 kafka broker 监听地址/端口</h3>
-<p>修改每个 kafka broker 的配置文件 <code>server.properties</code>：</p>
+<p>修改每个 kafka broker 的配置文件 <code>server.properties</code>，将监听地址改为该节点的 hostname，例如 kafka1 上配置：</p>
 <div class="highlight"><pre><span></span><code>listeners=PLAINTEXT://kafka1:9092
 #advertised.listeners=PLAINTEXT://kafka1:9092
 </code></pre></div>
@@ -703,10 +818,12 @@ server {
 <span class="c"># broker control 内部交互</span>
 <span class="na">control.plane.listener.name</span><span class="o">=</span><span class="s">BROKER_CONTROL</span>
 </code></pre></div>
-<p>这里每个 broker 开放了 3 个监听端口，以 kafka1 节点为例：
-1. BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 <code>kafka1:9090</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip
-2. BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 <code>kafka1:9091</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip
-3. EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 <code>106.75.143.227:9092</code>，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。</p>
+<p>这里每个 broker 开放了 3 个监听端口，以 kafka1 节点为例：</p>
+<ol>
+<li>BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 <code>kafka1:9090</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
+<li>BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 <code>kafka1:9091</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
+<li>EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 <code>106.75.143.227:9092</code>，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。</li>
+</ol>
 <h3 id="nginx_1">配置 nginx 代理</h3>
 <p>与方法 1 的 nginx 配置相同。</p>
 <h3 id="_3">配置客户端机器</h3>
