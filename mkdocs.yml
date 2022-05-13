@@ -7,23 +7,28 @@ site_author: mapan
 nav:
   - 1. 基础操作: '1-基础操作/index.md'
   - 2. 其他操作:
-    - 1. 版本升级: '2-其他操作/kafka-upgrade.md'
-    - 2. 转发服务: '2-其他操作/kafka-proxy.md'
-    - 3. 手动迁移分区数据: '2-其他操作/kafka-move-partiton.md'
+    - 2.1 版本升级: '2-其他操作/kafka-upgrade.md'
+    - 2.2 转发服务: '2-其他操作/kafka-proxy.md'
+    - 2.3 手动迁移分区数据: '2-其他操作/kafka-move-partiton.md'
   - 3. 常用配置:
     - '3-常用配置/index.md'
-    - 1. jvm config: '3-常用配置/1-jvm-config.md'
-    - 2. borker config: '3-常用配置/2-broker-config.md'
-    - 3. topic config: '3-常用配置/3-topic-config.md'
-    - 4. producer config: '3-常用配置/4-producer-config.md'
-    - 5. consumer config: '3-常用配置/5-consumer-config.md'
-    - 6. other: '3-常用配置/6-other.md'
-  - 4. 监控: '4-监控/index.md'
+    - 3.0 os config: '3-常用配置/0-os-config.md'
+    - 3.1 jvm config: '3-常用配置/1-jvm-config.md'
+    - 3.2 borker config: '3-常用配置/2-broker-config.md'
+    - 3.3 topic config: '3-常用配置/3-topic-config.md'
+    - 3.4 producer config: '3-常用配置/4-producer-config.md'
+    - 3.5 consumer config: '3-常用配置/5-consumer-config.md'
+    - 3.6 other: '3-常用配置/6-other.md'
+  - 4. 认证/鉴权/加密: /kafka-security" target="_blank
+  - 5. 监控: '4-监控/index.md'
 
 theme:
   # name: readthedocs
   name: material
   language: 'zh'
+  features:
+    - navigation.expand
+    - navigation.top
   # palette:
   #   scheme: slate
   #   primary: blue grey

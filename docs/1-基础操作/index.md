@@ -27,112 +27,93 @@ export JMX_PORT=9997
 
 创建 topic
 
-    $ kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
+    kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
 
 删除 topic
 
-    $ kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
 
-列出 topic
+topic 列表
 
-    $ kafka-topics.sh --list --zookeeper ${ZK_CONNECT}
+    kafka-topics.sh --list --zookeeper ${ZK_CONNECT}
 
-生产 消息
+topic 详情
 
-    $ kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
-
-消费 消息
-
-    $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
-
-描述 topic
-
-    $ kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic test
+    kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic test
 
 修改 topic 分区数
 
-    $ kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
+    kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
+
+生产 消息
+
+    kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
+
+消费 消息
+
+    kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
+
+    kafka-console-consumer.sh --property print.timestamp=true --property print.key=true \
+        --bootstrap-server ${BOOTSTRAP_SERVER} --group test_group --topic test --from-beginning
+
+consumer 列表
+
+    # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
+    kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
+
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer
+
+consumer 详情
+
+    # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
+    kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
+
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
+
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+
 
 ## 消费者选项
 
-* 使用 zookeeper 保存消费组数据: `--zookeeper localhost:2181`
+* 使用 zookeeper 保存消费组数据（2.x.x 版本以上废弃）: `--zookeeper localhost:2181`
 * 使用 __consumer_offsets 保存消费组数据: `--bootstrap-server localhost:9092`
-* 指定 topic:
-    * `--topic foo`
-    * `--whitelist ".*"`
 * 指定 group 名:
     * `--group group1`
     * `--consumer-property group.id=group1`
+* 指定 topic:
+    * `--topic foo`
+    * `--whitelist ".*"`
+* 指定 partition: 
+    * `--partition 0`
+* 指定 offset:
+    * `--from-beginning`
+    * `--offset 3418783`
 
-ZK Group
+ZK Group（2.x.x 版本以上废弃）
 
-    kafka-console-consumer.sh --zookeeper ${ZK_CONNECT} --topic test --from-beginning --group test1
-    kafka-console-consumer.sh --zookeeper ${ZK_CONNECT} --topic logs --consumer-property group.id=your_group
+    kafka-console-consumer.sh --zookeeper ${ZK_CONNECT} --topic test --from-beginning --group group1
+
+    kafka-console-consumer.sh --zookeeper ${ZK_CONNECT} --topic test --consumer-property group.id=group1
 
 KF Group
 
     kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic test
+
     kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --whitelist ".*"
 
 property
 
     kafka-console-consumer.sh --property print.timestamp=true --property print.key=true --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
-    kafka-console-consumer.sh --property print.timestamp=true --property print.key=true --property group.id=__test --bootstrap-server ${BOOTSTRAP_SERVER} --zookeeper ${ZK_CONNECT} --topic logs --from-beginning
 
 从指定 partition, offset 开始消费
 
     $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0
-
-## 列出所有 topic 详情
-
-``` sh
-kafka-topics.sh --list --zookeeper ${ZK_CONNECT} > topics.data
-while read topic
-do
-    kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic $topic
-done < topics.data
-```
-
-## 列出所有 consumer 详情
-
-ZK
-
-``` sh
-kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list > zk.data
-while read group
-do
-    echo ==================== zk group name: $group ===============================
-    kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
-    echo
-    echo
-done < zk.data
-```
-
-KF `>` 0.9.x.x
-
-``` sh
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list > kf.data
-while read group
-do
-    echo ==================== kf group name: $group ===============================
-    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
-    echo
-    echo
-done < kf.data
-```
-
-KF `<=` 0.9.x.x
-
-``` sh
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer > kf.data
-while read group
-do
-    echo ==================== kf group name: $group ===============================
-    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
-    echo
-    echo
-done < kf.data
-```
 
 ## 分区重分配/修改副本数
 
@@ -206,25 +187,8 @@ done < kf.data
     $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
 
 参考：
+
 - https://kafka.apache.org/documentation/#rep-throttle
-
-## 读取 __consumer_offsets
-
-0.11.0.0之前版本
-
-    $ kafka-console-consumer.sh --formatter "kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter" --zookeeper ${ZK_CONNECT} --topic __consumer_offsets
-
-0.11.0.0之后版本(含)
-
-    $ kafka-console-consumer.sh --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --bootstrap-server ${BOOTSTRAP_SERVER} --topic __consumer_offsets
-
-格式：
-
-    [Group, Topic, Partition]::[OffsetMetadata[Offset, Metadata], CommitTime, ExpirationTime]
-
-分区规则：
-
-    Math.abs(groupID.hashCode()) % numPartitions
 
 ## 修改 topic 参数
 
@@ -247,16 +211,6 @@ done < kf.data
 
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config retention.ms
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=compact
-
-## 查看日志/索引文件
-
-查看日志文件
-
-    $ kafka-run-class.sh kafka.tools.DumpLogSegments --files ./00000000000000283198.log --print-data-log
-
-查看索引文件
-
-    $ kafka-run-class.sh kafka.tools.DumpLogSegments --files 0000000000000045.timeindex
 
 ## 重新平衡 leader
 
@@ -291,16 +245,6 @@ ZK 类型
 
     $ kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --delete --group console-consumer-38645
 
-## 查看请求使用的 API Version
-
-    $ kafka-broker-api-versions.sh  --bootstrap-server ${BOOTSTRAP_SERVER}
-
-## 查看副本同步 lag
-
-    kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
-
-    kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
-
 ## 查看 topic offset
 
 最终的 offset
@@ -321,3 +265,93 @@ ZK 类型
 
     $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
 
+## 读取 __consumer_offsets
+
+0.11.0.0 之前版本
+
+    $ kafka-console-consumer.sh --formatter "kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter" --zookeeper ${ZK_CONNECT} --topic __consumer_offsets
+
+0.11.0.0 之后版本(含)
+
+    $ kafka-console-consumer.sh --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --bootstrap-server ${BOOTSTRAP_SERVER} --topic __consumer_offsets
+
+格式：
+
+    [Group, Topic, Partition]::[OffsetMetadata[Offset, Metadata], CommitTime, ExpirationTime]
+
+分区规则：
+
+    Math.abs(groupID.hashCode()) % numPartitions
+
+## 查看日志/索引文件
+
+查看日志文件
+
+    $ kafka-run-class.sh kafka.tools.DumpLogSegments --files ./00000000000000283198.log --print-data-log
+
+查看索引文件
+
+    $ kafka-run-class.sh kafka.tools.DumpLogSegments --files 0000000000000045.timeindex
+
+## 查看请求使用的 API Version
+
+    $ kafka-broker-api-versions.sh  --bootstrap-server ${BOOTSTRAP_SERVER}
+
+## 查看副本同步 lag
+
+    kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
+
+    kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
+
+<!--
+## 列出所有 topic 详情
+
+``` sh
+kafka-topics.sh --list --zookeeper ${ZK_CONNECT} > topics.data
+while read topic
+do
+    kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic $topic
+done < topics.data
+```
+
+## 列出所有 consumer 详情
+
+ZK
+
+``` sh
+kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list > zk.data
+while read group
+do
+    echo ==================== zk group name: $group ===============================
+    kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
+    echo
+    echo
+done < zk.data
+```
+
+KF `>` 0.9.x.x
+
+``` sh
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list > kf.data
+while read group
+do
+    echo ==================== kf group name: $group ===============================
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
+    echo
+    echo
+done < kf.data
+```
+
+KF `<=` 0.9.x.x
+
+``` sh
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer > kf.data
+while read group
+do
+    echo ==================== kf group name: $group ===============================
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+    echo
+    echo
+done < kf.data
+```
+-->
