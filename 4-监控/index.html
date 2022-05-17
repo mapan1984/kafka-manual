@@ -20,7 +20,7 @@
     
     
       
-        <title>4. 监控 - kafka 使用手册</title>
+        <title>5. 监控 - kafka 使用手册</title>
       
     
     
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              4. 监控
+              5. 监控
             
           </span>
         </div>
@@ -256,7 +256,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -284,7 +284,7 @@
   
     <li class="md-nav__item">
       <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
-        1. 版本升级
+        2.1 版本升级
       </a>
     </li>
   
@@ -298,7 +298,7 @@
   
     <li class="md-nav__item">
       <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
-        2. 转发服务
+        2.2 转发服务
       </a>
     </li>
   
@@ -312,7 +312,7 @@
   
     <li class="md-nav__item">
       <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
-        3. 手动迁移分区数据
+        2.3 手动迁移分区数据
       </a>
     </li>
   
@@ -336,7 +336,7 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -369,8 +369,22 @@
   
   
     <li class="md-nav__item">
+      <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/0-os-config/" class="md-nav__link">
+        3.0 os config
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
-        1. jvm config
+        3.1 jvm config
       </a>
     </li>
   
@@ -384,7 +398,7 @@
   
     <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
-        2. borker config
+        3.2 borker config
       </a>
     </li>
   
@@ -398,7 +412,7 @@
   
     <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
-        3. topic config
+        3.3 topic config
       </a>
     </li>
   
@@ -412,7 +426,7 @@
   
     <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
-        4. producer config
+        3.4 producer config
       </a>
     </li>
   
@@ -426,7 +440,7 @@
   
     <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
-        5. consumer config
+        3.5 consumer config
       </a>
     </li>
   
@@ -440,7 +454,7 @@
   
     <li class="md-nav__item">
       <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
-        6. other
+        3.6 other
       </a>
     </li>
   
@@ -449,6 +463,21 @@
           
         </ul>
       </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/kafka-security" target="_blank" class="md-nav__link">
+        4. 认证/鉴权/加密
+      </a>
     </li>
   
 
@@ -476,12 +505,12 @@
             <a href="./" class="md-nav__link md-nav__link--active"
               style="margin: initial; padding: initial; pointer-events: initial">
           
-            4. 监控
+            5. 监控
           </a>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        4. 监控
+        5. 监控
       </a>
       
         
@@ -640,6 +669,53 @@
 <div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=ResponseSendTimeMs,request={Produce|FetchConsumer|FetchFollower}
 </code></pre></div>
 <p>Time to send the response.</p>
+<p>bjyz-kafka-bj-jan-02.bjyz</p>
+<div class="highlight"><pre><span></span><code>Meter:kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=*
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec,topic=*
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec
+</code></pre></div>
+<p>网络处理线程空闲率</p>
+<div class="highlight"><pre><span></span><code>Gauge:kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent
+</code></pre></div>
+<p>请求处理线程空闲率</p>
+<div class="highlight"><pre><span></span><code>Meter:kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent
+</code></pre></div>
+<p>leader 数量</p>
+<div class="highlight"><pre><span></span><code>Gauge:kafka.server:type=ReplicaManager,name=LeaderCount
+</code></pre></div>
+<p>落后副本数量</p>
+<div class="highlight"><pre><span></span><code>Gauge:kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions
+</code></pre></div>
+<p>分区数量</p>
+<div class="highlight"><pre><span></span><code>Gauge:kafka.server:type=ReplicaManager,name=PartitionCount
+
+
+Meter:kafka.server:type=ReplicaManager,name=IsrShrinksPerSec
+
+Meter:kafka.server:type=ReplicaManager,name=IsrExpandsPerSec
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=TotalFetchRequestsPerSec
+
+Meter:kafka.server:type=BrokerTopicMetrics,name=TotalProduceRequestsPerSec
+
+Gauge:kafka.controller:type=KafkaController,name=ActiveControllerCount
+
+Gauge:kafka.controller:type=KafkaController,name=OfflinePartitionsCount
+
+Gauge:kafka.controller:type=KafkaController,name=PreferredReplicaImbalanceCount
+
+Timer:kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs
+
+Meter:kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec
+</code></pre></div>
                 
               
               
@@ -651,6 +727,11 @@
           </div>
         </div>
         
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
       </main>
       
         
@@ -659,7 +740,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 6. other" rel="prev">
+        <a href="../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3.6 other" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -668,7 +749,7 @@
               <span class="md-footer__direction">
                 上一页
               </span>
-              6. other
+              3.6 other
             </div>
           </div>
         </a>
@@ -697,7 +778,7 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.top"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.f8263e09.min.js", "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.4fc53ad4.min.js"></script>
