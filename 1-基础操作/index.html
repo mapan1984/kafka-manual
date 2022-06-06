@@ -287,24 +287,51 @@
     基本操作
   </a>
   
+    <nav class="md-nav" aria-label="基本操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topic" class="md-nav__link">
+    topic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    生产/消费
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumer" class="md-nav__link">
+    consumer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     消费者选项
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     分区重分配/修改副本数
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#topic" class="md-nav__link">
+  <a href="#topic_1" class="md-nav__link">
     修改 topic 参数
   </a>
   
@@ -318,7 +345,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     删除消费组
   </a>
   
@@ -346,7 +373,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     查看日志/索引文件
   </a>
   
@@ -663,24 +690,51 @@
     基本操作
   </a>
   
+    <nav class="md-nav" aria-label="基本操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#topic" class="md-nav__link">
+    topic
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    生产/消费
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumer" class="md-nav__link">
+    consumer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     消费者选项
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     分区重分配/修改副本数
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#topic" class="md-nav__link">
+  <a href="#topic_1" class="md-nav__link">
     修改 topic 参数
   </a>
   
@@ -694,7 +748,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     删除消费组
   </a>
   
@@ -722,7 +776,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     查看日志/索引文件
   </a>
   
@@ -780,8 +834,11 @@
 <span class="nb">export</span> <span class="nv">JMX_PORT</span><span class="o">=</span><span class="m">9997</span>
 </code></pre></div>
 <h2 id="_2">基本操作</h2>
+<h3 id="topic">topic</h3>
 <p>创建 topic</p>
 <div class="highlight"><pre><span></span><code>kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
+
+kafka-topics.sh --create --bootstrap-server ${BOOTSTRAP_SERVER} --replication-factor 3 --partitions 3 --topic __test
 </code></pre></div>
 <p>删除 topic</p>
 <div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
@@ -795,6 +852,7 @@
 <p>修改 topic 分区数</p>
 <div class="highlight"><pre><span></span><code>kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
 </code></pre></div>
+<h3 id="_3">生产/消费</h3>
 <p>生产 消息</p>
 <div class="highlight"><pre><span></span><code>kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
 </code></pre></div>
@@ -804,6 +862,7 @@
 kafka-console-consumer.sh --property print.timestamp=true --property print.key=true \
     --bootstrap-server ${BOOTSTRAP_SERVER} --group test_group --topic test --from-beginning
 </code></pre></div>
+<h3 id="consumer">consumer</h3>
 <p>consumer 列表</p>
 <div class="highlight"><pre><span></span><code># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
 kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
@@ -824,7 +883,7 @@ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --gro
 # 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
 kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
 </code></pre></div>
-<h2 id="_3">消费者选项</h2>
+<h2 id="_4">消费者选项</h2>
 <ul>
 <li>使用 zookeeper 保存消费组数据（2.x.x 版本以上废弃）: <code>--zookeeper localhost:2181</code></li>
 <li>使用 __consumer_offsets 保存消费组数据: <code>--bootstrap-server localhost:9092</code></li>
@@ -838,13 +897,17 @@ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer 
 <li><code>--whitelist ".*"</code></li>
 </ul>
 </li>
-<li>指定 partition: <ul>
+<li>指定 partition:<ul>
 <li><code>--partition 0</code></li>
 </ul>
 </li>
 <li>指定 offset:<ul>
 <li><code>--from-beginning</code></li>
 <li><code>--offset 3418783</code></li>
+</ul>
+</li>
+<li>消费多少条消息:<ul>
+<li><code>--max-messages 10</code></li>
 </ul>
 </li>
 </ul>
@@ -862,9 +925,12 @@ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --whitelist &qu
 <div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --property print.timestamp=true --property print.key=true --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
 </code></pre></div>
 <p>从指定 partition, offset 开始消费</p>
-<div class="highlight"><pre><span></span><code>$ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0
+<div class="highlight"><pre><span></span><code>$ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0 --group __test_group
 </code></pre></div>
-<h2 id="_4">分区重分配/修改副本数</h2>
+<p>从指定 partition, offset 开始消费指定数量消息：</p>
+<div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 1340190464 --partition 7 --max-messages 10 --group __test_group
+</code></pre></div>
+<h2 id="_5">分区重分配/修改副本数</h2>
 <p>获取当前 broker id 列表：</p>
 <div class="highlight"><pre><span></span><code>$ zookeeper-shell.sh ${ZK_CONNECT} ls /brokers/ids | sed &#39;s/ //g&#39;
 </code></pre></div>
@@ -924,7 +990,7 @@ $ sed -n &#39;5p&#39; plan &gt; reassign.json
 <ul>
 <li>https://kafka.apache.org/documentation/#rep-throttle</li>
 </ul>
-<h2 id="topic">修改 topic 参数</h2>
+<h2 id="topic_1">修改 topic 参数</h2>
 <p>保留大小</p>
 <div class="highlight"><pre><span></span><code>$ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config max.message.bytes=4194304
 </code></pre></div>
@@ -959,7 +1025,7 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
     <span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="_5">删除消费组</h2>
+<h2 id="_6">删除消费组</h2>
 <p>KF 类型</p>
 <div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
 </code></pre></div>
@@ -974,11 +1040,14 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
 <div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list ${BOOTSTRAP_SERVER} --time -2 --topic test
 </code></pre></div>
 <h2 id="consumer-current-offset">设置 consumer current offset</h2>
+<p>重置 offset 到最新位置：</p>
+<div class="highlight"><pre><span></span><code>kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --reset-offsets --to-latest --group $group --topic $topic --execute
+</code></pre></div>
 <p>设置到指定的 offset：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-offset 6250 --topic $topic --execute
+<div class="highlight"><pre><span></span><code>kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-offset 6250 --topic $topic --execute
 </code></pre></div>
 <p>根据时间设置，设置到大于等于该时间的第一个 offset：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
+<div class="highlight"><pre><span></span><code>kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
 </code></pre></div>
 <h2 id="__consumer_offsets">读取 __consumer_offsets</h2>
 <p>0.11.0.0 之前版本</p>
@@ -993,7 +1062,7 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
 <p>分区规则：</p>
 <div class="highlight"><pre><span></span><code>Math.abs(groupID.hashCode()) % numPartitions
 </code></pre></div>
-<h2 id="_6">查看日志/索引文件</h2>
+<h2 id="_7">查看日志/索引文件</h2>
 <p>查看日志文件</p>
 <div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.DumpLogSegments --files ./00000000000000283198.log --print-data-log
 </code></pre></div>
