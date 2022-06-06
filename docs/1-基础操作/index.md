@@ -25,9 +25,13 @@ export JMX_PORT=9997
 
 ## 基本操作
 
+### topic
+
 创建 topic
 
     kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
+
+    kafka-topics.sh --create --bootstrap-server ${BOOTSTRAP_SERVER} --replication-factor 3 --partitions 3 --topic __test
 
 删除 topic
 
@@ -45,6 +49,8 @@ topic 详情
 
     kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
 
+### 生产/消费
+
 生产 消息
 
     kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
@@ -55,6 +61,8 @@ topic 详情
 
     kafka-console-consumer.sh --property print.timestamp=true --property print.key=true \
         --bootstrap-server ${BOOTSTRAP_SERVER} --group test_group --topic test --from-beginning
+
+### consumer
 
 consumer 列表
 
@@ -78,7 +86,6 @@ consumer 详情
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
 
-
 ## 消费者选项
 
 * 使用 zookeeper 保存消费组数据（2.x.x 版本以上废弃）: `--zookeeper localhost:2181`
@@ -89,11 +96,13 @@ consumer 详情
 * 指定 topic:
     * `--topic foo`
     * `--whitelist ".*"`
-* 指定 partition: 
+* 指定 partition:
     * `--partition 0`
 * 指定 offset:
     * `--from-beginning`
     * `--offset 3418783`
+* 消费多少条消息:
+    * `--max-messages 10`
 
 ZK Group（2.x.x 版本以上废弃）
 
@@ -113,7 +122,11 @@ property
 
 从指定 partition, offset 开始消费
 
-    $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0
+    $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0 --group __test_group
+
+从指定 partition, offset 开始消费指定数量消息：
+
+    kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 1340190464 --partition 7 --max-messages 10 --group __test_group
 
 ## 分区重分配/修改副本数
 
@@ -257,13 +270,18 @@ ZK 类型
 
 ## 设置 consumer current offset
 
+重置 offset 到最新位置：
+
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --reset-offsets --to-latest --group $group --topic $topic --execute
+
 设置到指定的 offset：
 
-    $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-offset 6250 --topic $topic --execute
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-offset 6250 --topic $topic --execute
 
 根据时间设置，设置到大于等于该时间的第一个 offset：
 
-    $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
+
 
 ## 读取 __consumer_offsets
 
