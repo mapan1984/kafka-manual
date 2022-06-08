@@ -836,25 +836,35 @@
 <h2 id="_2">基本操作</h2>
 <h3 id="topic">topic</h3>
 <p>创建 topic</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
+<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --create --replication-factor 3 --partitions 3 --topic __test
 
-kafka-topics.sh --create --bootstrap-server ${BOOTSTRAP_SERVER} --replication-factor 3 --partitions 3 --topic __test
+kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --create --replication-factor 3 --partitions 3 --topic __test
 </code></pre></div>
 <p>删除 topic</p>
 <div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
+
+kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --topic __test
 </code></pre></div>
 <p>topic 列表</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --list --zookeeper ${ZK_CONNECT}
+<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --list
+
+kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
 </code></pre></div>
 <p>topic 详情</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic test
+<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --describe --topic test
+
+kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --topic __test
 </code></pre></div>
 <p>修改 topic 分区数</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
+<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --alter --topic __test --partitions 5
+
+kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --alter --topic __test --partitions 5
 </code></pre></div>
 <h3 id="_3">生产/消费</h3>
 <p>生产 消息</p>
 <div class="highlight"><pre><span></span><code>kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
+
+kafka-console-producer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test
 </code></pre></div>
 <p>消费 消息</p>
 <div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
@@ -867,21 +877,27 @@ kafka-console-consumer.sh --property print.timestamp=true --property print.key=t
 <div class="highlight"><pre><span></span><code># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
 kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
 
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
-
 # 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
 kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer
+
+# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
 </code></pre></div>
 <p>consumer 详情</p>
 <div class="highlight"><pre><span></span><code># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
 kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
 
+# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+
 # 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x
 kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
 
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members
+
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members --verbose
+
+kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --state
 </code></pre></div>
 <h2 id="_4">消费者选项</h2>
 <ul>
