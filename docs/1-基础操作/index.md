@@ -29,31 +29,41 @@ export JMX_PORT=9997
 
 创建 topic
 
-    kafka-topics.sh --create --zookeeper ${ZK_CONNECT} --replication-factor 3 --partitions 3 --topic __test
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --create --replication-factor 3 --partitions 3 --topic __test
 
-    kafka-topics.sh --create --bootstrap-server ${BOOTSTRAP_SERVER} --replication-factor 3 --partitions 3 --topic __test
+    kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --create --replication-factor 3 --partitions 3 --topic __test
 
 删除 topic
 
     kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
 
+    kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --topic __test
+
 topic 列表
 
-    kafka-topics.sh --list --zookeeper ${ZK_CONNECT}
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --list
+
+    kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
 
 topic 详情
 
-    kafka-topics.sh --describe --zookeeper ${ZK_CONNECT} --topic test
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --describe --topic test
+
+    kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --topic __test
 
 修改 topic 分区数
 
-    kafka-topics.sh  --zookeeper ${ZK_CONNECT} --alter  --partitions 5 --topic bar
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --alter --topic __test --partitions 5
+
+    kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --alter --topic __test --partitions 5
 
 ### 生产/消费
 
 生产 消息
 
     kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
+
+    kafka-console-producer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test
 
 消费 消息
 
@@ -69,22 +79,28 @@ consumer 列表
     # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
     kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
 
-    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
-    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
-
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer
+
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
 
 consumer 详情
 
     # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
     kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
 
+    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
 
-    # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
-    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members
+
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members --verbose
+
+    kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --state
 
 ## 消费者选项
 
