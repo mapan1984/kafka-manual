@@ -20,7 +20,7 @@ nav:
     - 3.5 consumer config: '3-常用配置/5-consumer-config.md'
     - 3.6 other: '3-常用配置/6-other.md'
   - 4. 认证/鉴权/加密: /kafka-security" target="_blank
-  - 5. 监控: '4-监控/index.md'
+  - 5. 监控: /ops-manual/2-监控/4-exporter/2-jmx_exporter/2-kafka/2-监控项/" target="_blank
 
 theme:
   # name: readthedocs
