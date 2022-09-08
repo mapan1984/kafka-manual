@@ -46,8 +46,13 @@
 
 ## 事务
 
-读已提交消息，关闭自动提交 offset
+设置为读已提交消息，关闭自动提交 offset
 
     isolation.level=read_committed
+
     enable.auto.commit=false
+
+
+`isolation.level` 控制如何读通过事务写的消息，如果设置为 `read_committed`，则只会读取事务已提交的消息；如果设置为 `read_uncommitted`(默认值)，则会读取所有消息。非事务写的消息在任何配置下都会返回。
+
 

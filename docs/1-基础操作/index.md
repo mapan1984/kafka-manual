@@ -20,7 +20,7 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 # 如果 broker 通过在 kafka-run-class.sh 文件内设置 JMX_PORT，则这里需要设置成不同的 port
 # (一般 broker 开启 JMX_PORT 最好在 kafka-server-start.sh 文件内设置，kafka-run-class.sh 文件内的修改会影响到所有命令脚本)
-export JMX_PORT=9997
+# export JMX_PORT=9997
 ```
 
 ## 基本操作
@@ -138,98 +138,45 @@ property
 
 从指定 partition, offset 开始消费
 
-    $ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0 --group __test_group
+    kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --partition 0 --offset 3418783
 
 从指定 partition, offset 开始消费指定数量消息：
 
-    kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 1340190464 --partition 7 --max-messages 10 --group __test_group
+    kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --partition 7 --offset 1340190464 --max-messages 10
 
-## 分区重分配/修改副本数
+## broker 参数(动态)
 
-获取当前 broker id 列表：
+查看参数：
 
-    $ zookeeper-shell.sh ${ZK_CONNECT} ls /brokers/ids | sed 's/ //g'
+    kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
 
-创建 `topics.json` 文件，文件内容为需要重分区的 topic，例如：
+设置副本同步的限流参数：
 
-``` json
-{
-    "topics": [
-        {
-            "topic": "statistics"
-        }
-    ],
-    "version": 1
-}
-```
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 0
 
-执行 `kafka-reassign-partitions.sh`，指定 `--generate` 参数和刚才创建的 `topics.json` 文件，通过 `--broker-list` 指定分布的 broker id，生成描述 partition 分布的内容：
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 1
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT}:2181 --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-    Current partition replica assignment
-    {"version":1,"partitions":[{"topic":"statistics","partition":0,"replicas":[3],"log_dirs":["any"]}]}
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 2
 
-    Proposed partition reassignment configuration
-    {"version":1,"partitions":[{"topic":"statistics","partition":0,"replicas":[1],"log_dirs":["any"]}]}
+删除副本同步限流参数：
 
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate' --entity-name 0
 
-命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 `current.json`(用于恢复) `reassign.json`(之后的计划)
+## topic 参数
 
-    $ sed -n '2p' plan > current.json
+查看参数：
 
-    $ sed -n '5p' plan > reassign.json
+    kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
 
-可以调整 `replicas.json` 的内容，`replicas` 字段的含义是该 partition 分布的 broker id：
-1. 通过增加/减少 `replicas` 中的 broker id 可以增加/减少副本（`log_dirs` 包含的项要与 `replicas` 包含的项数目一致）
-2. 调整 `replicas` 字段的第一个 broker id 可以指定这个 partition 的优先 leader
-
-``` json
-{
-    "partitions": [
-        {
-            "log_dirs": [
-                "any", "any", "any"
-            ],
-            "partition": 0,
-            "replicas": [
-                1, 2, 3
-            ],
-            "topic": "statistics"
-        }
-    ],
-    "version": 1
-}
-```
-
-*低版本没有 `log_dirs` 字段，可以忽略*
-
-执行 `kafka-reassign-partitions.sh`，指定 `--execute` 参数和 `reassign.json` 文件，执行 partition 重分布：
-
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
-
-执行 `kafka-reassign-partitions.sh`，指定 `--verify` 参数和 `reassign.json` 文件，确认 partition 重分布进度：
-
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-
-如果 topic 数据量和流量过大，重分区会对集群服务造成比较大的影响，此时可以对重分区限制流量，比如限制不超过 50MB/s：
-
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
-
-参考：
-
-- https://kafka.apache.org/documentation/#rep-throttle
-
-## 修改 topic 参数
-
-保留大小
+修改消息保留大小：
 
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config max.message.bytes=4194304
 
-保留时间
+修改消息保留时长：
 
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config retention.ms=259200000
 
-修改 __consumer_offsets 保留策略
+修改 __consumer_offsets 保留策略：
 
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --describe --entity-type topics --entity-name __consumer_offsets
 
@@ -240,6 +187,14 @@ property
 
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config retention.ms
     $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=compact
+
+设置副本同步流量限制：
+
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name test-throttled --alter --add-config "leader.replication.throttled.replicas=*,follower.replication.throttled.replicas=*"
+
+删除副本同步流量限制：
+
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type topics --alter --delete-config 'leader.replication.throttled.replicas,follower.replication.throttled.replicas' --entity-name test-throttled
 
 ## 重新平衡 leader
 
@@ -336,6 +291,10 @@ ZK 类型
     kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
 
     kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
+
+## 获取 broker topic 分区实际目录分布
+
+    kafka-log-dirs.sh --bootstrap-server localhost:9092  --describe [--broker-list "0,1,2"] [--topic-list "t1,t2"]
 
 <!--
 ## 列出所有 topic 详情

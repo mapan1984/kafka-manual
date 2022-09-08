@@ -108,17 +108,25 @@ kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过
 
 ## 时间戳
 
-0.10.0.0 版本后，kafka 消息增加了 timestamp 字段。
 
     log.message.timestamp.type=CreateTime/LogAppendTime
 
-producer 写入的消息可以设置 timestamp 字段，(如果没有指定，则使用 producer 客户端的当前时间)。
+0.10.0.0 版本后，kafka 消息增加了 timestamp 字段，表示消息的时间戳，有 2 种类型：
 
-时间戳有 2 中类型：
+1. `CreateTime`: producer 端发送消息时给消息设置的 timestamp 字段，理解为消息创建时间。
+2. `LogAppendTime`: 使用 broker 接收消息的时间作为消息的 timestamp（会覆盖消息本身携带的 timestamp 字段)，理解为消息写入时间。
 
-1. `CreateTime`: 
-2. `LogAppendTime`: 使用 broker 当前时间覆盖 消息携带的 timestamp，
-
-时间戳类型为 `CreateTime`，允许 create time 与当前时间最大的时间差：
+时间戳类型为 `CreateTime` 时，允许 create time 与当前时间最大的时间差：
 
     log.message.timestamp.difference.max.ms=9223372036854775807
+
+## 限流
+
+    leader.replication.throttled.rate
+
+表示 leader 节点对来自副本复制的读流量限制，搭配 topic 参数 `leader.replication.throttled.replicas` 使用。
+
+    follower.replication.throttled.rate
+
+表示 follower 节点复制副本的写流量限制，搭配 topic 参数 `follower.replication.throttled.replicas` 使用。
+

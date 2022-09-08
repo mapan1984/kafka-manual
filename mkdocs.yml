@@ -7,6 +7,7 @@ site_author: mapan
 nav:
   - 1. 基础操作: '1-基础操作/index.md'
   - 2. 其他操作:
+    - 2.0 重新分区: '2-其他操作/kafka-reassign-partitions.md'
     - 2.1 版本升级: '2-其他操作/kafka-upgrade.md'
     - 2.2 转发服务: '2-其他操作/kafka-proxy.md'
     - 2.3 手动迁移分区数据: '2-其他操作/kafka-move-partiton.md'
