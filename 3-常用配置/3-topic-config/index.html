@@ -283,6 +283,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
+        2.0 重新分区
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         2.1 版本升级
       </a>
@@ -457,6 +471,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    限流
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -576,6 +597,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    限流
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -596,9 +624,18 @@
                 <h1 id="topic">Topic 参数配置</h1>
 <h2 id="_1">时间戳</h2>
 <div class="highlight"><pre><span></span><code>message.timestamp.type=LogAppendTime/CreateTime
-
-message.timestamp.difference.max.ms
 </code></pre></div>
+<p>定义消息的时间戳类型为 <code>CreateTime</code> 或者 <code>LogAppendTime</code></p>
+<div class="highlight"><pre><span></span><code>message.timestamp.difference.max.ms
+</code></pre></div>
+<p>当消息时间戳类型为 <code>CreateTime</code> 时，可以接受的创建时间与当前时间的最大时间差</p>
+<h2 id="_2">限流</h2>
+<div class="highlight"><pre><span></span><code>leader.replication.throttled.replicas
+</code></pre></div>
+<p>表示需要限流的 leader partition replica 列表。格式为 <code>partitionId:brokerId,partitionId:brokerId,...</code>，或者使用 <code>*</code> 代表此 topic 的全部副本。搭配 broker 参数 <code>leader.replication.throttled.rate</code> 使用。</p>
+<div class="highlight"><pre><span></span><code>follower.replication.throttled.replicas
+</code></pre></div>
+<p>表示需要限流的 follower partition replica 列表。格式为 <code>partitionId:brokerId,partitionId:brokerId,...</code>，或者使用 <code>*</code> 代表此 topic 的全部副本。搭配 broker 参数 <code>follower.replication.throttled.rate</code> 使用。</p>
                 
               
               

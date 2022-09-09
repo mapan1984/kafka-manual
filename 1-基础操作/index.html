@@ -324,15 +324,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    分区重分配/修改副本数
+  <a href="#broker" class="md-nav__link">
+    broker 参数(动态)
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#topic_1" class="md-nav__link">
-    修改 topic 参数
+    topic 参数
   </a>
   
 </li>
@@ -345,7 +345,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     删除消费组
   </a>
   
@@ -373,7 +373,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     查看日志/索引文件
   </a>
   
@@ -389,6 +389,13 @@
         <li class="md-nav__item">
   <a href="#lag" class="md-nav__link">
     查看副本同步 lag
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker-topic" class="md-nav__link">
+    获取 broker topic 分区实际目录分布
   </a>
   
 </li>
@@ -432,6 +439,20 @@
           
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
+        2.0 重新分区
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -727,15 +748,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    分区重分配/修改副本数
+  <a href="#broker" class="md-nav__link">
+    broker 参数(动态)
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#topic_1" class="md-nav__link">
-    修改 topic 参数
+    topic 参数
   </a>
   
 </li>
@@ -748,7 +769,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     删除消费组
   </a>
   
@@ -776,7 +797,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     查看日志/索引文件
   </a>
   
@@ -792,6 +813,13 @@
         <li class="md-nav__item">
   <a href="#lag" class="md-nav__link">
     查看副本同步 lag
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker-topic" class="md-nav__link">
+    获取 broker topic 分区实际目录分布
   </a>
   
 </li>
@@ -831,7 +859,7 @@
 
 <span class="c1"># 如果 broker 通过在 kafka-run-class.sh 文件内设置 JMX_PORT，则这里需要设置成不同的 port</span>
 <span class="c1"># (一般 broker 开启 JMX_PORT 最好在 kafka-server-start.sh 文件内设置，kafka-run-class.sh 文件内的修改会影响到所有命令脚本)</span>
-<span class="nb">export</span> <span class="nv">JMX_PORT</span><span class="o">=</span><span class="m">9997</span>
+<span class="c1"># export JMX_PORT=9997</span>
 </code></pre></div>
 <h2 id="_2">基本操作</h2>
 <h3 id="topic">topic</h3>
@@ -941,79 +969,36 @@ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --whitelist &qu
 <div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --property print.timestamp=true --property print.key=true --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
 </code></pre></div>
 <p>从指定 partition, offset 开始消费</p>
-<div class="highlight"><pre><span></span><code>$ kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 3418783 --partition 0 --group __test_group
+<div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --partition 0 --offset 3418783
 </code></pre></div>
 <p>从指定 partition, offset 开始消费指定数量消息：</p>
-<div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --offset 1340190464 --partition 7 --max-messages 10 --group __test_group
+<div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic logs --partition 7 --offset 1340190464 --max-messages 10
 </code></pre></div>
-<h2 id="_5">分区重分配/修改副本数</h2>
-<p>获取当前 broker id 列表：</p>
-<div class="highlight"><pre><span></span><code>$ zookeeper-shell.sh ${ZK_CONNECT} ls /brokers/ids | sed &#39;s/ //g&#39;
+<h2 id="broker">broker 参数(动态)</h2>
+<p>查看参数：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
 </code></pre></div>
-<p>创建 <code>topics.json</code> 文件，文件内容为需要重分区的 topic，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;topics&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;statistics&quot;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">1</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--generate</code> 参数和刚才创建的 <code>topics.json</code> 文件，通过 <code>--broker-list</code> 指定分布的 broker id，生成描述 partition 分布的内容：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT}:2181 --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-Current partition replica assignment
-{&quot;version&quot;:1,&quot;partitions&quot;:[{&quot;topic&quot;:&quot;statistics&quot;,&quot;partition&quot;:0,&quot;replicas&quot;:[3],&quot;log_dirs&quot;:[&quot;any&quot;]}]}
+<p>设置副本同步的限流参数：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config &quot;leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024&quot; --entity-name 0
 
-Proposed partition reassignment configuration
-{&quot;version&quot;:1,&quot;partitions&quot;:[{&quot;topic&quot;:&quot;statistics&quot;,&quot;partition&quot;:0,&quot;replicas&quot;:[1],&quot;log_dirs&quot;:[&quot;any&quot;]}]}
-</code></pre></div>
-<p>命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 <code>current.json</code>(用于恢复) <code>reassign.json</code>(之后的计划)</p>
-<div class="highlight"><pre><span></span><code>$ sed -n &#39;2p&#39; plan &gt; current.json
+kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config &quot;leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024&quot; --entity-name 1
 
-$ sed -n &#39;5p&#39; plan &gt; reassign.json
+kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config &quot;leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024&quot; --entity-name 2
 </code></pre></div>
-<p>可以调整 <code>replicas.json</code> 的内容，<code>replicas</code> 字段的含义是该 partition 分布的 broker id：
-1. 通过增加/减少 <code>replicas</code> 中的 broker id 可以增加/减少副本（<code>log_dirs</code> 包含的项要与 <code>replicas</code> 包含的项数目一致）
-2. 调整 <code>replicas</code> 字段的第一个 broker id 可以指定这个 partition 的优先 leader</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-    <span class="nt">&quot;partitions&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;log_dirs&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;any&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;partition&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="nt">&quot;replicas&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;statistics&quot;</span>
-        <span class="p">}</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="mi">1</span>
-<span class="p">}</span>
+<p>删除副本同步限流参数：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers --alter --delete-config &#39;leader.replication.throttled.rate,follower.replication.throttled.rate&#39; --entity-name 0
 </code></pre></div>
-<p><em>低版本没有 <code>log_dirs</code> 字段，可以忽略</em></p>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--execute</code> 参数和 <code>reassign.json</code> 文件，执行 partition 重分布：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
+<h2 id="topic_1">topic 参数</h2>
+<p>查看参数：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
 </code></pre></div>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--verify</code> 参数和 <code>reassign.json</code> 文件，确认 partition 重分布进度：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-</code></pre></div>
-<p>如果 topic 数据量和流量过大，重分区会对集群服务造成比较大的影响，此时可以对重分区限制流量，比如限制不超过 50MB/s：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
-</code></pre></div>
-<p>参考：</p>
-<ul>
-<li>https://kafka.apache.org/documentation/#rep-throttle</li>
-</ul>
-<h2 id="topic_1">修改 topic 参数</h2>
-<p>保留大小</p>
+<p>修改消息保留大小：</p>
 <div class="highlight"><pre><span></span><code>$ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config max.message.bytes=4194304
 </code></pre></div>
-<p>保留时间</p>
+<p>修改消息保留时长：</p>
 <div class="highlight"><pre><span></span><code>$ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config retention.ms=259200000
 </code></pre></div>
-<p>修改 __consumer_offsets 保留策略</p>
+<p>修改 __consumer_offsets 保留策略：</p>
 <div class="highlight"><pre><span></span><code>$ kafka-configs.sh --zookeeper ${ZK_CONNECT} --describe --entity-type topics --entity-name __consumer_offsets
 
 $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config cleanup.policy
@@ -1023,6 +1008,12 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
 
 $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config retention.ms
 $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=compact
+</code></pre></div>
+<p>设置副本同步流量限制：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name test-throttled --alter --add-config &quot;leader.replication.throttled.replicas=*,follower.replication.throttled.replicas=*&quot;
+</code></pre></div>
+<p>删除副本同步流量限制：</p>
+<div class="highlight"><pre><span></span><code>kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type topics --alter --delete-config &#39;leader.replication.throttled.replicas,follower.replication.throttled.replicas&#39; --entity-name test-throttled
 </code></pre></div>
 <h2 id="leader">重新平衡 leader</h2>
 <p>触发集群内所有 topic partition 的最优 leader 选举:</p>
@@ -1041,7 +1032,7 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
     <span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="_6">删除消费组</h2>
+<h2 id="_5">删除消费组</h2>
 <p>KF 类型</p>
 <div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
 </code></pre></div>
@@ -1078,7 +1069,7 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
 <p>分区规则：</p>
 <div class="highlight"><pre><span></span><code>Math.abs(groupID.hashCode()) % numPartitions
 </code></pre></div>
-<h2 id="_7">查看日志/索引文件</h2>
+<h2 id="_6">查看日志/索引文件</h2>
 <p>查看日志文件</p>
 <div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.DumpLogSegments --files ./00000000000000283198.log --print-data-log
 </code></pre></div>
@@ -1092,6 +1083,9 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --enti
 <div class="highlight"><pre><span></span><code>kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
 
 kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
+</code></pre></div>
+<h2 id="broker-topic">获取 broker topic 分区实际目录分布</h2>
+<div class="highlight"><pre><span></span><code>kafka-log-dirs.sh --bootstrap-server localhost:9092  --describe [--broker-list &quot;0,1,2&quot;] [--topic-list &quot;t1,t2&quot;]
 </code></pre></div>
 <!--
 ## 列出所有 topic 详情
@@ -1166,13 +1160,13 @@ KF `<=` 0.9.x.x
       
       
         
-        <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-footer__link md-footer__link--next" aria-label="下一页: 2.1 版本升级" rel="next">
+        <a href="../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-footer__link md-footer__link--next" aria-label="下一页: 2.0 重新分区" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              2.1 版本升级
+              2.0 重新分区
             </div>
           </div>
           <div class="md-footer__button md-icon">

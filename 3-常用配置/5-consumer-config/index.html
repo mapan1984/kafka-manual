@@ -283,6 +283,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
+        2.0 重新分区
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         2.1 版本升级
       </a>
@@ -683,10 +697,12 @@
 </code></pre></div>
 <p>单次 <code>poll()</code> 调用可以拉取的最多消息</p>
 <h2 id="_3">事务</h2>
-<p>读已提交消息，关闭自动提交 offset</p>
+<p>设置为读已提交消息，关闭自动提交 offset</p>
 <div class="highlight"><pre><span></span><code>isolation.level=read_committed
+
 enable.auto.commit=false
 </code></pre></div>
+<p><code>isolation.level</code> 控制如何读通过事务写的消息，如果设置为 <code>read_committed</code>，则只会读取事务已提交的消息；如果设置为 <code>read_uncommitted</code>(默认值)，则会读取所有消息。非事务写的消息在任何配置下都会返回。</p>
                 
               
               

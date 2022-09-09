@@ -283,6 +283,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
+        2.0 重新分区
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         2.1 版本升级
       </a>
@@ -418,6 +432,13 @@
         <li class="md-nav__item">
   <a href="#vmmax_map_count" class="md-nav__link">
     vm.max_map_count
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    参考
   </a>
   
 </li>
@@ -590,6 +611,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    参考
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -614,6 +642,10 @@
 <div class="highlight"><pre><span></span><code>sysctl -w vm.max_map_count=262144
 </code></pre></div>
 <p>在 <code>/etc/sysctl.conf</code> 通过修改 <code>vm.max_map_count</code> 永久设置</p>
+<h2 id="_2">参考</h2>
+<ul>
+<li>https://developer.confluent.io/learn/kafka-performance/</li>
+</ul>
                 
               
               
