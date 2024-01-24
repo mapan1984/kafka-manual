@@ -48,7 +48,14 @@ socket server可接受数据大小(防止OOM异常)，根据自己业务数据�
     # 日志保留时长
     log.retention.hours=72
 
-日志建议保留三天，也可以更短
+    # 单个 partition 的日志保留大小
+    log.retention.bytes
+
+    # 检查日志是否需要清理的时间间隔
+    log.retention.check.interval.ms
+
+    # 从文件系统中删除文件之前等待的时间
+    file.delete.delay.ms=60000
 
 ## 日志文件
 
@@ -64,9 +71,12 @@ kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过
 
 增加 `num.recovery.threads.per.data.dir` 也可以提高加载速度。
 
+    # 即使段文件大小没有达到回滚的大小，超过此时间设置，段文件也会回滚
+    log.roll.hours
+
 ## replica复制配置
 
-    # 拉取线程数：fetchers 配置多可以提高follower的I/O并发度，单位时间内leader持有更多请求，相应负载会增大，需要根据机器硬件资源做权衡，建议适当调大；
+    # 连接其他 broker 拉取线程数，注意这里是连接每个 broker 的线程数，fetchers 配置多可以提高follower的I/O并发度
     num.replica.fetchers=3
 
     # 拉取消息最小字节：一般无需更改，默认值即可；
@@ -97,8 +107,13 @@ kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过
 
 ## auto rebalance
 
+    # 启用自动平衡 leader
     auto.leader.rebalance.enable=true
+
+    # 检查自动平衡 leader 的时间间隔
     leader.imbalance.check.interval.seconds=300
+
+    # 允许每个 broker leader 不平衡的比例
     leader.imbalance.per.broker.percentage=10
 
 ## offset retention
@@ -107,7 +122,6 @@ kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过
     offsets.retention.minutes = 1440
 
 ## 时间戳
-
 
     log.message.timestamp.type=CreateTime/LogAppendTime
 
@@ -129,4 +143,41 @@ kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过
     follower.replication.throttled.rate
 
 表示 follower 节点复制副本的写流量限制，搭配 topic 参数 `follower.replication.throttled.replicas` 使用。
+
+假设 broker 1 上 leader.replication.throttled.rate 设置为 512KB，topic A 分区 0 分布在 broker 1 和 broker 2 上，broker 1 上为分区 leader，设置 topic A 级别的 leader.replication.throttled.replicas=0:1，则 broker 2 上 topic A 分区 0 从 broker 1 上同步分区 0 数据的速度被限制为 512KB。
+
+多个副本同时进行同步，都会占用 leader 的限流阈值
+
+### 示例
+
+在 broker 1 上限制 topic A 的分区 0, 1, 2 的 leader read 总速率为 1024 B/s
+
+    # broker 1 增加 broker 级别配置
+    leader.replication.throttled.rate=1024
+
+    # topic A 增加 topic 级别配置
+    leader.replication.throttled.replicas=0:1,1:1,2:1
+
+## log.cleaner
+
+compact 清理策略相关
+
+    log.cleaner.delete.retention.ms
+
+    log.cleaner.enable
+
+## 压缩
+
+broker 端默认使用生成者的压缩策略，当生产者发送的消息 RecordBatch 压缩时，broker 端不需要解压，直接写入
+
+    compression.type=producer
+
+以下 3 种情况，broker 需要对生产者的压缩消息解压并重新压缩:
+
+1. 当 broker 端使用了和生产者不同的压缩算法
+2. broker 端消息格式与生产者不一致时
+3. broker 目标消息格式是 V0，需要为每条消息重新分配绝对 offset，因此也需要进行解压
+
+当消费组从 broker 读取消息时，broker 会把压缩消息直接发出，消费者读到压缩的消息后，可以根据 RecordBatch attributes 字段得知消息压缩算法，自行解压。
+
 

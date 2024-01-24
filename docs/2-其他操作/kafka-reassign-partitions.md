@@ -128,8 +128,6 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 重新限制流量为 700MB/s
 
-    $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --additional --execute --reassignment-json-file reassign.json --throttle 700000000
-
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --additional --throttle 700000000
 
 当分区分配完成后，重新执行 verfiy 会取消限流设置
@@ -138,9 +136,40 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --verify --reassignment-json-file reassign.json
 
-限流实际上设置了 broker 级别的 `leader.replication.throttled.rate`, `follower.replication.throttled.rate` 参数和 topic 级别的 `leader.replication.throttled.replicas`, `follower.replication.throttled.replicas` 参数，限制了副本同步的流量。
+流量限制实际上是通过调整以下参数实现：
 
-### 参考
+- broker 级别
+    - `leader.replication.throttled.rate`
+    - `follower.replication.throttled.rate`
+- topic 级别
+    - `leader.replication.throttled.replicas`
+    - `follower.replication.throttled.replicas`
 
-- https://kafka.apache.org/documentation/#rep-throttle
+查看参数：
+
+    $ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
+
+    $ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
+
+限流设置规则：
+
+- 主题重新分配分区前所有副本均设置 leader 限流（其中任何一个副本都可能成为分区 leader）
+- 主题重新分配分区后新增的副本均设置 follower 限流
+- 对涉及设置 leader 限流的副本所在节点设置 `leader.replication.throttled.rate`
+- 对涉及设置 follower 限流的副本所在节点设置 `follower.replication.throttled.rate`
+
+例如：Topic A 分区 0 副本分布从 101,102 到 102,103，设置限流 2048 B/s，会在 101, 102 上应用 leader 限流，在 103 上限制 follower 限流
+
+对 Topic A 设置配置：
+
+    leader.replication.throttled.replicas=0:101,0:102
+    follower.replication.throttled.replicas=0:103
+
+对 broker 101，102 设置配置：
+
+    leader.replication.throttled.rate=2048
+
+对 broker 103 设置配置：
+
+    follower.replication.throttled.rate=2048
 

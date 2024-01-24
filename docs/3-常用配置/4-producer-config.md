@@ -6,7 +6,7 @@
 在 Producer 端用来存放尚未发送出去的 Message 的缓冲区大小，默认 32MB。内存缓冲区内的消息以一个个 batch 的形式组织，每个 batch 内包含多条消息，Producer 会把多个 batch 打包成一个 request 发送到 kafka 服务器上。
 
     # `0.11.0.0` 版本之后废弃
-    block.on.buffer.full
+    block.on.buffer.full=false
 
 内存缓冲区满了之后可以选择阻塞发送或抛出异常，由 `block.on.buffer.full` 的配置来决定（`0.11.0.0` 版本之后废弃）。
 
@@ -30,6 +30,9 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
     max.request.size
 
 决定了每次发送给 Kafka 服务器请求的最大大小，同时也限制了单条消息的最大大小
+
+    # 请求-响应超时时间，应该大于服务端的 replica.lag.time.max.ms
+    request.timeout.ms=30000
 
     # 发送失败重试次数
     retries
@@ -75,9 +78,11 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
 
 ## 幂等性
 
+开启幂等写配置：
+
     enable.idempotence
 
-单个会话，单个 partition 幂等性，重复发送数据时 exactly once
+示例：
 
 ``` java
 Properties props = new Properties();
@@ -98,6 +103,8 @@ kafka 可以通过设置 `ack`, `retries` 等参数保证消息不丢失，但�
 
 每个 producer 在初始化时，会向 server 端申请一个唯一的 `producer_id`。之后发送的每条消息，都会关联一个从 0 开始递增的 `sequence_number`，每个 topic partition 都会维护一个单独的 `sequence_number`。
 
+因为每次 producer 初始化都会申请新的 `producer_id`，且 `sequence_number` 是分区维度的，所以只能保证单个会话，单个 partition 的幂等性，重复发送数据时 exactly once
+
 ## 事务性
 
 生产者事务 id
@@ -105,6 +112,17 @@ kafka 可以通过设置 `ack`, `retries` 等参数保证消息不丢失，但�
     transactional.id
 
 设置事务 id 后，`enable.idempotence` 默认开启
+
+kafka 事务特性主要用于 2 种场景：
+
+1. 将多条消息的发送动作封装在一个事务中，形成原子操作，多条消息要么都发送成功，要么都发送失败。
+2. consume-transform-produce loop，将 消费消息-处理消息-发送消息 封装在一个事务中，形成原子操作。常见于流式处理应用，从一个上游接收消息，经过处理后发送给下游。
+
+kafka 事务的实现原理是把全部消息都追加到分区日志中，并将未完成事务的消息标记为未提交。一旦事务提交，这些标记就会被改为已提交。
+
+### 场景 1
+
+示例代码：
 
 ``` java
 Properties props = new Properties();
@@ -136,5 +154,52 @@ producer.close();
 
 * 原子性：事务保证多个写操作要么全部成功，要么全部失败
 * 僵死进程：开启事务的 producer 会向 Transaction 申请一个 producer id，transaction id 与 producer id 一一对应，每个 producer id 对应一个 epoch，当新的 producer 使用相同的 transaction id 开启事务后，会获得相同的 producer id 和更高的 epoch，此时服务端可以根据 epoch 区分新旧 producer，旧的 producer 将不能写入消息。
+
+### 场景 2
+
+``` java
+Properties producerProps = new Properties();
+producerProps.put("bootstrap.servers", "localhost:9092");
+producerProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+producerProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+producerProps.put("transactional.id", "test-transactional");
+producerProps.put("acks", "all");
+KafkaProducer producer = new KafkaProducer(producerProps);
+
+Properties consumerProps = new Properties();
+consumerProps.put("bootstrap.servers", "localhost:9092");
+consumerProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+consumerProps.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+consumerProps.put("group.id", groupId);
+consumerProps.put("enable.auto.commit", "false");
+consumerProps.put("isolation.level", "read_committed");
+KafkaConsumer consumer = new KafkaConsumer(consumerProps);
+
+consumer.subscribe(Collections.singleton("source_topic"));
+
+
+producer.initTransactions();
+
+try {
+    records = consumer.poll();
+
+    producer.beginTransaction();
+
+    records.forEach(record -> producer.send("target_topic", record));
+
+    producer.sendOffsetsToTransaction();
+
+    producer.commitTransaction();
+} catch (ProducerFencedException e1) {
+    e1.printStackTrace();
+    producer.close();
+} catch (KafkaException e2) {
+    e2.printStackTrace();
+    producer.abortTransaction();
+}
+producer.close();
+```
 
 - https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging

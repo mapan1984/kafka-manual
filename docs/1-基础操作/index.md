@@ -148,55 +148,78 @@ property
 
 查看参数：
 
-    kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --describe
+
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --entity-name 0 --describe
 
 设置副本同步的限流参数：
 
-    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 0
-
-    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 1
-
-    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024" --entity-name 2
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --entity-name 0 \
+        --alter --add-config "leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024"
 
 删除副本同步限流参数：
 
-    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate' --entity-name 0
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers  --entity-name 0 \
+        --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate'
+
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} -entity-type brokers --entity-name 0 \
+        --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate'
+
+设置集群级别的参数
+
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --entity-default \
+        --alter --add-config 'log.cleaner.threads=2'
+
+查看集群级别的参数
+
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --entity-default --describe
 
 ## topic 参数
 
 查看参数：
 
-    kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics --describe
 
-修改消息保留大小：
+    kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics --entity-name __test --describe
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config max.message.bytes=4194304
+修改消息大小限制：
+
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __test \
+        --alter --add-config max.message.bytes=4194304
 
 修改消息保留时长：
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __test --add-config retention.ms=259200000
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __test \
+        --alter --add-config retention.ms=259200000
 
 修改 __consumer_offsets 保留策略：
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --describe --entity-type topics --entity-name __consumer_offsets
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets --describe
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config cleanup.policy
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets \
+        --alter --delete-config cleanup.policy
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config retention.ms=2592000000
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=delete
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets \
+        --alter --add-config retention.ms=2592000000
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets \
+        --alter --add-config cleanup.policy=delete
 
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --delete-config retention.ms
-    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --alter --entity-type topics --entity-name __consumer_offsets --add-config cleanup.policy=compact
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets \
+        --alter --delete-config retention.ms
+    $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name __consumer_offsets \
+        --alter --add-config cleanup.policy=compact
 
 设置副本同步流量限制：
 
-    kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name test-throttled --alter --add-config "leader.replication.throttled.replicas=*,follower.replication.throttled.replicas=*"
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name test-throttled \
+        --alter --add-config "leader.replication.throttled.replicas=*,follower.replication.throttled.replicas=*"
 
 删除副本同步流量限制：
 
-    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type topics --alter --delete-config 'leader.replication.throttled.replicas,follower.replication.throttled.replicas' --entity-name test-throttled
+    kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type topics --entity-name test-throttled \
+        --alter --delete-config 'leader.replication.throttled.replicas,follower.replication.throttled.replicas'
 
-## 重新平衡 leader
+## 选举 leader
 
 触发集群内所有 topic partition 的最优 leader 选举:
 
@@ -212,12 +235,22 @@ property
 {
     "partitions": [
         {
-            "partition": 45,
-            "topic": "a8a3cbf02a7e4aa7b1b52ab5297f9066__sku2ava_rec"
+            "partition": 1,
+            "topic": "__test"
         }
     ]
 }
 ```
+
+从 2.4.0 版本开始，推荐使用 `kafka-leader-election.sh` 触发选举
+
+可以通过 `--topic`, `--partition` 参数指定 topic, partition，通过 `--election-type` 指定选举类型为 preferred/unclean
+
+    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic <topic> --partition <partition> --election-type preferred
+
+也可以通过 `--path-to-json-file` 指定文件包含的 topic partition 的最优 leader 选举
+
+    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --path-to-json-file partitions.json --election-type preferred
 
 ## 删除消费组
 
