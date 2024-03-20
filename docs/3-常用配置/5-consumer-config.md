@@ -1,27 +1,5 @@
 # 消费者参数配置
 
-<!--
-    num.consumer.fetchers=1
-
-启动Consumer的个数，适当增加可以提高并发度。
-
-    fetch.wait.max.ms=100
-
-在Fetch Request获取的数据至少达到 `fetch.min.bytes` 之前，允许等待的最大时长。
--->
-
-    fetch.min.bytes=1
-
-每次Fetch Request至少要拿到多少字节的数据才可以返回。
-
-    enable.auto.commit
-
-是否启用自动提交。
-
-    auto.commit.interval.ms
-
-自动提交间隔
-
 ## consumer 什么时候被认为下线
 
 ### 心跳
@@ -59,7 +37,7 @@
 
     fetch.min.bytes
 
-fetch 请求要求服务端返回响应最少应达到的数据量，默认为 1，增加该值可能提高服务端的吞吐量，同时增加延迟。
+fetch 请求要求服务端返回响应最少应达到的数据量，默认为 1，增加该值可能提高服务端的吞吐量，同时增加延迟
 
     max.partition.fetch.bytes
 
@@ -84,6 +62,16 @@ fetch 请求要求服务端在返回前最长阻塞时间，如果在这个时�
 
 定时刷新客户端元数据，即使在此期间没有发生 partition leader 切换
 
+## offset commit
+
+    enable.auto.commit
+
+是否启用自动提交
+
+    auto.commit.interval.ms
+
+自动提交间隔
+
 ## 事务
 
 设置为读已提交消息，关闭自动提交 offset
@@ -92,5 +80,5 @@ fetch 请求要求服务端在返回前最长阻塞时间，如果在这个时�
 
     enable.auto.commit=false
 
-`isolation.level` 控制如何读通过事务写的消息，如果设置为 `read_committed`，则只会读取事务已提交的消息；如果设置为 `read_uncommitted`(默认值)，则会读取所有消息。非事务写的消息在任何配置下都会返回。
+`isolation.level` 控制如何读通过事务写的消息，如果设置为 `read_committed`，则只会读取事务已提交的消息；如果设置为 `read_uncommitted`(默认值)，则会读取所有消息。非事务写的消息在任何配置下都会返回
 

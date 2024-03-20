@@ -14,8 +14,8 @@
 
     leader.replication.throttled.replicas
 
-表示需要限流的 leader partition replica 列表。格式为 `partitionId:brokerId,partitionId:brokerId,...`，或者使用 `*` 代表此 topic 的全部副本。搭配 broker 参数 `leader.replication.throttled.rate` 使用。
+表示需要限流的 leader partition replica 列表。格式为 `partitionId:brokerId,partitionId:brokerId,...`，或者使用 `*` 代表此 topic 的全部副本。搭配 broker 参数 `leader.replication.throttled.rate` 使用
 
     follower.replication.throttled.replicas
 
-表示需要限流的 follower partition replica 列表。格式为 `partitionId:brokerId,partitionId:brokerId,...`，或者使用 `*` 代表此 topic 的全部副本。搭配 broker 参数 `follower.replication.throttled.rate` 使用。
+表示需要限流的 follower partition replica 列表。格式为 `partitionId:brokerId,partitionId:brokerId,...`，或者使用 `*` 代表此 topic 的全部副本。搭配 broker 参数 `follower.replication.throttled.rate` 使用

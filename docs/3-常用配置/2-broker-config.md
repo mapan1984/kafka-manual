@@ -2,14 +2,14 @@
 
 ## broker id and rack
 
-    # integer 类型，默认 -1。
+    # integer 类型，默认 -1
     # 手动设置应该从 0 开始，每个 broker 依次 +1，手动设置的值不能超过 reserved.broker.max.id
     broker.id=0
 
     # 如果配置文件中没有指定 broker.id，broker 会自动生成一个 broker.id，默认从 reserved.broker.max.id+1 开始
     reserved.broker.max.id=1000
 
-    # string 类型，默认 null。
+    # string 类型，默认 null
     # topic partition 的 replica 分布在不同的 broker 上，但这些 broker 可能在同一个机架/机房/区域内，
     # 如果想让 replica 在不同机架/机房/区域内分布，可以将不同机架/机房/区域的 broker 配置不同的 broker.rack，
     # 配置后，topic partition 的 replica 会分布在不同的 broker.rack
@@ -19,17 +19,19 @@
 
     num.network.threads=9
 
-broker处理消息的最大线程数(主要处理网络io，读写缓冲区数据，基本没有io等待，配置线程数量为cpu核数加1)
+broker 用于接收来自网络的请求并向网络发送响应的线程数，对应 kafka 的 Processor 线程数，处理已连接 socket 数据读写
+
+> 可以动态调整，每次动态调整范围为 [currentSize / 2, currentSize * 2]
 
     num.io.threads=16
 
-broker处理磁盘IO的线程数(处理磁盘io操作，高峰期可能有些io等待，因此配置需要大些。配置线程数量为cpu核数2倍，最大不超过3倍)
+broker 处理请求的线程数，对应 kafka 的 Handler 线程数，进行实际的 kafka 动作
 
-    socket.request.max.bytes=2147483600
+> 可以动态调整，每次动态调整范围为 [currentSize / 2, currentSize * 2]
 
-socket server可接受数据大小(防止OOM异常)，根据自己业务数据包的大小适当调大。这里取值是int类型的，而受限于java int类型的取值范围
+    socket.receive.buffer.bytes=102400
 
-> java int的取值范围为（-2147483648~2147483647）
+broker server socket 的 SO_RCVBUF 大小，默认 100kB
 
 ## log 数据文件刷盘策略
 
@@ -39,9 +41,7 @@ socket server可接受数据大小(防止OOM异常)，根据自己业务数据�
     # 每间隔1秒钟时间，刷数据到磁盘
     log.flush.interval.ms=1000
 
-为了大幅度提高producer写入吞吐量，需要定期批量写文件。一般无需改动，如果topic的数据量较小可以考虑减少 `log.flush.interval.ms` 和 `log.flush.interval.messages` 来强制刷写数据，减少可能由于缓存数据未写盘带来的不一致。推荐配置分别message 10000，间隔1s。
-
-> Kafka官方并不建议通过Broker端的log.flush.interval.messages和log.flush.interval.ms来强制写盘，认为数据的可靠性应该通过Replica来保证，而强制Flush数据到磁盘会对整体性能产生影响。
+> Kafka 官方并不建议通过 Broker 端的 log.flush.interval.messages 和 log.flush.interval.ms 来强制写盘，认为数据的可靠性应该通过 Replica 来保证，而强制 flush 数据到磁盘会对整体性能产生影响
 
 ## 日志保留策略配置
 
@@ -59,46 +59,44 @@ socket server可接受数据大小(防止OOM异常)，根据自己业务数据�
 
 ## 日志文件
 
-    # 段文件大小
+    # 段文件大小，默认 1G
     log.segment.bytes=1073741824
 
-段文件配置1GB，有利于快速回收磁盘空间，重启kafka加载也会加快。
-
-kafka启动时会加载目录(log.dir)下所有数据文件，如果段文件过小，则文件数量比较多。
-
-    # 启动时每个文件夹对应的线程数
+    # 启动时加载每个文件夹内 segment 文件对应的线程数
     num.recovery.threads.per.data.dir=1
-
-增加 `num.recovery.threads.per.data.dir` 也可以提高加载速度。
 
     # 即使段文件大小没有达到回滚的大小，超过此时间设置，段文件也会回滚
     log.roll.hours
 
 ## replica复制配置
 
-    # 连接其他 broker 拉取线程数，注意这里是连接每个 broker 的线程数，fetchers 配置多可以提高follower的I/O并发度
-    num.replica.fetchers=3
+    # 连接其他 broker 拉取线程数
+    num.replica.fetchers=1
 
-    # 拉取消息最小字节：一般无需更改，默认值即可；
+注意这里是连接每个 broker 的线程数，也就是说，当 fetcher 线程数设置为 x 时，如果集群有 n 个节点，每个节点有 x * (n - 1) 个 fetcher 用来连接其他 n - 1 个节点
+
+> 可以动态调整，每次动态调整范围为 [currentSize / 2, currentSize * 2]
+
+    # 拉取消息最小字节
     replica.fetch.min.bytes=1
 
-    # 拉取消息最大字节：默认为1MB，根据业务情况调整
+    # 拉取消息最大字节，默认为1MB，根据业务情况调整
     replica.fetch.max.bytes=5242880
 
-    # 拉取消息等待时间：决定 follower 的拉取频率，频率过高，leader会积压大量无效请求情况，无法进行数据同步，导致cpu飙升。配置时谨慎使用，建议默认值，无需配置。
+    # 拉取消息等待时间
     replica.fetch.wait.max.ms
 
 ## 分区数量配置
 
     num.partitions=1
 
-默认 partition 数量 1，如果topic在创建时没有指定partition数量，默认使用此值。Partition的数量选取也会直接影响到Kafka集群的吞吐性能，配置过小会影响消费性能。
+默认 partition 数量 1，如果 topic 在创建时没有指定 partition 数量，默认使用此值
 
 ## replica 数配置
 
     default.replication.factor=1
 
-这个参数指新创建一个topic时，默认的Replica数量，Replica过少会影响数据的可用性，太多则会白白浪费存储资源，一般建议在2~3为宜。
+默认的 replica 数量，如果 topic 在创建时没有指定 partition 数量，默认使用此值
 
 ## replica lag
 
@@ -179,5 +177,4 @@ broker 端默认使用生成者的压缩策略，当生产者发送的消息 Rec
 3. broker 目标消息格式是 V0，需要为每条消息重新分配绝对 offset，因此也需要进行解压
 
 当消费组从 broker 读取消息时，broker 会把压缩消息直接发出，消费者读到压缩的消息后，可以根据 RecordBatch attributes 字段得知消息压缩算法，自行解压。
-
 

@@ -254,13 +254,13 @@ property
 
 ## 删除消费组
 
-KF 类型
-
-    $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
-
 ZK 类型
 
     $ kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --delete --group console-consumer-38645
+
+KF 类型
+
+    $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
 
 ## 查看 topic offset
 
