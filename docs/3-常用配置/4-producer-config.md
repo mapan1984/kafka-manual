@@ -35,9 +35,9 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
     request.timeout.ms=30000
 
     # 发送失败重试次数
-    retries
+    retries=2147483647
     # 每次重试间隔时间
-    retries.backoff.ms
+    retries.backoff.ms=100
 
     # 压缩类型
     compression.type=none
@@ -113,12 +113,22 @@ kafka 可以通过设置 `ack`, `retries` 等参数保证消息不丢失，但�
 
 设置事务 id 后，`enable.idempotence` 默认开启
 
+kafka 对日志文件格式进行扩展，日志中分为 普通消息 和 控制消息(control batch)，控制消息用来标记事务被成功提交还是被终止。
+
 kafka 事务特性主要用于 2 种场景：
 
 1. 将多条消息的发送动作封装在一个事务中，形成原子操作，多条消息要么都发送成功，要么都发送失败。
 2. consume-transform-produce loop，将 消费消息-处理消息-发送消息 封装在一个事务中，形成原子操作。常见于流式处理应用，从一个上游接收消息，经过处理后发送给下游。
 
 kafka 事务的实现原理是把全部消息都追加到分区日志中，并将未完成事务的消息标记为未提交。一旦事务提交，这些标记就会被改为已提交。
+
+### 相关配置
+
+    # 事务超时时间，默认 1 分钟
+    # transaction coordinator 在主动终止正在进行的事务前，等待来自生产者的事务状态更新的最长时间
+    # 不能大于服务端的 transaction.max.timeout.ms 设置
+    transaction.timeout.ms=60000
+
 
 ### 场景 1
 
@@ -133,16 +143,26 @@ props.put("bootstrap.servers", "localhost:9092");
 props.put("transactional.id", "test-transactional");
 props.put("acks", "all");
 KafkaProducer producer = new KafkaProducer(props);
+
+
+// 获取 PID
+// 增加 PID 的 epoch
+// 回滚这个 transactionId 之前的实例留下的未完成的事务
 producer.initTransactions();
 
 try {
-    String msg = "matt test";
+    // 开始一个事务
+    // 只会记录在 producer 本地状态，transaction coordinator 不会感知这个操作
     producer.beginTransaction();
-    producer.send(new ProducerRecord(topic, "0", msg.toString()));
-    producer.send(new ProducerRecord(topic, "1", msg.toString()));
-    producer.send(new ProducerRecord(topic, "2", msg.toString()));
+
+    producer.send(new ProducerRecord(topic, "0", "msg test"));
+    producer.send(new ProducerRecord(topic, "1", "msg test"));
+    producer.send(new ProducerRecord(topic, "2", "msg test"));
+
     producer.commitTransaction();
+
 } catch (ProducerFencedException e1) {
+    // 已经有另一个活跃的 producer 在是哟哦那个相同的 transactionId 了
     e1.printStackTrace();
     producer.close();
 } catch (KafkaException e2) {
@@ -183,15 +203,23 @@ consumer.subscribe(Collections.singleton("source_topic"));
 producer.initTransactions();
 
 try {
-    records = consumer.poll();
+    ConsumerRecords records = consumer.poll();
+    if (!records.isEmpty()) {
 
-    producer.beginTransaction();
+        producer.beginTransaction();
 
-    records.forEach(record -> producer.send("target_topic", record));
+        // 处理消息
+        List<ProducerRecord> outputRecords = processRecords(records)
+        for (ProducerRecord ouputRecord : outputRecords) {
+            producer.send(outputRecord)
+        }
 
-    producer.sendOffsetsToTransaction();
+        // 由 producer 提交 offset
+        producer.sendOffsetsToTransaction();
 
-    producer.commitTransaction();
+        // 完成一个批次的 消费-处理-生产，提交事务
+        producer.commitTransaction();
+    }
 } catch (ProducerFencedException e1) {
     e1.printStackTrace();
     producer.close();

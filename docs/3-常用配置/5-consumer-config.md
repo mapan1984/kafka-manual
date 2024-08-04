@@ -35,7 +35,7 @@
 
 ## 批次
 
-    fetch.min.bytes
+    fetch.min.bytes=1
 
 fetch 请求要求服务端返回响应最少应达到的数据量，默认为 1，增加该值可能提高服务端的吞吐量，同时增加延迟
 
@@ -47,7 +47,7 @@ fetch 请求要求服务端对每个 partition 返回响应最多达到的数据
 
 fetch 请求要求服务端返回响应最多达到的数据量（即使超过也会返回，不是硬性的固定上限）
 
-    fetch.max.wait.ms
+    fetch.max.wait.ms=500
 
 fetch 请求要求服务端在返回前最长阻塞时间，如果在这个时间到了仍然没有达到 `fetch.min.bytes` 要求的数据量，仍然返回响应
 
@@ -76,9 +76,13 @@ fetch 请求要求服务端在返回前最长阻塞时间，如果在这个时�
 
 设置为读已提交消息，关闭自动提交 offset
 
-    isolation.level=read_committed
+    isolation.level=read_uncommitted
 
     enable.auto.commit=false
 
-`isolation.level` 控制如何读通过事务写的消息，如果设置为 `read_committed`，则只会读取事务已提交的消息；如果设置为 `read_uncommitted`(默认值)，则会读取所有消息。非事务写的消息在任何配置下都会返回
+`isolation.level` 控制如何读通过事务写的消息，如果设置为 `read_committed`，则只会读取事务已提交的消息与非事务写的消息。如果设置为 `read_uncommitted`(默认值)，则会读取所有消息。
+
+消费者以 offset 顺序读取消息，如果设置了 `read_committed`，`consumer.poll()` 只会返回 last stable offset (LSO) 之前的消息，LSO 是小于第一个 open transaction 的 offset。
+
+消费者设置 `read_committed` 之后，`seekToEnd` 方法也会返回 LSO。
 

@@ -21,3 +21,5 @@
 ### consumer
 
     fetch.message.max.bytes
+
+    fetch.max.bytes

@@ -168,6 +168,7 @@ compact 清理策略相关
 
 broker 端默认使用生成者的压缩策略，当生产者发送的消息 RecordBatch 压缩时，broker 端不需要解压，直接写入
 
+    # 'gzip', 'snappy', 'lz4', 'zstd'
     compression.type=producer
 
 以下 3 种情况，broker 需要对生产者的压缩消息解压并重新压缩:
@@ -177,4 +178,32 @@ broker 端默认使用生成者的压缩策略，当生产者发送的消息 Rec
 3. broker 目标消息格式是 V0，需要为每条消息重新分配绝对 offset，因此也需要进行解压
 
 当消费组从 broker 读取消息时，broker 会把压缩消息直接发出，消费者读到压缩的消息后，可以根据 RecordBatch attributes 字段得知消息压缩算法，自行解压。
+
+## 事务
+
+__transaction_state 主题配置：
+
+    # __transaction_state 的 min.insync.replicas，默认 2 (优先级高于主题级别配置)
+    transaction.state.log.min.isr=2
+
+    # __transaction_state 的分区数，默认 50 (部署后不应该更改)
+    transaction.state.log.num.partitions=50
+
+    # __transaction_state 的副本数，默认 3
+    transaction.state.log.replication.factor=3
+
+其他配置
+
+    # 事务超时时间，默认 15分钟
+    transaction.max.timeout.ms=900000
+
+    # transaction coordinator 多久没有收到 transaction 状态更新后将 transaction id 视为过期
+    # 默认 7 天
+    transactional.id.expiration.ms=604800000
+
+    # rollback 超时 transaction 的时间间隔，默认 10 秒
+    transaction.abort.timed.out.transaction.cleanup.interval.ms=10000
+
+    # remove 过期 transaction 的时间间隔，默认 1 小时
+    transaction.remove.expired.transaction.cleanup.interval.ms=3600000
 
