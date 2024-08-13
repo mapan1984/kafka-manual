@@ -2,72 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partition-throttle/</loc>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/0-os-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://mapan1984.github.io/kafka-manual/3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/</loc>
-         <lastmod>2022-09-09</lastmod>
+         <lastmod>2024-08-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
