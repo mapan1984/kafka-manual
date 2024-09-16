@@ -50,11 +50,6 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 执行 `kafka-reassign-partitions.sh`，指定 `--generate` 参数和刚才创建的 `topics.json` 文件，通过 `--broker-list` 指定分布的 broker id，生成描述 partition 分布的内容：
 
     $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-    Current partition replica assignment
-    {"version":1,"partitions":[{"topic":"statistics","partition":0,"replicas":[3],"log_dirs":["any"]}]}
-
-    Proposed partition reassignment configuration
-    {"version":1,"partitions":[{"topic":"statistics","partition":0,"replicas":[1],"log_dirs":["any"]}]}
 
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topics-to-move-json-file topics.json --broker-list 1,2,3 --generate | tee plan
 
@@ -68,7 +63,7 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 1. 通过增加/减少 `replicas` 中的 broker id 可以增加/减少副本（`log_dirs` 包含的项要与 `replicas` 包含的项数目一致）
 2. 调整 `replicas` 字段的第一个 broker id 可以指定这个 partition 的优先 leader
-3. 通过指定 `log_dirs` 中 `any` 为实际的目录，从而指定分区数据位置
+3. 通过指定 `log_dirs` 中 `any` 为实际的目录，从而指定分区数据位置（`log.dirs` 配置的目录）
 
 ``` json
 {
