@@ -340,7 +340,7 @@
         
   
   <span class="md-ellipsis">
-    2.0 重新分区
+    2.0 重新分配分区
   </span>
   
 
@@ -558,6 +558,27 @@
   
   <span class="md-ellipsis">
     2.4 迁移分区数据限流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka-performance-estimate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.5 理论极限性能预估
   </span>
   
 
@@ -960,7 +981,8 @@
 <li>kafka 单个节点磁盘故障，数据丢失，但是 topic 分区 leader 并未切换，leader 为 <code>-1</code>，如果分区副本数据还在，此时可以将分区副本数据手动移动到 leader 节点上，恢复数据。</li>
 </ol>
 <blockquote>
-<p>注意：这里并不会改变分区在 broker 上的分布情况，移动后分区还在原来的 broker 上。操作只是在同一个 broker 不同数据目录下移动分区，或者在分区 leader, follower 所在 broker 之间复制分区数据。如果想改变分区在 broker 上的分布情况，将分区移动到原来没有分布的 broker 上，请参考「基础操作」里的「分区重分配」说明。</p>
+<p>注意：这里并不会改变分区在 broker 上的分布情况，移动后分区还在原来的 broker 上。操作只是在同一个 broker 不同数据目录下移动分区，或者在分区 leader, follower 所在 broker 之间复制分区数据。如果想改变分区在 broker 上的分布情况，将分区移动到原来没有分布的 broker 上，请参考「重新分配分区」操作说明。</p>
+<p>kafka 1.1.0 之后「重新分配分区」方案可以指定分区目录，场景 1 可以参考「重新分配分区」操作说明解决，不需要手动迁移了。</p>
 </blockquote>
 <h2 id="_2">原理</h2>
 <p>kafka 数据目录由配置项 <code>log.dirs</code>(或 <code>log.dir</code>) 指定，数据目录结构如下：</p>

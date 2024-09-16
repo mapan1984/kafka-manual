@@ -26,7 +26,7 @@
     
     
       
-        <title>2.0 重新分区 - kafka 使用手册</title>
+        <title>2.0 重新分配分区 - kafka 使用手册</title>
       
     
     
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2.0 重新分区
+              2.0 重新分配分区
             
           </span>
         </div>
@@ -349,7 +349,7 @@
           
   
   <span class="md-ellipsis">
-    2.0 重新分区
+    2.0 重新分配分区
   </span>
   
 
@@ -360,7 +360,7 @@
         
   
   <span class="md-ellipsis">
-    2.0 重新分区
+    2.0 重新分配分区
   </span>
   
 
@@ -510,6 +510,27 @@
   
   <span class="md-ellipsis">
     2.4 迁移分区数据限流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka-performance-estimate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.5 理论极限性能预估
   </span>
   
 
@@ -897,11 +918,6 @@
 </code></pre></div>
 <p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--generate</code> 参数和刚才创建的 <code>topics.json</code> 文件，通过 <code>--broker-list</code> 指定分布的 broker id，生成描述 partition 分布的内容：</p>
 <div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-Current partition replica assignment
-{&quot;version&quot;:1,&quot;partitions&quot;:[{&quot;topic&quot;:&quot;statistics&quot;,&quot;partition&quot;:0,&quot;replicas&quot;:[3],&quot;log_dirs&quot;:[&quot;any&quot;]}]}
-
-Proposed partition reassignment configuration
-{&quot;version&quot;:1,&quot;partitions&quot;:[{&quot;topic&quot;:&quot;statistics&quot;,&quot;partition&quot;:0,&quot;replicas&quot;:[1],&quot;log_dirs&quot;:[&quot;any&quot;]}]}
 
 $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topics-to-move-json-file topics.json --broker-list 1,2,3 --generate | tee plan
 </code></pre></div>
@@ -914,7 +930,7 @@ $ sed -n &#39;5p&#39; plan &gt; reassign.json
 <ol>
 <li>通过增加/减少 <code>replicas</code> 中的 broker id 可以增加/减少副本（<code>log_dirs</code> 包含的项要与 <code>replicas</code> 包含的项数目一致）</li>
 <li>调整 <code>replicas</code> 字段的第一个 broker id 可以指定这个 partition 的优先 leader</li>
-<li>通过指定 <code>log_dirs</code> 中 <code>any</code> 为实际的目录，从而指定分区数据位置</li>
+<li>通过指定 <code>log_dirs</code> 中 <code>any</code> 为实际的目录，从而指定分区数据位置（<code>log.dirs</code> 配置的目录）</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;partitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
