@@ -77,14 +77,25 @@ broker server socket 的 SO_RCVBUF 大小，默认 100kB
 
 > 可以动态调整，每次动态调整范围为 [currentSize / 2, currentSize * 2]
 
-    # 拉取消息最小字节
+    # 拉取消息最小字节，如果数据不足，超过 replica.fetch.wait.max.ms 后仍然返回
     replica.fetch.min.bytes=1
 
-    # 拉取消息最大字节，默认为1MB，根据业务情况调整
-    replica.fetch.max.bytes=5242880
+    # 拉取消息最大字节，默认为1MB
+    replica.fetch.max.bytes=1048576
 
-    # 拉取消息等待时间
-    replica.fetch.wait.max.ms
+    # 拉取消息等待时间，需要小于 replica.lag.time.max.ms 以避免频繁的 ISR 波动
+    replica.fetch.wait.max.ms=500
+
+    # 如果 follower 超过这个时间没有向 leader 发送 fetch 请求，或者消费到的消息与 leader 消息延时超过这个时间，leader 会将 follower 移出 ISR
+    replica.lag.time.max.ms
+
+    # kafka 2.0 后废弃
+    replica.lag.max.messages
+
+
+    # 生产者设置 acks=all 后，要求最少必须同步的副本数
+    # 分区的 High Watermark 必须在 ISR 数满足最少同步的副本数的情况下才可以增长，HW 之前的消息对消费者可见
+    min.insync.replicas=1
 
 ## 分区数量配置
 
@@ -116,7 +127,11 @@ broker server socket 的 SO_RCVBUF 大小，默认 100kB
 
 ## offset retention
 
+    # 默认每 10 分钟检查并清理 group metadata（delete-expired-group-metadata）
     offsets.retention.check.interval.ms = 600000
+
+    # consumer offset 信息保留时间。
+    # 如果消费组为空，并且没有 offset 记录，消费组进入 Dead 状态，并被删除
     offsets.retention.minutes = 1440
 
 ## 时间戳
@@ -207,3 +222,12 @@ __transaction_state 主题配置：
     # remove 过期 transaction 的时间间隔，默认 1 小时
     transaction.remove.expired.transaction.cleanup.interval.ms=3600000
 
+## rack
+
+    replica.selector.class
+
+## 配置类型
+
+- read-only: Requires a broker restart for update
+- per-broker: May be updated dynamically for each broker
+- cluster-wide: May be updated dynamically as a cluster-wide default. May also be updated as a per-broker value for testing.

@@ -5,8 +5,7 @@ site_description: kafka 使用手册
 site_author: mapan
 
 nav:
-  - 0. Kafka 手册: 'README.md'
-  - 1. 基础操作: '1-基础操作/index.md'
+  - 1. 基础操作: 'README.md'
   - 2. 其他操作:
     - 2.0 重新分配分区: '2-其他操作/kafka-reassign-partitions.md'
     - 2.1 版本升级: '2-其他操作/kafka-upgrade.md'
@@ -24,7 +23,14 @@ nav:
     - 3.5 consumer config: '3-常用配置/5-consumer-config.md'
     - 3.6 other: '3-常用配置/6-other.md'
   - 4. 认证/鉴权/加密: /kafka-security" target="_blank
-  - 5. 监控: /ops-manual/2-监控/4-exporter/2-jmx_exporter/2-kafka/2-监控项/" target="_blank
+  - 5. 监控:
+    - '5-监控/index.md'
+    - 5.1 获取监控: '5-监控/1-获取监控.md'
+    - 5.2 监控项:
+      - 5.2.1 broker 监控: '5-监控/2-监控项/1-broker.md'
+      - 5.2.2 connector 监控: '5-监控/2-监控项/2-connector.md'
+      - 5.2.3 consumer 监控: '5-监控/2-监控项/3-consumer.md'
+    - 5.3 rules 配置: '5-监控/3-rules配置.md'
 
 theme:
   # name: readthedocs

@@ -23,7 +23,7 @@
 
     max.poll.interval.ms=300000
 
-`poll()` 调用的最大时间间隔，如果距离上一次 `poll()` 调用的时间超过 `max.poll.interval.ms`，消费者会被认为失败
+`poll()` 调用的最大时间间隔，如果距离上一次 `poll()` 调用的时间超过 `max.poll.interval.ms`，消费者会被认为失败（由客户端判断）
 
 为什么有心跳后还需要设置 `max.poll.interval.ms` 超时机制，因为即使消费者有心跳，也只能证明消费者是存活状态，但是并不能保证消费者正常，比如消费者因为死锁导致永远无法调用 `poll()`
 
@@ -86,3 +86,29 @@ fetch 请求要求服务端在返回前最长阻塞时间，如果在这个时�
 
 消费者设置 `read_committed` 之后，`seekToEnd` 方法也会返回 LSO。
 
+## rack
+
+从指定 `broker.rack` 上的分区副本读数据
+
+    client.rack
+
+## 新的消费组协议
+
+[KIP-848](https://cwiki.apache.org/confluence/x/HhD1D) 4.0 后正式可用
+
+
+服务端配置：
+
+group.consumer.heartbeat.interval.ms
+group.consumer.session.timeout.ms
+group.consumer.assignors
+
+消费端配置：
+
+group.protocol
+group.remote.assignor
+
+## 参考
+
+- kafka 消费请求/响应协议：https://kafka.apache.org/protocol.html#The_Messages_Fetch
+- kafka 消息格式：https://kafka.apache.org/documentation/#messageformat

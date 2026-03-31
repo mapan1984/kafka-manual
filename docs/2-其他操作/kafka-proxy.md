@@ -20,14 +20,14 @@ kafka broker 注册的地址可以在 zookeeper 的 `/brokers/ids/<broker_id>` �
 
 1. kafka 集群各节点的内网 ip 和 hostname 的对应信息
 
-        10.13.8.59  kafka1
-        10.13.76.7  kafka2
-        10.13.79.81 kafka3
+        10.0.0.1  kafka1
+        10.0.0.2  kafka2
+        10.0.0.3 kafka3
 
 2. nginx 代理所在机器
 
-        内网ip：10.13.9.72
-        外网ip：106.75.143.227
+        内网ip：10.0.0.4
+        外网ip：203.0.113.100
 
 ## 方法1：利用 hosts 文件
 
@@ -73,13 +73,13 @@ stream {
 
 ``` conf
 upstream tcp9092 {
-    server 10.13.8.59:9092;
+    server 10.0.0.1:9092;
 }
 upstream tcp9093 {
-    server 10.13.76.7:9093;
+    server 10.0.0.2:9093;
 }
 upstream tcp9094 {
-    server 10.13.79.81:9094;
+    server 10.0.0.3:9094;
 }
 
 server {
@@ -116,12 +116,12 @@ server {
 
 ### 配置客户端机器
 
-修改客户端 hosts 文件（106.75.143.227 为 nginx 所在机器外网ip）：
+修改客户端 hosts 文件（203.0.113.100 为 nginx 所在机器外网ip）：
 
 ```
-106.75.143.227 kafka1
-106.75.143.227 kafka2
-106.75.143.227 kafka3
+203.0.113.100 kafka1
+203.0.113.100 kafka2
+203.0.113.100 kafka3
 ```
 
 ## 方法2：利用 advertised.listeners 配置
@@ -133,7 +133,7 @@ server {
 ``` jproperties
 listeners=BROKER_DATA://:9090,BROKER_CONTROL://:9091,EXT_CLIENT://:9092
 
-advertised.listeners=BROKER_DATA://kafka1:9090,BROKER_CONTROL://kafka1:9091,EXT_CLIENT://106.75.143.227:9092
+advertised.listeners=BROKER_DATA://kafka1:9090,BROKER_CONTROL://kafka1:9091,EXT_CLIENT://203.0.113.100:9092
 
 listener.security.protocol.map=BROKER_DATA:PLAINTEXT,BROKER_CONTROL:PLAINTEXT,EXT_CLIENT:PLAINTEXT
 
@@ -148,7 +148,7 @@ control.plane.listener.name=BROKER_CONTROL
 
 1. BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 `kafka1:9090`，`kafka1` 也可以用 kafka1 节点的内网 ip
 2. BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 `kafka1:9091`，`kafka1` 也可以用 kafka1 节点的内网 ip
-3. EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 `106.75.143.227:9092`，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。
+3. EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 `203.0.113.100:9092`，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。
 
 ### 配置 nginx 代理
 

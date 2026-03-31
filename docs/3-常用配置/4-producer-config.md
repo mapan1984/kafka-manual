@@ -3,41 +3,39 @@
     # 内存缓冲大小，单位 byte
     buffer.memory=33554432
 
-在 Producer 端用来存放尚未发送出去的 Message 的缓冲区大小，默认 32MB。内存缓冲区内的消息以一个个 batch 的形式组织，每个 batch 内包含多条消息，Producer 会把多个 batch 打包成一个 request 发送到 kafka 服务器上。
+在 Producer 端用来存放尚未发送出去的 Message 的缓冲区大小，默认 32MB。
 
-    # `0.11.0.0` 版本之后废弃
+内存缓冲区内的消息以 batch 的形式组织，每个 batch 内包含单个分区的多条消息（一个 RecordBatch 对应一个 topic partition）。
+
+如果多个 batch 同属于一个 broker，Producer 发送时会尽量把多个 batch 打包成一个 request 发送到 kafka broker 上。
+
+    # 内存缓冲区满后是否阻塞，`0.11.0.0` 版本之后废弃
     block.on.buffer.full=false
 
 内存缓冲区满了之后可以选择阻塞发送或抛出异常，由 `block.on.buffer.full` 的配置来决定（`0.11.0.0` 版本之后废弃）。
 
     max.block.ms=60000
 
-设置 `Producer` 的 `send()`, `partitionsFor()` 等方法的最多阻塞时长。
-
-* 当缓冲区 `buffer.memory` 写满后，Producer `send()` 方法最多阻塞时间不超过 `max.block.ms` 设置的值，超过后 producer 会抛出 `TimeoutException` 异常。
-* 元数据拉取超时，也会导致 `send()` 方法超时。
-
+设置 Producer 的 `send()`, `partitionsFor()` 等方法的最多阻塞时长。
 
     batch.size=16384
 
-Producer 会把发往同一个 topic partition 的多个消息进行合并，`batch.size` 指明了合并后 batch 大小的上限。如果这个值设置的太小，可能会导致所有的 Request 都不进行 Batch。`batch.size` 增加会增大吞吐量，但是同时也会增加延迟。
+Producer 会把同一个 topic partition 的多个消息合并为一个 RecordBatch，`batch.size` 指明了合并后 batch 大小的上限。
+
+如果这个值设置的太小，可能会导致所有的消息都不进行合并。
+
+增加 `batch.size` 会增大吞吐量，但是同时也会增加延迟。
 
     linger.ms=0
 
-producer 合并的消息的大小未达到 `batch.size`，但如果存在时间达到 `linger.ms`，也会进行发送。增加此值可能会增加吞吐量，但同时也会增加延迟。
+producer 合并的消息的大小未达到 `batch.size`，但如果存在时间达到 `linger.ms`，也会进行发送。
+
+增加 `linger.ms` 可能会增加吞吐量，但同时也会增加延迟。
 
     # 最大请求大小
     max.request.size
 
-决定了每次发送给 Kafka 服务器请求的最大大小，同时也限制了单条消息的最大大小
-
-    # 请求-响应超时时间，应该大于服务端的 replica.lag.time.max.ms
-    request.timeout.ms=30000
-
-    # 发送失败重试次数
-    retries=2147483647
-    # 每次重试间隔时间
-    retries.backoff.ms=100
+Producer 发送生产请求的最大大小，同时也限制了单条消息的最大大小
 
     # 压缩类型
     compression.type=none
@@ -46,7 +44,7 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
 
     acks=1
 
-这个配置可以设定发送消息后是否需要 Broker 端返回确认:
+这个配置可以设定发送消息后是否需要 Broker 端返回确认，可以理解为需要确认的副本数：
 
 * 0：表示 producer 请求发出后立即返回，不需要等待 leader 的任何确认
 * 1：表示 producer 发出请求后，leader 需要将 producer 请求消息写入后向 producer 返回成功响应，之后 producer 请求才确认成功并返回
@@ -54,11 +52,24 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
 
 从上到下的设置，可靠性依次增强，吞吐量依次降低，延迟依次增加。
 
-## 生产者不丢失数据保证
+    # 发送失败重试次数
+    retries=2147483647
+    # 每次重试间隔时间
+    retries.backoff.ms=100
+
+    # 请求-响应超时时间，应该大于服务端的 replica.lag.time.max.ms
+    request.timeout.ms=30000
+
+## 不丢失数据保证
 
     block.on.buffer.full = true
 
-生产者消息在实际发送之前是保留在 buffer 中，buffer 满之后生产等待，而不是抛出异常
+生产者消息在实际发送之前是保留在 buffer 中，buffer 满之后生产等待，而不是抛出异常（0.11.0.0 之后被移除）
+
+    # default 60000
+    max.block.ms=Long.MAX_VALUE
+
+持续阻塞（包含 buffer 满阻塞）
 
     acks=all
 
@@ -86,11 +97,12 @@ producer 合并的消息的大小未达到 `batch.size`，但如果存在时间�
 
 ``` java
 Properties props = new Properties();
-props.put("enable.idempotence", "true");
-props.put("acks", "all");  // 当 enable.idempotence 为 true，这里默认为 all
 props.put("bootstrap.servers", "localhost:9092");
 props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+props.put("enable.idempotence", "true");  // 开启幂等写
+props.put("acks", "all");  // 当 enable.idempotence 为 true，这里默认为 all
 
 KafkaProducer producer = new KafkaProducer(props);
 ```
@@ -129,21 +141,20 @@ kafka 事务的实现原理是把全部消息都追加到分区日志中，并�
     # 不能大于服务端的 transaction.max.timeout.ms 设置
     transaction.timeout.ms=60000
 
-
 ### 场景 1
 
 示例代码：
 
 ``` java
 Properties props = new Properties();
+props.put("bootstrap.servers", "localhost:9092");
+props.put("client.id", "ProducerTranscationnalExample");
 props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-props.put("client.id", "ProducerTranscationnalExample");
-props.put("bootstrap.servers", "localhost:9092");
+
 props.put("transactional.id", "test-transactional");
 props.put("acks", "all");
 KafkaProducer producer = new KafkaProducer(props);
-
 
 // 获取 PID
 // 增加 PID 的 epoch
@@ -162,14 +173,14 @@ try {
     producer.commitTransaction();
 
 } catch (ProducerFencedException e1) {
-    // 已经有另一个活跃的 producer 在是哟哦那个相同的 transactionId 了
+    // 已经有另一个活跃的 producer 在使用相同的 transactionId 了
     e1.printStackTrace();
-    producer.close();
 } catch (KafkaException e2) {
     e2.printStackTrace();
     producer.abortTransaction();
+} finally {
+    producer.close();
 }
-producer.close();
 ```
 
 * 原子性：事务保证多个写操作要么全部成功，要么全部失败
@@ -231,3 +242,8 @@ producer.close();
 ```
 
 - https://cwiki.apache.org/confluence/display/KAFKA/KIP-98+-+Exactly+Once+Delivery+and+Transactional+Messaging
+
+## 参考
+
+- kafka 生产请求协议：https://kafka.apache.org/protocol.html#The_Messages_Produce
+- kafka 消息格式：https://kafka.apache.org/documentation/#messageformat
