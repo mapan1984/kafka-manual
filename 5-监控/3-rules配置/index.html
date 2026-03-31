@@ -12,13 +12,11 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/5-%E7%9B%91%E6%8E%A7/3-rules%E9%85%8D%E7%BD%AE/">
       
       
-        <link rel="prev" href="../..">
+        <link rel="prev" href="../2-%E7%9B%91%E6%8E%A7%E9%A1%B9/3-consumer/">
       
-      
-        <link rel="next" href="../kafka-upgrade/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +24,7 @@
     
     
       
-        <title>2.0 重新分配分区 - kafka 使用手册</title>
+        <title>5.3 rules 配置 - kafka 使用手册</title>
       
     
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#53-jmx_exporter-rules" class="md-skip">
           跳转至
         </a>
       
@@ -114,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2.0 重新分配分区
+              5.3 rules 配置
             
           </span>
         </div>
@@ -274,21 +272,21 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -302,7 +300,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             2. 其他操作
@@ -313,30 +311,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    2.0 重新分配分区
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -345,71 +323,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      预设环境变量
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#broker-id" class="md-nav__link">
-    <span class="md-ellipsis">
-      获取当前集群 broker id 列表
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      生成分配方案
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      执行重新分配
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      限流
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -422,7 +335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-upgrade/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -443,7 +356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-proxy/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -464,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-move-partiton/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -485,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-reassign-partition-throttle/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partition-throttle/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -506,7 +419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-performance-estimate/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-performance-estimate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -752,26 +665,26 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../5-%E7%9B%91%E6%8E%A7/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -788,7 +701,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             5. 监控
@@ -802,7 +715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5-%E7%9B%91%E6%8E%A7/1-%E8%8E%B7%E5%8F%96%E7%9B%91%E6%8E%A7/" class="md-nav__link">
+      <a href="../1-%E8%8E%B7%E5%8F%96%E7%9B%91%E6%8E%A7/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -862,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5-%E7%9B%91%E6%8E%A7/2-%E7%9B%91%E6%8E%A7%E9%A1%B9/1-broker/" class="md-nav__link">
+      <a href="../2-%E7%9B%91%E6%8E%A7%E9%A1%B9/1-broker/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -883,7 +796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5-%E7%9B%91%E6%8E%A7/2-%E7%9B%91%E6%8E%A7%E9%A1%B9/2-connector/" class="md-nav__link">
+      <a href="../2-%E7%9B%91%E6%8E%A7%E9%A1%B9/2-connector/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -904,7 +817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5-%E7%9B%91%E6%8E%A7/2-%E7%9B%91%E6%8E%A7%E9%A1%B9/3-consumer/" class="md-nav__link">
+      <a href="../2-%E7%9B%91%E6%8E%A7%E9%A1%B9/3-consumer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -930,10 +843,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../5-%E7%9B%91%E6%8E%A7/3-rules%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -942,6 +864,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -974,59 +897,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      预设环境变量
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#broker-id" class="md-nav__link">
-    <span class="md-ellipsis">
-      获取当前集群 broker id 列表
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      生成分配方案
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      执行重新分配
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      限流
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1043,149 +913,90 @@
   
 
 
-<h1 id="_1">分区重分配/修改副本数</h1>
-<blockquote>
-<p>Kafka 在逐步去除 zookeeper 依赖，所以不同的版本命令行工具参数存在差异，
-以下大部分命令给了依赖 zookeeper 和不依赖 zookeeper 的 2 种示例，可以根据自己的 kafka 版本进行选择。</p>
-</blockquote>
-<h2 id="_2">预设环境变量</h2>
-<p>预设置环境变量，方便操作：</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 将 kafka 命令脚本路径加入到 PATH</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">KAFKA_HOME</span><span class="o">=</span>/usr/local/kafka
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="si">${</span><span class="nv">KAFKA_HOME</span><span class="si">}</span><span class="s2">/bin&quot;</span>
+<h1 id="53-jmx_exporter-rules">5.3 jmx_exporter rules 设置</h1>
+<div class="highlight"><pre><span></span><code><span class="nt">rules</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Special cases and very specific rules</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.server&lt;type=(.+), name=(.+), clientId=(.+), topic=(.+), partition=(.*)&gt;&lt;&gt;Value</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_server_$1_$2</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">clientId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$3&quot;</span>
+<span class="w">      </span><span class="nt">topic</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$4&quot;</span>
+<span class="w">      </span><span class="nt">partition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.server&lt;type=(.+), name=(.+), clientId=(.+), brokerHost=(.+), brokerPort=(.+)&gt;&lt;&gt;Value</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_server_$1_$2</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">clientId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$3&quot;</span>
+<span class="w">      </span><span class="nt">broker</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$4:$5&quot;</span>
 
-<span class="c1"># zk 连接地址</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ZK_CONNECT</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">:2181&quot;</span>
+<span class="w">  </span><span class="c1"># Generic per-second counters with 0-2 key/value pairs</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)PerSec\w*, (.+)=(.+), (.+)=(.+)&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_total</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">      </span><span class="s">&quot;$6&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$7&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)PerSec\w*, (.+)=(.+)&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_total</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)PerSec\w*&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_total</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
 
-<span class="c1"># kafka 连接地址</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">BOOTSTRAP_SERVER</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">:9092&quot;</span>
+<span class="w">  </span><span class="c1"># Generic gauges with 0-2 key/value pairs</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.+), (.+)=(.+)&gt;&lt;&gt;Value</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">      </span><span class="s">&quot;$6&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$7&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.+)&gt;&lt;&gt;Value</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)&gt;&lt;&gt;Value</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
 
-<span class="c1"># 如果有 jaas 认证</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">KAFKA_OPTS</span><span class="o">=</span><span class="s2">&quot;-Djava.security.auth.login.config=</span><span class="si">${</span><span class="nv">KAFKA_HOME</span><span class="si">}</span><span class="s2">/config/kafka_server_jaas.conf&quot;</span>
-
-<span class="c1"># 如果 broker 通过在 kafka-run-class.sh 文件内设置 JMX_PORT，则这里需要设置成不同的 port</span>
-<span class="c1"># (一般 broker 开启 JMX_PORT 最好在 kafka-server-start.sh 文件内设置，kafka-run-class.sh 文件内的修改会影响到所有命令脚本)</span>
-<span class="c1"># export JMX_PORT=9997</span>
-</code></pre></div>
-<h2 id="broker-id">获取当前集群 broker id 列表</h2>
-<p>获取当前 broker id 列表：</p>
-<div class="highlight"><pre><span></span><code>$ zookeeper-shell.sh ${ZK_CONNECT} ls /brokers/ids | sed &#39;s/ //g&#39;
-</code></pre></div>
-<h2 id="_3">生成分配方案</h2>
-<p>创建 <code>topics.json</code> 文件，文件内容为需要重分区的 topic，例如：</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;topics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;statistics&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--generate</code> 参数和刚才创建的 <code>topics.json</code> 文件，通过 <code>--broker-list</code> 指定分布的 broker id，生成描述 partition 分布的内容：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topics-to-move-json-file topics.json --broker-list 1,2,3 --generate | tee plan
-</code></pre></div>
-<p>命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 <code>current.json</code>(用于恢复) <code>reassign.json</code>(之后的计划)</p>
-<div class="highlight"><pre><span></span><code>$ sed -n &#39;2p&#39; plan &gt; current.json
-
-$ sed -n &#39;5p&#39; plan &gt; reassign.json
-</code></pre></div>
-<p>可以调整 <code>replicas.json</code> 的内容，<code>replicas</code> 字段的含义是该 partition 分布的 broker id：</p>
-<ol>
-<li>通过增加/减少 <code>replicas</code> 中的 broker id 可以增加/减少副本（<code>log_dirs</code> 包含的项要与 <code>replicas</code> 包含的项数目一致）</li>
-<li>调整 <code>replicas</code> 字段的第一个 broker id 可以指定这个 partition 的优先 leader</li>
-<li>通过指定 <code>log_dirs</code> 中 <code>any</code> 为实际的目录，从而指定分区数据位置（<code>log.dirs</code> 配置的目录）</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;partitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;log_dirs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;any&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;any&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;any&quot;</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;partition&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;replicas&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;statistics&quot;</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><em>版本低于 1.1.0，分配方案没有 <code>log_dirs</code> 字段，可以忽略</em></p>
-<h2 id="_4">执行重新分配</h2>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--execute</code> 参数和 <code>reassign.json</code> 文件，执行 partition 重分布：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute
-</code></pre></div>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--verify</code> 参数和 <code>reassign.json</code> 文件，确认 partition 重分布进度：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --verify
-</code></pre></div>
-<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--list</code> 参数，查看当前正在进行重分配的分区：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
-Current partition reassignments:
-test-0: replicas: 2,1,3. adding: 1. removing: 3.
-test-1: replicas: 3,2,1. adding: 2. removing: 1.
-test-2: replicas: 1,3,2. adding: 3. removing: 2.
-</code></pre></div>
-<p>取消重分配：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --cancel
-</code></pre></div>
-<h2 id="_5">限流</h2>
-<p>如果 topic 数据量和流量过大，重分区会对集群服务造成比较大的影响，此时可以使用 <code>--throttle</code> 参数对重分区限制流量，单位 Byte/s。</p>
-<p>比如限制不超过 50MB/s：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000
-</code></pre></div>
-<p>重新限制流量为 700MB/s</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --additional --throttle 700000000
-</code></pre></div>
-<p>当分区分配完成后，重新执行 verfiy 会取消限流设置</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --verify --reassignment-json-file reassign.json
-</code></pre></div>
-<p>流量限制实际上是通过调整以下参数实现：</p>
-<ul>
-<li>broker 级别<ul>
-<li><code>leader.replication.throttled.rate</code></li>
-<li><code>follower.replication.throttled.rate</code></li>
-</ul>
-</li>
-<li>topic 级别<ul>
-<li><code>leader.replication.throttled.replicas</code></li>
-<li><code>follower.replication.throttled.replicas</code></li>
-</ul>
-</li>
-</ul>
-<p>查看参数：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
-
-$ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
-</code></pre></div>
-<p>限流设置规则：</p>
-<ul>
-<li>主题重新分配分区前所有副本均设置 leader 限流（其中任何一个副本都可能成为分区 leader）</li>
-<li>主题重新分配分区后新增的副本均设置 follower 限流</li>
-<li>对涉及设置 leader 限流的副本所在节点设置 <code>leader.replication.throttled.rate</code></li>
-<li>对涉及设置 follower 限流的副本所在节点设置 <code>follower.replication.throttled.rate</code></li>
-</ul>
-<p>例如：Topic A 分区 0 副本分布从 101,102 到 102,103，设置限流 2048 B/s，会在 101, 102 上应用 leader 限流，在 103 上限制 follower 限流</p>
-<p>对 Topic A 设置配置：</p>
-<div class="highlight"><pre><span></span><code>leader.replication.throttled.replicas=0:101,0:102
-follower.replication.throttled.replicas=0:103
-</code></pre></div>
-<p>对 broker 101，102 设置配置：</p>
-<div class="highlight"><pre><span></span><code>leader.replication.throttled.rate=2048
-</code></pre></div>
-<p>对 broker 103 设置配置：</p>
-<div class="highlight"><pre><span></span><code>follower.replication.throttled.rate=2048
+<span class="w">  </span><span class="c1"># Emulate Prometheus &#39;Summary&#39; metrics for the exported &#39;Histogram&#39;s.</span>
+<span class="w">  </span><span class="c1">#</span>
+<span class="w">  </span><span class="c1"># Note that these are missing the &#39;_sum&#39; metric!</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.+), (.+)=(.+)&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_count</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">      </span><span class="s">&quot;$6&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$7&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.*), (.+)=(.+)&gt;&lt;&gt;(\d+)thPercentile</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">      </span><span class="s">&quot;$6&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$7&quot;</span>
+<span class="w">      </span><span class="nt">quantile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.$8&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.+)&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_count</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+), (.+)=(.*)&gt;&lt;&gt;(\d+)thPercentile</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="s">&quot;$4&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;$5&quot;</span>
+<span class="w">      </span><span class="nt">quantile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.$6&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)&gt;&lt;&gt;Count</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3_count</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COUNTER</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka.(\w+)&lt;type=(.+), name=(.+)&gt;&lt;&gt;(\d+)thPercentile</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kafka_$1_$2_$3</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAUGE</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">quantile</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.$4&quot;</span>
 </code></pre></div>
 
 

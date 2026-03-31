@@ -1,0 +1,1702 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="kafka 使用手册">
+      
+      
+        <meta name="author" content="mapan">
+      
+      
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/5-%E7%9B%91%E6%8E%A7/2-%E7%9B%91%E6%8E%A7%E9%A1%B9/1-broker/">
+      
+      
+        <link rel="prev" href="../../1-%E8%8E%B7%E5%8F%96%E7%9B%91%E6%8E%A7/">
+      
+      
+        <link rel="next" href="../2-connector/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>5.2.1 broker 监控 - kafka 使用手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#52" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="kafka 使用手册" class="md-header__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            kafka 使用手册
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.2.1 broker 监控
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mapan1984/kafka-manual/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="kafka 使用手册" class="md-nav__button md-logo" aria-label="kafka 使用手册" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    kafka 使用手册
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mapan1984/kafka-manual/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. 基础操作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2. 其他操作
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2. 其他操作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partitions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.0 重新分配分区
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1 版本升级
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.2 转发服务
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.3 手动迁移分区数据
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-reassign-partition-throttle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.4 迁移分区数据限流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-performance-estimate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.5 理论极限性能预估
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    3. 常用配置
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3. 常用配置
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/0-os-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.0 os config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/1-jvm-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1 jvm config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/2-broker-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2 borker config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/3-topic-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.3 topic config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/4-producer-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.4 producer config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/5-consumer-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.5 consumer config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../3-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/6-other/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.6 other
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/kafka-security" target="_blank" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. 认证/鉴权/加密
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    5. 监控
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            5. 监控
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../1-%E8%8E%B7%E5%8F%96%E7%9B%91%E6%8E%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.1 获取监控
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5.2 监控项
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            5.2 监控项
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5.2.1 broker 监控
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5.2.1 broker 监控
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kafkarequesthandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      消息速率(KafkaRequestHandler 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafkarequesthandler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求频率(KafkaRequestHandler 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requestchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求频率(RequestChannel 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求大小
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络处理线程空闲率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求处理线程空闲率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topic 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader" class="md-nav__link">
+    <span class="md-ellipsis">
+      leader 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      有落后副本的分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      下线分区数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    <span class="md-ellipsis">
+      落后的 replica 数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      掉线的 replica 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      当前 leader 不是最优的分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      落后消息数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isr 列表扩缩容速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      当前 broker 是否为 controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leader 选举速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unclean-leader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unclean leader 选举速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求/响应队列
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求耗时
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      消息格式转换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gc" class="md-nav__link">
+    <span class="md-ellipsis">
+      gc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafka-purgatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      kafka purgatory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partition-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      partition log
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-connector/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2.2 connector 监控
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-consumer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2.3 consumer 监控
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3-rules%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.3 rules 配置
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kafkarequesthandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      消息速率(KafkaRequestHandler 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafkarequesthandler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求频率(KafkaRequestHandler 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requestchannel" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求频率(RequestChannel 统计)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求大小
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      网络处理线程空闲率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求处理线程空闲率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Topic 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader" class="md-nav__link">
+    <span class="md-ellipsis">
+      leader 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      有落后副本的分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      下线分区数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica" class="md-nav__link">
+    <span class="md-ellipsis">
+      落后的 replica 数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replica_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      掉线的 replica 数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      当前 leader 不是最优的分区数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      落后消息数量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      Isr 列表扩缩容速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      当前 broker 是否为 controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leader_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leader 选举速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unclean-leader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unclean leader 选举速率
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求/响应队列
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      请求耗时
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      消息格式转换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gc" class="md-nav__link">
+    <span class="md-ellipsis">
+      gc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kafka-purgatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      kafka purgatory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partition-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      partition log
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="52">5.2 监控项</h1>
+<p>Kafka 通过 JMX 暴露内部监控，具体监控项可以查看：https://kafka.apache.org/documentation/#monitoring</p>
+<p>这里列出一些需要关注的监控项的 JMX <code>MBean</code> 的 <code>ObjectName</code>(<code>domain:properties...</code>)，以及 jmx_exporter 将其转换后对应的 promql 查询语句：</p>
+<p>JMX ObjectName + attrName 需要转换为 promql 指标，默认的转换规则将</p>
+<div class="highlight"><pre><span></span><code>domain:&lt;beanpropertyName1=beanPropertyValue1, beanpropertyName2=beanPropertyValue2, ...&gt;:&lt;key1, key2, ...&gt;:attrName=value
+</code></pre></div>
+<p>转换为</p>
+<div class="highlight"><pre><span></span><code>domain_beanPropertyValue1_key1_key2_...keyN_attrName{beanpropertyName2=&quot;beanPropertyValue2&quot;, ...}: value
+</code></pre></div>
+<h2 id="kafkarequesthandler">消息速率(KafkaRequestHandler 统计)</h2>
+<p>客户端与 broker 之间消息写入/读取速率。</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec[,topic=*]
+
+kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec[,topic=*]
+
+kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec[,topic=*]
+</code></pre></div>
+<blockquote>
+<p>kafka_server_BrokerTopicMetrics_OneMinuteRate{name="MessagesInPerSec",topic=""}
+kafka_server_BrokerTopicMetrics_OneMinuteRate{name="BytesInPerSec", topic=""}
+kafka_server_BrokerTopicMetrics_OneMinuteRate{name="BytesOutPerSec", topic=""}</p>
+</blockquote>
+<p>broker 与 broker 之间副本同步带来的消息写入/读取速率。</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=ReplicationBytesInPerSec
+
+kafka.server:type=BrokerTopicMetrics,name=ReplicationBytesOutPerSec
+</code></pre></div>
+<blockquote>
+<p>kafka_server_BrokerTopicMetrics_OneMinuteRate{name="ReplicationBytesInPerSec",}
+kafka_server_BrokerTopicMetrics_OneMinuteRate{name="ReplicationBytesOutPerSec",}</p>
+</blockquote>
+<p>broker 重新分区数据迁移速率：</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=ReassignmentBytesInPerSec
+
+kafka.server:type=BrokerTopicMetrics,name=ReassignmentBytesOutPerSec
+</code></pre></div>
+<p>拒绝写入速率</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=BytesRejectedPerSec
+</code></pre></div>
+<h2 id="kafkarequesthandler_1">请求频率(KafkaRequestHandler 统计)</h2>
+<p>以 topic 维度统计请求频率</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=TotalProduceRequestsPerSec,topic=([-.\w]+)
+
+kafka.server:type=BrokerTopicMetrics,name=TotalFetchRequestsPerSec,topic=([-.\w]+)
+</code></pre></div>
+<blockquote>
+<p>kafka_server_BrokerTopicMetrics_OneMinuteRate{name="TotalProduceRequestsPerSec", }
+kafka_server_BrokerTopicMetrics_OneMinuteRate{name="TotalFetchRequestsPerSec", }</p>
+</blockquote>
+<p>TotalProduceRequestsPerSec 会在消息加入本地副本日志时统计一次</p>
+<p>TotalFetchRequestsPerSec 会在从本地读取消息时统计一次</p>
+<p>失败请求频率</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec,topic=([-.\w]+)
+
+kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec,topic=([-.\w]+)
+</code></pre></div>
+<blockquote>
+<p>kafka_server_BrokerTopicMetrics_OneMinuteRate{name="FailedProduceRequestsPerSec", }
+kafka_server_BrokerTopicMetrics_OneMinuteRate{name="FailedFetchRequestsPerSec", }</p>
+</blockquote>
+<p>这里的 Fetch 包含 FetchConsumer 与 FetchFollower，即客户端的拉取与副本的拉取请求速率之和。</p>
+<h2 id="requestchannel">请求频率(RequestChannel 统计)</h2>
+<p>RequestChannel 会在处理响应时 <code>processCompletedSends()</code> 时记录请求频率</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=RequestsPerSec,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<blockquote>
+<p>kafka_network_RequestMetrics_OneMinuteRate{name="RequestsPerSec",request="Produce",}</p>
+</blockquote>
+<p>Kafka 的 API 定义读取消息只有 FETCH，RequestChannel 在统计时会将请求分为 <code>FetchConsumer</code> 和 <code>FetchFollower</code>，即客户端消费和副本同步消费。</p>
+<p>请求错误频率，统计失败的请求/响应，如果 <code>error=NONE</code> 表示响应是成功的。</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=ErrorsPerSec,request=([-.\w]+),error=([-.\w]+)
+</code></pre></div>
+<blockquote>
+<p>kafka_network_RequestMetrics_OneMinuteRate{name="ErrorsPerSec", error!="NONE"}</p>
+</blockquote>
+<p>一般 RequestChannel 统计数会小于 KafkaRequestHandler 统计数，区别在于：</p>
+<ul>
+<li>RequestChannel 统计的是网络层面的指标，记录的是 Broker 接收到的请求数量，即每个请求类型（Produce、FetchConsumer、FetchFollower）每秒多少次</li>
+<li>KafkaRequestHandler 统计的是 Server 层面（逻辑层） 的指标，每次 Fetch 或 Produce 操作针对 Topic/Partition 都会累计计数</li>
+</ul>
+<p>因此，如果一个 Fetch 请求包含多个 partition：</p>
+<ul>
+<li>RequestChannel 计 1</li>
+<li>KafkaRequestHandler 可能会计 N（分区数）</li>
+</ul>
+<h2 id="_1">请求大小</h2>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=RequestBytes,request=([-.\w]+)
+</code></pre></div>
+<blockquote>
+<p>kafka_network_RequestMetrics_OneMinuteRate{name="RequestBytes", }</p>
+</blockquote>
+<h2 id="_2">网络处理线程空闲率</h2>
+<div class="highlight"><pre><span></span><code>kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent
+</code></pre></div>
+<h2 id="_3">请求处理线程空闲率</h2>
+<div class="highlight"><pre><span></span><code>kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent
+</code></pre></div>
+<h2 id="topic">Topic 数量</h2>
+<p>只有 Controller 节点上有，表示集群的 topic 数量</p>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=KafkaController,name=GlobalTopicCount
+</code></pre></div>
+<h2 id="leader">leader 数量</h2>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=LeaderCount
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaManager_Value{name="LeaderCount"}</p>
+</blockquote>
+<p>只有 Controller 节点上有，表示集群的 topic leader partition 数量</p>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=KafkaController,name=GlobalPartitionCount
+</code></pre></div>
+<h2 id="_4">分区数量</h2>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=PartitionCount
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaManager_Value{name="PartitionCount"}</p>
+</blockquote>
+<h2 id="_5">有落后副本的分区数量</h2>
+<p><code>|isr| &lt; |all replicas|</code> 的 partition 数</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaManager_Value{name="UnderReplicatedPartitions"}</p>
+</blockquote>
+<p><code>|isr| = min.insync.replicas</code> 的 partition 数</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=AtMinIsrPartitionCount
+</code></pre></div>
+<p><code>|isr| &lt; min.insync.replicas</code> 的 partition 数</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=UnderMinIsrPartitionCount
+</code></pre></div>
+<h2 id="_6">下线分区数</h2>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=KafkaController,name=OfflinePartitionsCount
+</code></pre></div>
+<h2 id="replica">落后的 replica 数</h2>
+<div class="highlight"><pre><span></span><code>kafka.cluster:type=Partition,name=UnderReplicated,topic=*,partition=*
+</code></pre></div>
+<h2 id="replica_1">掉线的 replica 数量</h2>
+<p>当副本因为日志目录文件系统错误而无法访问时，视为 OfflineReplica。</p>
+<p>每个 broker 上的 OfflineReplica 数量：</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=OfflineReplicaCount
+</code></pre></div>
+<p>每个 broker 上的无法访问的 LogDir 数量：</p>
+<div class="highlight"><pre><span></span><code>kafka.server:name=OfflineLogDirectoryCount,type=LogManager
+</code></pre></div>
+<h2 id="leader_1">当前 leader 不是最优的分区数量</h2>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=KafkaController,name=PreferredReplicaImbalanceCount
+</code></pre></div>
+<h2 id="_7">落后消息数量</h2>
+<p>follower 和 leader replica 之间落后的消息数量。</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaFetcherManager_Value{name="MaxLag", clientId="Replica"}</p>
+</blockquote>
+<p>具体到 topic partition 级别落后的消息数量</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=FetcherLagMetrics,name=ConsumerLag,clientId=([-.\w]+),topic=([-.\w]+),partition=([0-9]+)
+</code></pre></div>
+<blockquote>
+<p>kafka_server_FetcherLagMetrics_Value{name="ConsumerLag",clientId="ReplicaFetcherThread-0-4",topic="test",partition="0",}</p>
+</blockquote>
+<h2 id="isr">Isr 列表扩缩容速率</h2>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=IsrShrinksPerSec
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaManager_OneMinuteRate{name="IsrExpandsPerSec"}</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>kafka.server:type=ReplicaManager,name=IsrExpandsPerSec
+</code></pre></div>
+<blockquote>
+<p>kafka_server_ReplicaManager_OneMinuteRate{name="IsrShrinksPerSec"}</p>
+</blockquote>
+<h2 id="broker-controller">当前 broker 是否为 controller</h2>
+<p>只有当 broker 作为集群 controller 时为 1，整个集群应该只有 1 个 controller</p>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=KafkaController,name=ActiveControllerCount
+</code></pre></div>
+<h2 id="leader_2">Leader 选举速率</h2>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs
+</code></pre></div>
+<h2 id="unclean-leader">Unclean leader 选举速率</h2>
+<div class="highlight"><pre><span></span><code>kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec
+</code></pre></div>
+<h2 id="_8">请求/响应队列</h2>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestChannel,name=RequestQueueSize
+</code></pre></div>
+<p>Size of the request queue. A congested request queue will not be able to process incoming or outgoing requests.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestChannel,name=ResponseQueueSize
+</code></pre></div>
+<p>Size of the response queue. The response queue is unbounded. A congested response queue can result in delayed response times and memory pressure on the broker.</p>
+<h2 id="_9">请求耗时</h2>
+<p>Total time in ms to serve the specified request.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=TotalTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<blockquote>
+<p>kafka_network_RequestMetrics_75thPercentile{name="TotalTimeMs",request=~"Produce|FetchConsumer",}</p>
+</blockquote>
+<p>Time the request waits in the request queue.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=RequestQueueTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<p>Time the request is processed at the leader.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=LocalTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<p>Time the request waits for the follower. This is non-zero for produce requests when acks=all.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=RemoteTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<p>Time the request waits in the response queue.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=ResponseQueueTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<p>Time to send the response.</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=ResponseSendTimeMs,request={Produce|FetchConsumer|FetchFollower}
+</code></pre></div>
+<h2 id="_10">消息格式转换</h2>
+<p>转换频率</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=BrokerTopicMetrics,name=ProduceMessageConversionsPerSec,topic=([-.\w]+)
+</code></pre></div>
+<p>耗时</p>
+<div class="highlight"><pre><span></span><code>kafka.network:type=RequestMetrics,name=MessageConversionsTimeMs,request={Produce|Fetch}
+</code></pre></div>
+<h2 id="gc">gc</h2>
+<div class="highlight"><pre><span></span><code>java.lang:name=G1 Young Generation,type=GarbageCollector CollectionCount
+
+java.lang:name=G1 Young Generation,type=GarbageCollector CollectionTime
+</code></pre></div>
+<h2 id="kafka-purgatory">kafka purgatory</h2>
+<div class="highlight"><pre><span></span><code>kafka.server:type=DelayedOperationPurgatory,delayedOperation=Produce,name=PurgatorySize
+</code></pre></div>
+<p>Number of requests waiting in the producer purgatory. This should be non-zero when <code>acks=all</code> is used on the producer.</p>
+<div class="highlight"><pre><span></span><code>kafka.server:type=DelayedOperationPurgatory,delayedOperation=Fetch,name=PurgatorySize
+</code></pre></div>
+<p>Number of requests waiting in the fetch purgatory. This is high if consumers use a large value for <code>fetch.wait.max.ms</code>.</p>
+<h2 id="partition-log">partition log</h2>
+<div class="highlight"><pre><span></span><code>kafka.log:type=Log,name=Size,topic=([-.\w]+),partition=([0-9]+)
+
+kafka.log:type=Log,name=NumLogSegments,topic=([-.\w]+),partition=([0-9]+)
+
+kafka.log:type=Log,name=LogStartOffset,topic=([-.\w]+),partition=([0-9]+)
+
+kafka.log:type=Log,name=LogEndOffset,topic=([-.\w]+),partition=([0-9]+)
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "navigation.top"], "search": "../../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>
