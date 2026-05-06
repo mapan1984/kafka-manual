@@ -1005,10 +1005,10 @@
 
 <h3 id="_1">迁移计划描述</h3>
 <p>假设有迁移计划：</p>
-<div class="highlight"><pre><span></span><code><span class="kc">t</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">p</span><span class="mi">0</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="w">                 </span><span class="mi">101</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">103</span>
-<span class="kc">t</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">p</span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="w">                 </span><span class="mi">102</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">104</span>
-<span class="kc">t</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">p</span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">104</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="w">                 </span><span class="mi">103</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">104</span>
-<span class="kc">t</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">p</span><span class="mi">0</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">102</span><span class="p">,</span><span class="w"> </span><span class="mi">103</span><span class="p">,</span><span class="w"> </span><span class="mi">104</span><span class="w">       </span><span class="mi">101</span><span class="w"> </span><span class="mi">-</span><span class="err">&gt;</span><span class="w"> </span><span class="mi">104</span>
+<div class="highlight"><pre><span></span><code>t0, p0: 101, 102 -&gt; 102, 103                 101 -&gt; 103
+t0, p1: 102, 103 -&gt; 103, 104                 102 -&gt; 104
+t0, p2: 103, 101 -&gt; 104, 101                 103 -&gt; 104
+t1, p0: 101, 102, 103 -&gt; 102, 103, 104       101 -&gt; 104
 </code></pre></div>
 <p>根据迁移计划获取添加 leader 限制的副本</p>
 <table>
@@ -1114,6 +1114,7 @@
 <li>leader 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上涉及到的 topic partition leader 写入流量之和，broker 提供的 fetch 请求响应流量必须大于写入流量，因此设置该 broker 的 <code>leader.replication.throttled.rate</code> 大于这个值。</li>
 <li>follower 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上新增的 topic partition，进一步获取这些 topic partition 在当前 leader 节点写入流量之和，broker 的 fetch 请求流量必须大于写入流量，因此设置该 broker 的 <code>follower.replication.throttled.rate</code> 大于这个值。</li>
 </ul>
+<p>流量监控项：<code>kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=.*</code></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 当前分区分布</span>
 <span class="n">current_assignments</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
@@ -1190,7 +1191,7 @@
 
 
 <span class="k">def</span> <span class="nf">get_traffic</span><span class="p">(</span><span class="n">broker</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
-    <span class="c1"># 从 bcm 获取流量值</span>
+    <span class="c1"># 从监控获取流量值</span>
     <span class="k">return</span> <span class="mi">1</span>
 
 
@@ -1351,8 +1352,9 @@
 <li>生成重分区方案有随机性，意味着预估依据的方案必须与实际执行的方案一致</li>
 </ul>
 <h3 id="_3">迁移耗时预估</h3>
+<p>分区日志大小监控项：<code>kafka.log:type=Log,name=Size</code></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_log_size</span><span class="p">(</span><span class="n">broker</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">partition</span><span class="p">):</span>
-    <span class="c1"># 从 bcm 获取 topic, partition 占用大小</span>
+    <span class="c1"># 从监控获取 topic, partition 占用大小</span>
     <span class="k">return</span> <span class="mi">1</span>
 
 <span class="c1"># 获取要移动的 topic partition log size</span>
@@ -1427,6 +1429,8 @@
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1462,7 +1466,7 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>

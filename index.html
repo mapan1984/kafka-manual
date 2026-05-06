@@ -1322,36 +1322,84 @@
 <h2 id="_2">基本操作</h2>
 <h3 id="topic">topic</h3>
 <p>创建 topic</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --create --replication-factor 3 --partitions 3 --topic __test
-
-kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --create --replication-factor 3 --partitions 3 --topic __test
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">ZooKeeper</label><label for="__tabbed_1_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--create<span class="w"> </span>--replication-factor<span class="w"> </span><span class="m">3</span><span class="w"> </span>--partitions<span class="w"> </span><span class="m">3</span><span class="w"> </span>--topic<span class="w"> </span>__test
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--create<span class="w"> </span>--replication-factor<span class="w"> </span><span class="m">3</span><span class="w"> </span>--partitions<span class="w"> </span><span class="m">3</span><span class="w"> </span>--topic<span class="w"> </span>__test
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>删除 topic</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
-
-kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --topic __test
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">ZooKeeper</label><label for="__tabbed_2_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--delete<span class="w"> </span>--topic<span class="w"> </span>__test
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--delete<span class="w"> </span>--topic<span class="w"> </span>__test
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>topic 列表</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --list
-
-kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">ZooKeeper</label><label for="__tabbed_3_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--list
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--list
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>topic 详情</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --describe --topic test
-
-kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --topic __test
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">ZooKeeper</label><label for="__tabbed_4_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--topic<span class="w"> </span><span class="nb">test</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--topic<span class="w"> </span>__test
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>修改 topic 分区数</p>
-<div class="highlight"><pre><span></span><code>kafka-topics.sh --zookeeper ${ZK_CONNECT} --alter --topic __test --partitions 5
-
-kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --alter --topic __test --partitions 5
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">ZooKeeper</label><label for="__tabbed_5_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--alter<span class="w"> </span>--topic<span class="w"> </span>__test<span class="w"> </span>--partitions<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-topics.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--alter<span class="w"> </span>--topic<span class="w"> </span>__test<span class="w"> </span>--partitions<span class="w"> </span><span class="m">5</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <h3 id="_3">生产/消费</h3>
 <p>生产 消息</p>
-<div class="highlight"><pre><span></span><code>kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
-
-kafka-console-producer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">--broker-list</label><label for="__tabbed_6_2">--bootstrap-server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-console-producer.sh<span class="w"> </span>--broker-list<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__test
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-console-producer.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__test
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>消费 消息</p>
 <div class="highlight"><pre><span></span><code>kafka-console-consumer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test --from-beginning
 
@@ -1360,31 +1408,51 @@ kafka-console-consumer.sh --property print.timestamp=true --property print.key=t
 </code></pre></div>
 <h3 id="consumer">consumer</h3>
 <p>consumer 列表</p>
-<div class="highlight"><pre><span></span><code># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
-kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
-
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer
-
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">ZooKeeper (已废弃)</label><label for="__tabbed_7_2">Bootstrap Server (&lt;= 0.9)</label><label for="__tabbed_7_3">Bootstrap Server (&gt; 0.9)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）</span>
+kafka-consumer-groups.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--list
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x</span>
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--list<span class="w"> </span>--new-consumer
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x</span>
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--list
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>consumer 详情</p>
-<div class="highlight"><pre><span></span><code># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
-kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
-
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
-
-# 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
-
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members
-
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members --verbose
-
-kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --state
+<div class="tabbed-set tabbed-alternate" data-tabs="8:3"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><input id="__tabbed_8_3" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">ZooKeeper (已废弃)</label><label for="__tabbed_8_2">Bootstrap Server (&lt;= 0.9)</label><label for="__tabbed_8_3">Bootstrap Server (&gt; 0.9)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）</span>
+kafka-consumer-groups.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span><span class="nv">$group</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 __consumer_offsets 中的消费组，Kafka 版本 &lt;= 0.9.x.x</span>
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w">  </span>--new-consumer<span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span><span class="nv">$group</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="c1"># 记录在 __consumer_offsets 中的消费组，Kafka 版本 &gt; 0.9.x.x</span>
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span><span class="nv">$group</span>
+
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span>my-group<span class="w"> </span>--members
+
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span>my-group<span class="w"> </span>--members<span class="w"> </span>--verbose
+
+kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--describe<span class="w"> </span>--group<span class="w"> </span>my-group<span class="w"> </span>--state
+</code></pre></div>
+</div>
+</div>
+</div>
 <h2 id="_4">消费者选项</h2>
 <ul>
 <li>使用 zookeeper 保存消费组数据（2.x.x 版本以上废弃）: <code>--zookeeper localhost:2181</code></li>
@@ -1443,12 +1511,20 @@ kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --
     --alter --add-config &quot;leader.replication.throttled.rate=1024,follower.replication.throttled.rate=1024&quot;
 </code></pre></div>
 <p>删除副本同步限流参数：</p>
-<div class="highlight"><pre><span></span><code>kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers  --entity-name 0 \
-    --alter --delete-config &#39;leader.replication.throttled.rate,follower.replication.throttled.rate&#39;
-
-kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} -entity-type brokers --entity-name 0 \
-    --alter --delete-config &#39;leader.replication.throttled.rate,follower.replication.throttled.rate&#39;
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">ZooKeeper</label><label for="__tabbed_9_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-configs.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>-entity-type<span class="w"> </span>brokers<span class="w">  </span>--entity-name<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--alter<span class="w"> </span>--delete-config<span class="w"> </span><span class="s1">&#39;leader.replication.throttled.rate,follower.replication.throttled.rate&#39;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kafka-configs.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>-entity-type<span class="w"> </span>brokers<span class="w"> </span>--entity-name<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--alter<span class="w"> </span>--delete-config<span class="w"> </span><span class="s1">&#39;leader.replication.throttled.rate,follower.replication.throttled.rate&#39;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>设置集群级别的参数</p>
 <div class="highlight"><pre><span></span><code>kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers --entity-default \
     --alter --add-config &#39;log.cleaner.threads=2&#39;
@@ -1495,12 +1571,27 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name 
     --alter --delete-config &#39;leader.replication.throttled.replicas,follower.replication.throttled.replicas&#39;
 </code></pre></div>
 <h2 id="leader">选举 leader</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">&lt; 2.4 (kafka-preferred-replica-election)</label><label for="__tabbed_10_2">&gt;= 2.4 (kafka-leader-election)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>触发集群内所有 topic partition 的最优 leader 选举:</p>
-<div class="highlight"><pre><span></span><code>$ kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT}
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-preferred-replica-election.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span>
 </code></pre></div>
 <p>触发 <code>partitions.json</code> 文件指定的 topic partition 的最优 leader 选举:</p>
-<div class="highlight"><pre><span></span><code>kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT} --path-to-json-file partitions.json
+<div class="highlight"><pre><span></span><code>kafka-preferred-replica-election.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--path-to-json-file<span class="w"> </span>partitions.json
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>从 2.4.0 版本开始，推荐使用 <code>kafka-leader-election.sh</code> 触发选举</p>
+<p>可以通过 <code>--topic</code>, <code>--partition</code> 参数指定 topic, partition，通过 <code>--election-type</code> 指定选举类型为 preferred/unclean</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-leader-election.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>&lt;topic&gt;<span class="w"> </span>--partition<span class="w"> </span>&lt;partition&gt;<span class="w"> </span>--election-type<span class="w"> </span>preferred
+</code></pre></div>
+<p>也可以通过 <code>--path-to-json-file</code> 指定文件包含的 topic partition 的最优 leader 选举</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-leader-election.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--path-to-json-file<span class="w"> </span>partitions.json<span class="w"> </span>--election-type<span class="w"> </span>preferred
+</code></pre></div>
+</div>
+</div>
+</div>
 <p><code>partitions.json</code> 文件内容如下：</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;partitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -1511,20 +1602,19 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name 
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>从 2.4.0 版本开始，推荐使用 <code>kafka-leader-election.sh</code> 触发选举</p>
-<p>可以通过 <code>--topic</code>, <code>--partition</code> 参数指定 topic, partition，通过 <code>--election-type</code> 指定选举类型为 preferred/unclean</p>
-<div class="highlight"><pre><span></span><code>$ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic &lt;topic&gt; --partition &lt;partition&gt; --election-type preferred
-</code></pre></div>
-<p>也可以通过 <code>--path-to-json-file</code> 指定文件包含的 topic partition 的最优 leader 选举</p>
-<div class="highlight"><pre><span></span><code>$ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --path-to-json-file partitions.json --election-type preferred
-</code></pre></div>
 <h2 id="_5">删除消费组</h2>
-<p>ZK 类型</p>
-<div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --delete --group console-consumer-38645
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">ZooKeeper</label><label for="__tabbed_11_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-consumer-groups.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--delete<span class="w"> </span>--group<span class="w"> </span>console-consumer-38645
 </code></pre></div>
-<p>KF 类型</p>
-<div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-consumer-groups.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--delete<span class="w"> </span>--group<span class="w"> </span>console-consumer-97214
 </code></pre></div>
+</div>
+</div>
+</div>
 <h3 id="_6">删除主题订阅关系</h3>
 <div class="highlight"><pre><span></span><code>$ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete-offsets --group group1 --topic test:0,1 --topic foo
 </code></pre></div>
@@ -1549,12 +1639,18 @@ $ kafka-configs.sh --zookeeper ${ZK_CONNECT} --entity-type topics --entity-name 
 <div class="highlight"><pre><span></span><code>kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --group $group --reset-offsets --to-datetime 2019-12-12T16:59:59.000 --topic $topic --execute
 </code></pre></div>
 <h2 id="__consumer_offsets">读取 __consumer_offsets</h2>
-<p>0.11.0.0 之前版本</p>
-<div class="highlight"><pre><span></span><code>$ kafka-console-consumer.sh --formatter &quot;kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter&quot; --zookeeper ${ZK_CONNECT} --topic __consumer_offsets
+<div class="tabbed-set tabbed-alternate" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">&lt; 0.11.0.0</label><label for="__tabbed_12_2">&gt;= 0.11.0.0</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-console-consumer.sh<span class="w"> </span>--formatter<span class="w"> </span><span class="s2">&quot;kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter&quot;</span><span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__consumer_offsets
 </code></pre></div>
-<p>0.11.0.0 之后版本(含)</p>
-<div class="highlight"><pre><span></span><code>$ kafka-console-consumer.sh --formatter &quot;kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter&quot; --bootstrap-server ${BOOTSTRAP_SERVER} --topic __consumer_offsets
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-console-consumer.sh<span class="w"> </span>--formatter<span class="w"> </span><span class="s2">&quot;kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter&quot;</span><span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__consumer_offsets
 </code></pre></div>
+</div>
+</div>
+</div>
 <p>格式：</p>
 <div class="highlight"><pre><span></span><code>[Group, Topic, Partition]::[OffsetMetadata[Offset, Metadata], CommitTime, ExpirationTime]
 </code></pre></div>
@@ -1644,6 +1740,8 @@ KF `<=` 0.9.x.x
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1679,7 +1777,7 @@ KF `<=` 0.9.x.x
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand", "navigation.top"], "search": "assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.expand", "navigation.top", "content.tabs.link"], "search": "assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
       <script src="assets/javascripts/bundle.7389ff0e.min.js"></script>

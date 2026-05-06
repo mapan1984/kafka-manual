@@ -406,6 +406,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#kip" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关 KIP
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1025,6 +1034,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#kip" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关 KIP
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1083,10 +1101,18 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--generate</code> 参数和刚才创建的 <code>topics.json</code> 文件，通过 <code>--broker-list</code> 指定分布的 broker id，生成描述 partition 分布的内容：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topics-to-move-json-file topics.json --broker-list 1,2,3 --generate | tee plan
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">ZooKeeper</label><label for="__tabbed_1_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--generate<span class="w"> </span>--topics-to-move-json-file<span class="w"> </span>topics.json<span class="w"> </span>--broker-list<span class="w"> </span><span class="m">1</span>,2,3<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>plan
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topics-to-move-json-file<span class="w"> </span>topics.json<span class="w"> </span>--broker-list<span class="w"> </span><span class="m">1</span>,2,3<span class="w"> </span>--generate<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>plan
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 <code>current.json</code>(用于恢复) <code>reassign.json</code>(之后的计划)</p>
 <div class="highlight"><pre><span></span><code>$ sed -n &#39;2p&#39; plan &gt; current.json
 
@@ -1117,15 +1143,31 @@ $ sed -n &#39;5p&#39; plan &gt; reassign.json
 <p><em>版本低于 1.1.0，分配方案没有 <code>log_dirs</code> 字段，可以忽略</em></p>
 <h2 id="_4">执行重新分配</h2>
 <p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--execute</code> 参数和 <code>reassign.json</code> 文件，执行 partition 重分布：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">ZooKeeper</label><label for="__tabbed_2_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--execute<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--execute
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--verify</code> 参数和 <code>reassign.json</code> 文件，确认 partition 重分布进度：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --verify
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">ZooKeeper</label><label for="__tabbed_3_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--verify
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--list</code> 参数，查看当前正在进行重分配的分区：</p>
 <div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
 Current partition reassignments:
@@ -1139,28 +1181,47 @@ test-2: replicas: 1,3,2. adding: 3. removing: 2.
 <h2 id="_5">限流</h2>
 <p>如果 topic 数据量和流量过大，重分区会对集群服务造成比较大的影响，此时可以使用 <code>--throttle</code> 参数对重分区限制流量，单位 Byte/s。</p>
 <p>比如限制不超过 50MB/s：</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">ZooKeeper</label><label for="__tabbed_4_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--execute<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--throttle<span class="w"> </span><span class="m">50000000</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--execute<span class="w"> </span>--throttle<span class="w"> </span><span class="m">50000000</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>同时限制目录之间的流量：</p>
+<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000 --replica-alter-log-dirs-throttle 50000000
 </code></pre></div>
 <p>重新限制流量为 700MB/s</p>
 <div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --additional --throttle 700000000
 </code></pre></div>
 <p>当分区分配完成后，重新执行 verfiy 会取消限流设置</p>
-<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
-
-$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --verify --reassignment-json-file reassign.json
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">ZooKeeper</label><label for="__tabbed_5_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>流量限制实际上是通过调整以下参数实现：</p>
 <ul>
 <li>broker 级别<ul>
-<li><code>leader.replication.throttled.rate</code></li>
-<li><code>follower.replication.throttled.rate</code></li>
+<li><code>leader.replication.throttled.rate</code>: leader 副本同步流出速率</li>
+<li><code>follower.replication.throttled.rate</code>: follower 副本同步流入速率</li>
 </ul>
 </li>
 <li>topic 级别<ul>
-<li><code>leader.replication.throttled.replicas</code></li>
-<li><code>follower.replication.throttled.replicas</code></li>
+<li><code>leader.replication.throttled.replicas</code>: topic 受 leader 速率限制的 partition:replica 列表</li>
+<li><code>follower.replication.throttled.replicas</code>: topic 受 follower 速率限制的 partition:replica 列表</li>
 </ul>
 </li>
 </ul>
@@ -1187,6 +1248,12 @@ follower.replication.throttled.replicas=0:103
 <p>对 broker 103 设置配置：</p>
 <div class="highlight"><pre><span></span><code>follower.replication.throttled.rate=2048
 </code></pre></div>
+<h2 id="kip">相关 KIP</h2>
+<ul>
+<li>副本限速 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-73+Replication+Quotas">KIP-73</a> 0.10.1.0</li>
+<li>同 broker 不同磁盘之间移动副本 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-113%3A+Support+replicas+movement+between+log+directories">KIP-113</a> 1.1.0</li>
+<li>管理 API, 追加/取消任务 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-455%3A+Create+an+Administrative+API+for+Replica+Reassignment">KIP-455</a> 2.6</li>
+</ul>
 
 
 
@@ -1204,6 +1271,8 @@ follower.replication.throttled.replicas=0:103
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1239,7 +1308,7 @@ follower.replication.throttled.replicas=0:103
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
