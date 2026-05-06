@@ -29,41 +29,89 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 创建 topic
 
-    kafka-topics.sh --zookeeper ${ZK_CONNECT} --create --replication-factor 3 --partitions 3 --topic __test
+=== "ZooKeeper"
 
+    ```sh
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --create --replication-factor 3 --partitions 3 --topic __test
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --create --replication-factor 3 --partitions 3 --topic __test
+    ```
 
 删除 topic
 
-    kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
+=== "ZooKeeper"
 
+    ```sh
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --delete --topic __test
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --topic __test
+    ```
 
 topic 列表
 
-    kafka-topics.sh --zookeeper ${ZK_CONNECT} --list
+=== "ZooKeeper"
 
+    ```sh
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --list
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+    ```
 
 topic 详情
 
-    kafka-topics.sh --zookeeper ${ZK_CONNECT} --describe --topic test
+=== "ZooKeeper"
 
+    ```sh
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --describe --topic test
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --topic __test
+    ```
 
 修改 topic 分区数
 
-    kafka-topics.sh --zookeeper ${ZK_CONNECT} --alter --topic __test --partitions 5
+=== "ZooKeeper"
 
+    ```sh
+    kafka-topics.sh --zookeeper ${ZK_CONNECT} --alter --topic __test --partitions 5
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     kafka-topics.sh --bootstrap-server ${BOOTSTRAP_SERVER} --alter --topic __test --partitions 5
+    ```
 
 ### 生产/消费
 
 生产 消息
 
-    kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
+=== "--broker-list"
 
+    ```sh
+    kafka-console-producer.sh --broker-list ${BOOTSTRAP_SERVER} --topic __test
+    ```
+
+=== "--bootstrap-server"
+
+    ```sh
     kafka-console-producer.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic __test
+    ```
 
 消费 消息
 
@@ -76,23 +124,46 @@ topic 详情
 
 consumer 列表
 
+=== "ZooKeeper (已废弃)"
+
+    ```sh
     # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
     kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --list
+    ```
 
+=== "Bootstrap Server (<= 0.9)"
+
+    ```sh
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list --new-consumer
+    ```
 
+=== "Bootstrap Server (> 0.9)"
+
+    ```sh
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+    ```
 
 consumer 详情
 
+=== "ZooKeeper (已废弃)"
+
+    ```sh
     # 记录在 zookeeper 中的消费组（2.x.x 版本以上废弃）
     kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --describe --group $group
+    ```
 
+=== "Bootstrap Server (<= 0.9)"
+
+    ```sh
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 <= 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER}  --new-consumer --describe --group $group
+    ```
 
+=== "Bootstrap Server (> 0.9)"
+
+    ```sh
     # 记录在 __consumer_offsets 中的消费组，Kafka 版本 > 0.9.x.x
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group $group
 
@@ -101,6 +172,7 @@ consumer 详情
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --members --verbose
 
     kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --describe --group my-group --state
+    ```
 
 ## 消费者选项
 
@@ -159,11 +231,19 @@ property
 
 删除副本同步限流参数：
 
+=== "ZooKeeper"
+
+    ```sh
     kafka-configs.sh --zookeeper ${ZK_CONNECT} -entity-type brokers  --entity-name 0 \
         --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate'
+    ```
 
+=== "Bootstrap Server"
+
+    ```sh
     kafka-configs.sh --bootstrap-server ${BOOTSTRAP_SERVER} -entity-type brokers --entity-name 0 \
         --alter --delete-config 'leader.replication.throttled.rate,follower.replication.throttled.rate'
+    ```
 
 设置集群级别的参数
 
@@ -221,13 +301,36 @@ property
 
 ## 选举 leader
 
-触发集群内所有 topic partition 的最优 leader 选举:
+=== "< 2.4 (kafka-preferred-replica-election)"
 
+    触发集群内所有 topic partition 的最优 leader 选举:
+
+    ```sh
     $ kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT}
+    ```
 
-触发 `partitions.json` 文件指定的 topic partition 的最优 leader 选举:
+    触发 `partitions.json` 文件指定的 topic partition 的最优 leader 选举:
 
+    ```sh
     kafka-preferred-replica-election.sh --zookeeper ${ZK_CONNECT} --path-to-json-file partitions.json
+    ```
+
+
+=== ">= 2.4 (kafka-leader-election)"
+
+    从 2.4.0 版本开始，推荐使用 `kafka-leader-election.sh` 触发选举
+
+    可以通过 `--topic`, `--partition` 参数指定 topic, partition，通过 `--election-type` 指定选举类型为 preferred/unclean
+
+    ```sh
+    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic <topic> --partition <partition> --election-type preferred
+    ```
+
+    也可以通过 `--path-to-json-file` 指定文件包含的 topic partition 的最优 leader 选举
+
+    ```sh
+    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --path-to-json-file partitions.json --election-type preferred
+    ```
 
 `partitions.json` 文件内容如下：
 
@@ -242,25 +345,19 @@ property
 }
 ```
 
-从 2.4.0 版本开始，推荐使用 `kafka-leader-election.sh` 触发选举
-
-可以通过 `--topic`, `--partition` 参数指定 topic, partition，通过 `--election-type` 指定选举类型为 preferred/unclean
-
-    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topic <topic> --partition <partition> --election-type preferred
-
-也可以通过 `--path-to-json-file` 指定文件包含的 topic partition 的最优 leader 选举
-
-    $ kafka-leader-election.sh --bootstrap-server ${BOOTSTRAP_SERVER} --path-to-json-file partitions.json --election-type preferred
-
 ## 删除消费组
 
-ZK 类型
+=== "ZooKeeper"
 
+    ```sh
     $ kafka-consumer-groups.sh --zookeeper ${ZK_CONNECT} --delete --group console-consumer-38645
+    ```
 
-KF 类型
+=== "Bootstrap Server"
 
+    ```sh
     $ kafka-consumer-groups.sh --bootstrap-server ${BOOTSTRAP_SERVER} --delete --group console-consumer-97214
+    ```
 
 ### 删除主题订阅关系
 
@@ -295,13 +392,17 @@ KF 类型
 
 ## 读取 __consumer_offsets
 
-0.11.0.0 之前版本
+=== "< 0.11.0.0"
 
+    ```sh
     $ kafka-console-consumer.sh --formatter "kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter" --zookeeper ${ZK_CONNECT} --topic __consumer_offsets
+    ```
 
-0.11.0.0 之后版本(含)
+=== ">= 0.11.0.0"
 
+    ```sh
     $ kafka-console-consumer.sh --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --bootstrap-server ${BOOTSTRAP_SERVER} --topic __consumer_offsets
+    ```
 
 格式：
 

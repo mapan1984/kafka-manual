@@ -2,7 +2,7 @@
 
 假设有迁移计划：
 
-``` json
+```
 t0, p0: 101, 102 -> 102, 103                 101 -> 103
 t0, p1: 102, 103 -> 103, 104                 102 -> 104
 t0, p2: 103, 101 -> 104, 101                 103 -> 104
@@ -36,6 +36,8 @@ t1, p0: 101, 102, 103 -> 102, 103, 104       101 -> 104
 
 - leader 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上涉及到的 topic partition leader 写入流量之和，broker 提供的 fetch 请求响应流量必须大于写入流量，因此设置该 broker 的 `leader.replication.throttled.rate` 大于这个值。
 - follower 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上新增的 topic partition，进一步获取这些 topic partition 在当前 leader 节点写入流量之和，broker 的 fetch 请求流量必须大于写入流量，因此设置该 broker 的 `follower.replication.throttled.rate` 大于这个值。
+
+流量监控项：`kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=.*`
 
 ``` python
 # 当前分区分布
@@ -114,7 +116,7 @@ proposed_assignments = [
 
 
 def get_traffic(broker, topic, partition):
-    # 从 bcm 获取流量值
+    # 从监控获取流量值
     return 1
 
 
@@ -277,9 +279,11 @@ for broker, traffic in broker_follower_traffic.items():
 
 ### 迁移耗时预估
 
+分区日志大小监控项：`kafka.log:type=Log,name=Size`
+
 ``` python
 def get_log_size(broker, topic, partition):
-    # 从 bcm 获取 topic, partition 占用大小
+    # 从监控获取 topic, partition 占用大小
     return 1
 
 # 获取要移动的 topic partition log size

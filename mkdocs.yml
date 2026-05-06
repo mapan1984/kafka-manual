@@ -39,6 +39,7 @@ theme:
   features:
     - navigation.expand
     - navigation.top
+    - content.tabs.link
   # palette:
   #   scheme: slate
   #   primary: blue grey
@@ -70,4 +71,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
   - tables

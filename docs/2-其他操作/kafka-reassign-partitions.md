@@ -49,9 +49,17 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 执行 `kafka-reassign-partitions.sh`，指定 `--generate` 参数和刚才创建的 `topics.json` 文件，通过 `--broker-list` 指定分布的 broker id，生成描述 partition 分布的内容：
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
+=== "ZooKeeper"
 
+    ```sh
+    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --generate --topics-to-move-json-file topics.json --broker-list 1,2,3 | tee plan
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --topics-to-move-json-file topics.json --broker-list 1,2,3 --generate | tee plan
+    ```
 
 命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 `current.json`(用于恢复) `reassign.json`(之后的计划)
 
@@ -89,15 +97,31 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 执行 `kafka-reassign-partitions.sh`，指定 `--execute` 参数和 `reassign.json` 文件，执行 partition 重分布：
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
+=== "ZooKeeper"
 
+    ```sh
+    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute
+    ```
 
 执行 `kafka-reassign-partitions.sh`，指定 `--verify` 参数和 `reassign.json` 文件，确认 partition 重分布进度：
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
+=== "ZooKeeper"
 
+    ```sh
+    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --verify
+    ```
 
 执行 `kafka-reassign-partitions.sh`，指定 `--list` 参数，查看当前正在进行重分配的分区：
 
@@ -117,9 +141,21 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 比如限制不超过 50MB/s：
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
+=== "ZooKeeper"
 
+    ```sh
+    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --execute --reassignment-json-file reassign.json --throttle 50000000
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000
+    ```
+
+同时限制目录之间的流量：
+
+    $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000 --replica-alter-log-dirs-throttle 50000000
 
 重新限制流量为 700MB/s
 
@@ -127,18 +163,26 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 当分区分配完成后，重新执行 verfiy 会取消限流设置
 
-    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
+=== "ZooKeeper"
 
+    ```sh
+    $ kafka-reassign-partitions.sh --zookeeper ${ZK_CONNECT} --verify --reassignment-json-file reassign.json
+    ```
+
+=== "Bootstrap Server"
+
+    ```sh
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --verify --reassignment-json-file reassign.json
+    ```
 
 流量限制实际上是通过调整以下参数实现：
 
 - broker 级别
-    - `leader.replication.throttled.rate`
-    - `follower.replication.throttled.rate`
+    - `leader.replication.throttled.rate`: leader 副本同步流出速率
+    - `follower.replication.throttled.rate`: follower 副本同步流入速率
 - topic 级别
-    - `leader.replication.throttled.replicas`
-    - `follower.replication.throttled.replicas`
+    - `leader.replication.throttled.replicas`: topic 受 leader 速率限制的 partition:replica 列表
+    - `follower.replication.throttled.replicas`: topic 受 follower 速率限制的 partition:replica 列表
 
 查看参数：
 
@@ -168,3 +212,8 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
     follower.replication.throttled.rate=2048
 
+## 相关 KIP
+
+- 副本限速 [KIP-73](https://cwiki.apache.org/confluence/display/KAFKA/KIP-73+Replication+Quotas) 0.10.1.0
+- 同 broker 不同磁盘之间移动副本 [KIP-113](https://cwiki.apache.org/confluence/display/KAFKA/KIP-113%3A+Support+replicas+movement+between+log+directories) 1.1.0
+- 管理 API, 追加/取消任务 [KIP-455](https://cwiki.apache.org/confluence/display/KAFKA/KIP-455%3A+Create+an+Administrative+API+for+Replica+Reassignment) 2.6

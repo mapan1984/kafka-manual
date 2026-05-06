@@ -16,6 +16,7 @@ node.id=1001
 
 # dynamic
 # controller.quorum.bootstrap.servers=192.168.0.1:9091,192.168.0.2:9091,192.168.0.3:9091
+
 # static
 controller.quorum.voters=1001@192.168.0.1:9091,1002@192.168.0.2:9091,1003@192.168.0.3:9091
 
@@ -39,6 +40,7 @@ node.id=1
 
 # dynamic
 # controller.quorum.bootstrap.servers=192.168.0.1:9091,192.168.0.2:9091,192.168.0.3:9091
+
 # static
 controller.quorum.voters=1001@192.168.0.1:9091,1002@192.168.0.2:9091,1003@192.168.0.3:9091
 
