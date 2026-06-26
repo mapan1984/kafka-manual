@@ -93,6 +93,8 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 
 *版本低于 1.1.0，分配方案没有 `log_dirs` 字段，可以忽略*
 
+> 指定配置文件 --command-config client.properties
+
 ## 执行重新分配
 
 执行 `kafka-reassign-partitions.sh`，指定 `--execute` 参数和 `reassign.json` 文件，执行 partition 重分布：
@@ -134,6 +136,8 @@ export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_
 取消重分配：
 
     $ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --cancel
+
+> 指定配置文件 --command-config client.properties
 
 ## 限流
 
