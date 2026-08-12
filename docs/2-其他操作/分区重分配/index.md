@@ -3,28 +3,7 @@
 > Kafka 在逐步去除 zookeeper 依赖，所以不同的版本命令行工具参数存在差异，
 > 以下大部分命令给了依赖 zookeeper 和不依赖 zookeeper 的 2 种示例，可以根据自己的 kafka 版本进行选择。
 
-## 预设环境变量
-
-预设置环境变量，方便操作：
-
-``` sh
-# 将 kafka 命令脚本路径加入到 PATH
-export KAFKA_HOME=/usr/local/kafka
-export PATH="$PATH:${KAFKA_HOME}/bin"
-
-# zk 连接地址
-export ZK_CONNECT="$(hostname):2181"
-
-# kafka 连接地址
-export BOOTSTRAP_SERVER="$(hostname):9092"
-
-# 如果有 jaas 认证
-export KAFKA_OPTS="-Djava.security.auth.login.config=${KAFKA_HOME}/config/kafka_server_jaas.conf"
-
-# 如果 broker 通过在 kafka-run-class.sh 文件内设置 JMX_PORT，则这里需要设置成不同的 port
-# (一般 broker 开启 JMX_PORT 最好在 kafka-server-start.sh 文件内设置，kafka-run-class.sh 文件内的修改会影响到所有命令脚本)
-# export JMX_PORT=9997
-```
+> 操作前请先设置好 `ZK_CONNECT`、`BOOTSTRAP_SERVER` 等环境变量，参考[基础操作 - 预设环境变量](../../README.md)。
 
 ## 获取当前集群 broker id 列表
 

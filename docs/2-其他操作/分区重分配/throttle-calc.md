@@ -1,4 +1,8 @@
-### 迁移计划描述
+# 重分配限流计算
+
+迁移分区数据时，需要根据迁移计划估算合理的限流阈值与迁移耗时。
+
+## 迁移计划描述
 
 假设有迁移计划：
 
@@ -32,7 +36,7 @@ t1, p0: 101, 102, 103 -> 102, 103, 104       101 -> 104
 | t0    | p2        | 104    |
 | t1    | p0        | 104    |
 
-### 限流最小值计算
+## 限流最小值计算
 
 - leader 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上涉及到的 topic partition leader 写入流量之和，broker 提供的 fetch 请求响应流量必须大于写入流量，因此设置该 broker 的 `leader.replication.throttled.rate` 大于这个值。
 - follower 流量限制：对每个 broker，可以根据重新分配分区方案，获取该 broker 上新增的 topic partition，进一步获取这些 topic partition 在当前 leader 节点写入流量之和，broker 的 fetch 请求流量必须大于写入流量，因此设置该 broker 的 `follower.replication.throttled.rate` 大于这个值。
@@ -277,7 +281,7 @@ for broker, traffic in broker_follower_traffic.items():
 - 分批执行，会使得每个批次需要的实际流量更小
 - 生成重分区方案有随机性，意味着预估依据的方案必须与实际执行的方案一致
 
-### 迁移耗时预估
+## 迁移耗时预估
 
 分区日志大小监控项：`kafka.log:type=Log,name=Size`
 

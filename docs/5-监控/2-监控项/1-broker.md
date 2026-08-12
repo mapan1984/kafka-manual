@@ -99,6 +99,8 @@ Kafka 的 API 定义读取消息只有 FETCH，RequestChannel 在统计时会将
 - RequestChannel 计 1
 - KafkaRequestHandler 可能会计 N（分区数）
 
+> TotalFetchRequestsPerSec ≈ Consumer请求数 × 每个Consumer请求的平均partition数 + Follower请求数 × 每个Follower请求的平均partition数
+
 ## 请求大小
 
     kafka.network:type=RequestMetrics,name=RequestBytes,request=([-.\w]+)
