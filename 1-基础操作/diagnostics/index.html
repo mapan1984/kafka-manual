@@ -12,13 +12,13 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/diagnostics/">
       
       
-        <link rel="prev" href="../kafka-upgrade/">
+        <link rel="prev" href="../perf-test/">
       
       
-        <link rel="next" href="../kafka-performance-estimate/">
+        <link rel="next" href="../leader-election/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>代理 kafka 服务 - kafka 使用手册</title>
+        <title>2.3 诊断工具 - kafka 使用手册</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kafka-nginx" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              代理 kafka 服务
+              2.3 诊断工具
             
           </span>
         </div>
@@ -316,7 +316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/dynamic-config/" class="md-nav__link">
+      <a href="../dynamic-config/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -337,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/perf-test/" class="md-nav__link">
+      <a href="../perf-test/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -355,10 +355,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/diagnostics/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2.3 诊断工具
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -367,6 +387,89 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topic-offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看 topic offset
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#__consumer_offsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      读取 __consumer_offsets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看日志/索引文件
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看请求使用的 API Version
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lag" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看副本同步 lag
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#broker-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      获取 broker topic 分区实际目录分布
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consumer-topic-111" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看特定 consumer-topic 消费信息(1.1.1 后不可用）
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -379,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/leader-election/" class="md-nav__link">
+      <a href="../leader-election/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -416,7 +519,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/" class="md-nav__link ">
+            <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -447,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/throttle-calc/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/throttle-calc/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -476,7 +579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-move-partiton/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-move-partiton/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -497,7 +600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-upgrade/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-upgrade/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -515,30 +618,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    2.8 转发服务
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -547,119 +630,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      准备信息
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#1-hosts" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法1：利用 hosts 文件
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法1：利用 hosts 文件">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置客户端机器
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-advertisedlisteners" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法2：利用 advertised.listeners 配置
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法2：利用 advertised.listeners 配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置客户端机器
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -672,7 +642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka-performance-estimate/" class="md-nav__link">
+      <a href="../../2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-performance-estimate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -693,7 +663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/batch-scripts/" class="md-nav__link">
+      <a href="../batch-scripts/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1188,95 +1158,65 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#topic-offset" class="md-nav__link">
     <span class="md-ellipsis">
-      准备信息
+      查看 topic offset
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-hosts" class="md-nav__link">
+  <a href="#__consumer_offsets" class="md-nav__link">
     <span class="md-ellipsis">
-      方法1：利用 hosts 文件
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法1：利用 hosts 文件">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
+      读取 __consumer_offsets
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      配置客户端机器
+      查看日志/索引文件
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-advertisedlisteners" class="md-nav__link">
+  <a href="#api-version" class="md-nav__link">
     <span class="md-ellipsis">
-      方法2：利用 advertised.listeners 配置
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法2：利用 advertised.listeners 配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
+      查看请求使用的 API Version
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx_1" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#lag" class="md-nav__link">
     <span class="md-ellipsis">
-      配置 nginx 代理
+      查看副本同步 lag
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#broker-topic" class="md-nav__link">
     <span class="md-ellipsis">
-      配置客户端机器
+      获取 broker topic 分区实际目录分布
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#consumer-topic-111" class="md-nav__link">
+    <span class="md-ellipsis">
+      查看特定 consumer-topic 消费信息(1.1.1 后不可用）
+    </span>
+  </a>
   
 </li>
       
@@ -1298,143 +1238,63 @@
   
 
 
-<h1 id="kafka-nginx">kafka 外网 nginx 代理访问集群</h1>
-<p>进行生产或者消费活动时，kafka 客户端会主动获取集群的元信息，元信息包含 broker id 与 broker 地址之间的对应关系，以及 topic 的 partition, replica, leader 信息。当具体读/写某个 topic 的某个 partition 时，客户端必须根据元信息找到代表该 partition leader 的 broker id，再根据 broker id 找到 broker 的地址。</p>
-<p>配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在初次连接时没有问题，但是第一次连接成功后，客户端主动获取到的集群 broker 地址还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。</p>
-<p>解决这个问题的关键是让客户端初次连接成功后，主动获取到的集群 broker 地址还是指向代理 IP，有 2 种解决方法：</p>
-<ol>
-<li>修改 kafka listeners 的地址为 kafka broker 节点的 hostname，然后在客户端所在的主机配置 <code>/etc/hosts</code> 文件，添加 kafka listeners 配置的 hostname，并将对应的 IP 配置为代理 IP</li>
-<li>修改 kafka <code>advertised.listeners</code> 的地址为代理 IP，等于直接向客户端宣告通过代理地址访问自己</li>
-</ol>
-<p>kafka broker 注册的地址可以在 zookeeper 的 <code>/brokers/ids/&lt;broker_id&gt;</code> 路径下查看。</p>
-<h2 id="_1">准备信息</h2>
-<ol>
-<li>
-<p>kafka 集群各节点的内网 ip 和 hostname 的对应信息</p>
-<div class="highlight"><pre><span></span><code>10.0.0.1  kafka1
-10.0.0.2  kafka2
-10.0.0.3 kafka3
+<h1 id="_1">诊断工具</h1>
+<h2 id="topic-offset">查看 topic offset</h2>
+<p>最终的 offset</p>
+<div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list ${BOOTSTRAP_SERVER} --time -1 --topic test
 </code></pre></div>
-</li>
-<li>
-<p>nginx 代理所在机器</p>
-<div class="highlight"><pre><span></span><code>内网ip：10.0.0.4
-外网ip：203.0.113.100
-</code></pre></div>
-</li>
-</ol>
-<h2 id="1-hosts">方法1：利用 hosts 文件</h2>
-<h3 id="kafka-broker">配置 kafka broker 监听地址/端口</h3>
-<p>修改每个 kafka broker 的配置文件 <code>server.properties</code>，将监听地址改为该节点的 hostname，例如 kafka1 上配置：</p>
-<div class="highlight"><pre><span></span><code>listeners=PLAINTEXT://kafka1:9092
-#advertised.listeners=PLAINTEXT://kafka1:9092
-</code></pre></div>
-<p>让每个 broker 注册到 zookeeper 的监听地址为当前节点的 hostname，并修改端口，让每个 broker 使用不同端口（之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口进行区分，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则不需要修改默认端口）</p>
-<h3 id="nginx">配置 nginx 代理</h3>
-<p>编辑 <code>/etc/nginx/nginx.conf</code>，增加 stream 配置</p>
-<div class="highlight"><pre><span></span><code>$ vim /etc/nginx/nginx.conf
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>stream {
-    log_format proxy &#39;$remote_addr [$time_local] &#39;
-                 &#39;$protocol $status $bytes_sent $bytes_received &#39;
-                 &#39;$session_time &quot;$upstream_addr&quot; &#39;
-                 &#39;&quot;$upstream_bytes_sent&quot; &quot;$upstream_bytes_received&quot; &quot;$upstream_connect_time&quot;&#39;;
-
-    access_log /var/log/nginx/tcp-access.log proxy;
-    open_log_file_cache off;
-
-    # 统一放置，方便管理
-    include /etc/nginx/tcpConf.d/*.conf;
-}
+<p>最早的 offset</p>
+<div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list ${BOOTSTRAP_SERVER} --time -2 --topic test
 </code></pre></div>
 <blockquote>
-<p><a href="../../resources/code/kafka/proxy/nginx.conf">下载 nginx.conf</a></p>
+<p>指定客户端配置：--command-config conf/kafka.properties</p>
 </blockquote>
-<p>创建 <code>/etc/nginx/tcpConf.d/</code> 目录</p>
-<div class="highlight"><pre><span></span><code>$ mkdir -p /etc/nginx/tcpConf.d/
+<h2 id="__consumer_offsets">读取 __consumer_offsets</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">&lt; 0.11.0.0</label><label for="__tabbed_1_2">&gt;= 0.11.0.0</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-console-consumer.sh<span class="w"> </span>--formatter<span class="w"> </span><span class="s2">&quot;kafka.coordinator.GroupMetadataManager\$OffsetsMessageFormatter&quot;</span><span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__consumer_offsets
 </code></pre></div>
-<p>编辑 <code>/etc/nginx/tcpConf.d/kafka.conf</code> 配置文件</p>
-<div class="highlight"><pre><span></span><code>$ vim /etc/nginx/tcpConf.d/kafka.conf
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-console-consumer.sh<span class="w"> </span>--formatter<span class="w"> </span><span class="s2">&quot;kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter&quot;</span><span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topic<span class="w"> </span>__consumer_offsets
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>upstream tcp9092 {
-    server 10.0.0.1:9092;
-}
-upstream tcp9093 {
-    server 10.0.0.2:9093;
-}
-upstream tcp9094 {
-    server 10.0.0.3:9094;
-}
-
-server {
-    listen 9092;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9092;
-}
-server {
-    listen 9093;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9093;
-}
-server {
-    listen 9094;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9094;
-}
+</div>
+</div>
+</div>
+<p>格式：</p>
+<div class="highlight"><pre><span></span><code>[Group, Topic, Partition]::[OffsetMetadata[Offset, Metadata], CommitTime, ExpirationTime]
 </code></pre></div>
-<blockquote>
-<p><a href="../../resources/code/kafka/proxy/kafka.conf">下载 kafka.conf</a></p>
-</blockquote>
-<p>测试 nginx 配置：</p>
-<div class="highlight"><pre><span></span><code>$ nginx -t
+<p>分区规则：</p>
+<div class="highlight"><pre><span></span><code>Math.abs(groupID.hashCode()) % numPartitions
 </code></pre></div>
-<p>如果没有错误，应用 nginx 配置：</p>
-<div class="highlight"><pre><span></span><code>$ nginx -s reload
+<h2 id="_2">查看日志/索引文件</h2>
+<p>查看日志文件</p>
+<div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.DumpLogSegments --files ./00000000000000283198.log --print-data-log
 </code></pre></div>
-<p>这里 nginx 代理会将本地 9092，9093，9094 端口的请求转发到对应的 kafka broker 上</p>
-<h3 id="_2">配置客户端机器</h3>
-<p>修改客户端 hosts 文件（203.0.113.100 为 nginx 所在机器外网ip）：</p>
-<div class="highlight"><pre><span></span><code>203.0.113.100 kafka1
-203.0.113.100 kafka2
-203.0.113.100 kafka3
+<p>查看索引文件</p>
+<div class="highlight"><pre><span></span><code>$ kafka-run-class.sh kafka.tools.DumpLogSegments --files 0000000000000045.timeindex
 </code></pre></div>
-<h2 id="2-advertisedlisteners">方法2：利用 advertised.listeners 配置</h2>
-<h3 id="kafka-broker_1">配置 kafka broker 监听地址/端口</h3>
-<p>修改每个 kafka broker 的配置文件 <code>server.properties</code></p>
-<div class="highlight"><pre><span></span><code><span class="na">listeners</span><span class="o">=</span><span class="s">BROKER_DATA://:9090,BROKER_CONTROL://:9091,EXT_CLIENT://:9092</span>
-
-<span class="na">advertised.listeners</span><span class="o">=</span><span class="s">BROKER_DATA://kafka1:9090,BROKER_CONTROL://kafka1:9091,EXT_CLIENT://203.0.113.100:9092</span>
-
-<span class="na">listener.security.protocol.map</span><span class="o">=</span><span class="s">BROKER_DATA:PLAINTEXT,BROKER_CONTROL:PLAINTEXT,EXT_CLIENT:PLAINTEXT</span>
-
-<span class="c1"># broker data 内部交互</span>
-<span class="na">inter.broker.listener.name</span><span class="o">=</span><span class="s">BROKER_DATA</span>
-
-<span class="c1"># broker control 内部交互</span>
-<span class="na">control.plane.listener.name</span><span class="o">=</span><span class="s">BROKER_CONTROL</span>
+<h2 id="api-version">查看请求使用的 API Version</h2>
+<div class="highlight"><pre><span></span><code>$ kafka-broker-api-versions.sh  --bootstrap-server ${BOOTSTRAP_SERVER}
 </code></pre></div>
-<p>这里每个 broker 开放了 3 个监听端口，以 kafka1 节点为例：</p>
-<ol>
-<li>BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 <code>kafka1:9090</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
-<li>BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 <code>kafka1:9091</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
-<li>EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 <code>203.0.113.100:9092</code>，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。</li>
-</ol>
-<h3 id="nginx_1">配置 nginx 代理</h3>
-<p>与方法 1 的 nginx 配置相同。</p>
-<h3 id="_3">配置客户端机器</h3>
-<p>不需要进行额外配置。</p>
+<h2 id="lag">查看副本同步 lag</h2>
+<div class="highlight"><pre><span></span><code>kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER}
+
+kafka-replica-verification.sh --broker-list ${BOOTSTRAP_SERVER} --topic-white-list .*
+</code></pre></div>
+<h2 id="broker-topic">获取 broker topic 分区实际目录分布</h2>
+<div class="highlight"><pre><span></span><code>kafka-log-dirs.sh --bootstrap-server localhost:9092  --describe [--broker-list &quot;0,1,2&quot;] [--topic-list &quot;t1,t2&quot;]
+</code></pre></div>
+<h2 id="consumer-topic-111">查看特定 consumer-topic 消费信息(1.1.1 后不可用）</h2>
+<div class="highlight"><pre><span></span><code>kafka-consumer-offset-checker.sh<span class="w">  </span>--zookeeper<span class="w"> </span><span class="k">$(</span>hostname<span class="k">)</span>:2181<span class="w"> </span>--group<span class="w"> </span>flume<span class="w"> </span>--topic<span class="w"> </span>live-log
+</code></pre></div>
 
 
 
 
 
 
-
-  
-  
 
 
 

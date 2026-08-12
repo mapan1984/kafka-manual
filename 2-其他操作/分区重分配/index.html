@@ -12,13 +12,13 @@
         <meta name="author" content="mapan">
       
       
-        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/kafka-proxy/">
+        <link rel="canonical" href="https://mapan1984.github.io/kafka-manual/2-%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C/%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/">
       
       
-        <link rel="prev" href="../kafka-upgrade/">
+        <link rel="prev" href="../../1-%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/leader-election/">
       
       
-        <link rel="next" href="../kafka-performance-estimate/">
+        <link rel="next" href="throttle-calc/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>代理 kafka 服务 - kafka 使用手册</title>
+        <title>2.5 分区重分配 - kafka 使用手册</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kafka-nginx" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              代理 kafka 服务
+              2.5 分区重分配
             
           </span>
         </div>
@@ -397,26 +397,26 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   <span class="md-ellipsis">
@@ -427,13 +427,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
             2.5 分区重分配
@@ -447,7 +447,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../%E5%88%86%E5%8C%BA%E9%87%8D%E5%88%86%E9%85%8D/throttle-calc/" class="md-nav__link">
+      <a href="throttle-calc/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -515,30 +515,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    2.8 转发服务
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../kafka-proxy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -547,119 +527,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      准备信息
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#1-hosts" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法1：利用 hosts 文件
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法1：利用 hosts 文件">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置客户端机器
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-advertisedlisteners" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法2：利用 advertised.listeners 配置
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法2：利用 advertised.listeners 配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置客户端机器
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1188,95 +1055,47 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#broker-id" class="md-nav__link">
     <span class="md-ellipsis">
-      准备信息
+      获取当前集群 broker id 列表
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-hosts" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法1：利用 hosts 文件
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法1：利用 hosts 文件">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      配置客户端机器
+      生成分配方案
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-advertisedlisteners" class="md-nav__link">
-    <span class="md-ellipsis">
-      方法2：利用 advertised.listeners 配置
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="方法2：利用 advertised.listeners 配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kafka-broker_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 kafka broker 监听地址/端口
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nginx_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      配置 nginx 代理
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      配置客户端机器
+      执行重新分配
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      限流
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kip" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关 KIP
+    </span>
+  </a>
   
 </li>
       
@@ -1298,143 +1117,193 @@
   
 
 
-<h1 id="kafka-nginx">kafka 外网 nginx 代理访问集群</h1>
-<p>进行生产或者消费活动时，kafka 客户端会主动获取集群的元信息，元信息包含 broker id 与 broker 地址之间的对应关系，以及 topic 的 partition, replica, leader 信息。当具体读/写某个 topic 的某个 partition 时，客户端必须根据元信息找到代表该 partition leader 的 broker id，再根据 broker id 找到 broker 的地址。</p>
-<p>配置 kafka 转发常见的错误就是忽略了客户端会主动获取集群地址的特性，仅仅用外网 IP 代理内网下的 Kafka broker IP，这样客户端在初次连接时没有问题，但是第一次连接成功后，客户端主动获取到的集群 broker 地址还是 kafka listeners 配置的内网地址，因此之后的任何请求都会发向内网地址而不是代理地址。</p>
-<p>解决这个问题的关键是让客户端初次连接成功后，主动获取到的集群 broker 地址还是指向代理 IP，有 2 种解决方法：</p>
-<ol>
-<li>修改 kafka listeners 的地址为 kafka broker 节点的 hostname，然后在客户端所在的主机配置 <code>/etc/hosts</code> 文件，添加 kafka listeners 配置的 hostname，并将对应的 IP 配置为代理 IP</li>
-<li>修改 kafka <code>advertised.listeners</code> 的地址为代理 IP，等于直接向客户端宣告通过代理地址访问自己</li>
-</ol>
-<p>kafka broker 注册的地址可以在 zookeeper 的 <code>/brokers/ids/&lt;broker_id&gt;</code> 路径下查看。</p>
-<h2 id="_1">准备信息</h2>
-<ol>
-<li>
-<p>kafka 集群各节点的内网 ip 和 hostname 的对应信息</p>
-<div class="highlight"><pre><span></span><code>10.0.0.1  kafka1
-10.0.0.2  kafka2
-10.0.0.3 kafka3
+<h1 id="_1">分区重分配/修改副本数</h1>
+<blockquote>
+<p>Kafka 在逐步去除 zookeeper 依赖，所以不同的版本命令行工具参数存在差异，
+以下大部分命令给了依赖 zookeeper 和不依赖 zookeeper 的 2 种示例，可以根据自己的 kafka 版本进行选择。</p>
+<p>操作前请先设置好 <code>ZK_CONNECT</code>、<code>BOOTSTRAP_SERVER</code> 等环境变量，参考<a href="../../">基础操作 - 预设环境变量</a>。</p>
+</blockquote>
+<h2 id="broker-id">获取当前集群 broker id 列表</h2>
+<p>获取当前 broker id 列表：</p>
+<div class="highlight"><pre><span></span><code>$ zookeeper-shell.sh ${ZK_CONNECT} ls /brokers/ids | sed &#39;s/ //g&#39;
 </code></pre></div>
-</li>
-<li>
-<p>nginx 代理所在机器</p>
-<div class="highlight"><pre><span></span><code>内网ip：10.0.0.4
-外网ip：203.0.113.100
+<h2 id="_2">生成分配方案</h2>
+<p>创建 <code>topics.json</code> 文件，文件内容为需要重分区的 topic，例如：</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;topics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;statistics&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
 </code></pre></div>
-</li>
-</ol>
-<h2 id="1-hosts">方法1：利用 hosts 文件</h2>
-<h3 id="kafka-broker">配置 kafka broker 监听地址/端口</h3>
-<p>修改每个 kafka broker 的配置文件 <code>server.properties</code>，将监听地址改为该节点的 hostname，例如 kafka1 上配置：</p>
-<div class="highlight"><pre><span></span><code>listeners=PLAINTEXT://kafka1:9092
-#advertised.listeners=PLAINTEXT://kafka1:9092
+<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--generate</code> 参数和刚才创建的 <code>topics.json</code> 文件，通过 <code>--broker-list</code> 指定分布的 broker id，生成描述 partition 分布的内容：</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">ZooKeeper</label><label for="__tabbed_1_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--generate<span class="w"> </span>--topics-to-move-json-file<span class="w"> </span>topics.json<span class="w"> </span>--broker-list<span class="w"> </span><span class="m">1</span>,2,3<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>plan
 </code></pre></div>
-<p>让每个 broker 注册到 zookeeper 的监听地址为当前节点的 hostname，并修改端口，让每个 broker 使用不同端口（之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口进行区分，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则不需要修改默认端口）</p>
-<h3 id="nginx">配置 nginx 代理</h3>
-<p>编辑 <code>/etc/nginx/nginx.conf</code>，增加 stream 配置</p>
-<div class="highlight"><pre><span></span><code>$ vim /etc/nginx/nginx.conf
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--topics-to-move-json-file<span class="w"> </span>topics.json<span class="w"> </span>--broker-list<span class="w"> </span><span class="m">1</span>,2,3<span class="w"> </span>--generate<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>plan
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>stream {
-    log_format proxy &#39;$remote_addr [$time_local] &#39;
-                 &#39;$protocol $status $bytes_sent $bytes_received &#39;
-                 &#39;$session_time &quot;$upstream_addr&quot; &#39;
-                 &#39;&quot;$upstream_bytes_sent&quot; &quot;$upstream_bytes_received&quot; &quot;$upstream_connect_time&quot;&#39;;
+</div>
+</div>
+</div>
+<p>命令会给出现在的 partition 分布和目的 partition 分布，将生成的内容分别保存到 <code>current.json</code>(用于恢复) <code>reassign.json</code>(之后的计划)</p>
+<div class="highlight"><pre><span></span><code>$ sed -n &#39;2p&#39; plan &gt; current.json
 
-    access_log /var/log/nginx/tcp-access.log proxy;
-    open_log_file_cache off;
-
-    # 统一放置，方便管理
-    include /etc/nginx/tcpConf.d/*.conf;
-}
+$ sed -n &#39;5p&#39; plan &gt; reassign.json
+</code></pre></div>
+<p>可以调整 <code>replicas.json</code> 的内容，<code>replicas</code> 字段的含义是该 partition 分布的 broker id：</p>
+<ol>
+<li>通过增加/减少 <code>replicas</code> 中的 broker id 可以增加/减少副本（<code>log_dirs</code> 包含的项要与 <code>replicas</code> 包含的项数目一致）</li>
+<li>调整 <code>replicas</code> 字段的第一个 broker id 可以指定这个 partition 的优先 leader</li>
+<li>通过指定 <code>log_dirs</code> 中 <code>any</code> 为实际的目录，从而指定分区数据位置（<code>log.dirs</code> 配置的目录）</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;partitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;log_dirs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;any&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;any&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;any&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;partition&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;replicas&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;statistics&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><em>版本低于 1.1.0，分配方案没有 <code>log_dirs</code> 字段，可以忽略</em></p>
+<blockquote>
+<p>指定配置文件 --command-config client.properties</p>
+</blockquote>
+<h2 id="_3">执行重新分配</h2>
+<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--execute</code> 参数和 <code>reassign.json</code> 文件，执行 partition 重分布：</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">ZooKeeper</label><label for="__tabbed_2_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--execute<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--execute
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--verify</code> 参数和 <code>reassign.json</code> 文件，确认 partition 重分布进度：</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">ZooKeeper</label><label for="__tabbed_3_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--verify
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>执行 <code>kafka-reassign-partitions.sh</code>，指定 <code>--list</code> 参数，查看当前正在进行重分配的分区：</p>
+<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --list
+Current partition reassignments:
+test-0: replicas: 2,1,3. adding: 1. removing: 3.
+test-1: replicas: 3,2,1. adding: 2. removing: 1.
+test-2: replicas: 1,3,2. adding: 3. removing: 2.
+</code></pre></div>
+<p>取消重分配：</p>
+<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --cancel
 </code></pre></div>
 <blockquote>
-<p><a href="../../resources/code/kafka/proxy/nginx.conf">下载 nginx.conf</a></p>
+<p>指定配置文件 --command-config client.properties</p>
 </blockquote>
-<p>创建 <code>/etc/nginx/tcpConf.d/</code> 目录</p>
-<div class="highlight"><pre><span></span><code>$ mkdir -p /etc/nginx/tcpConf.d/
+<h2 id="_4">限流</h2>
+<p>如果 topic 数据量和流量过大，重分区会对集群服务造成比较大的影响，此时可以使用 <code>--throttle</code> 参数对重分区限制流量，单位 Byte/s。</p>
+<p>比如限制不超过 50MB/s：</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">ZooKeeper</label><label for="__tabbed_4_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--execute<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--throttle<span class="w"> </span><span class="m">50000000</span>
 </code></pre></div>
-<p>编辑 <code>/etc/nginx/tcpConf.d/kafka.conf</code> 配置文件</p>
-<div class="highlight"><pre><span></span><code>$ vim /etc/nginx/tcpConf.d/kafka.conf
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json<span class="w"> </span>--execute<span class="w"> </span>--throttle<span class="w"> </span><span class="m">50000000</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>upstream tcp9092 {
-    server 10.0.0.1:9092;
-}
-upstream tcp9093 {
-    server 10.0.0.2:9093;
-}
-upstream tcp9094 {
-    server 10.0.0.3:9094;
-}
-
-server {
-    listen 9092;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9092;
-}
-server {
-    listen 9093;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9093;
-}
-server {
-    listen 9094;
-    proxy_connect_timeout 8s;
-    proxy_timeout 24h;
-    proxy_pass tcp9094;
-}
+</div>
+</div>
+</div>
+<p>同时限制目录之间的流量：</p>
+<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --throttle 50000000 --replica-alter-log-dirs-throttle 50000000
 </code></pre></div>
-<blockquote>
-<p><a href="../../resources/code/kafka/proxy/kafka.conf">下载 kafka.conf</a></p>
-</blockquote>
-<p>测试 nginx 配置：</p>
-<div class="highlight"><pre><span></span><code>$ nginx -t
+<p>重新限制流量为 700MB/s</p>
+<div class="highlight"><pre><span></span><code>$ kafka-reassign-partitions.sh --bootstrap-server ${BOOTSTRAP_SERVER} --reassignment-json-file reassign.json --execute --additional --throttle 700000000
 </code></pre></div>
-<p>如果没有错误，应用 nginx 配置：</p>
-<div class="highlight"><pre><span></span><code>$ nginx -s reload
+<p>当分区分配完成后，重新执行 verfiy 会取消限流设置</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">ZooKeeper</label><label for="__tabbed_5_2">Bootstrap Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--zookeeper<span class="w"> </span><span class="si">${</span><span class="nv">ZK_CONNECT</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
 </code></pre></div>
-<p>这里 nginx 代理会将本地 9092，9093，9094 端口的请求转发到对应的 kafka broker 上</p>
-<h3 id="_2">配置客户端机器</h3>
-<p>修改客户端 hosts 文件（203.0.113.100 为 nginx 所在机器外网ip）：</p>
-<div class="highlight"><pre><span></span><code>203.0.113.100 kafka1
-203.0.113.100 kafka2
-203.0.113.100 kafka3
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kafka-reassign-partitions.sh<span class="w"> </span>--bootstrap-server<span class="w"> </span><span class="si">${</span><span class="nv">BOOTSTRAP_SERVER</span><span class="si">}</span><span class="w"> </span>--verify<span class="w"> </span>--reassignment-json-file<span class="w"> </span>reassign.json
 </code></pre></div>
-<h2 id="2-advertisedlisteners">方法2：利用 advertised.listeners 配置</h2>
-<h3 id="kafka-broker_1">配置 kafka broker 监听地址/端口</h3>
-<p>修改每个 kafka broker 的配置文件 <code>server.properties</code></p>
-<div class="highlight"><pre><span></span><code><span class="na">listeners</span><span class="o">=</span><span class="s">BROKER_DATA://:9090,BROKER_CONTROL://:9091,EXT_CLIENT://:9092</span>
+</div>
+</div>
+</div>
+<p>流量限制实际上是通过调整以下参数实现：</p>
+<ul>
+<li>broker 级别<ul>
+<li><code>leader.replication.throttled.rate</code>: leader 副本同步流出速率</li>
+<li><code>follower.replication.throttled.rate</code>: follower 副本同步流入速率</li>
+</ul>
+</li>
+<li>topic 级别<ul>
+<li><code>leader.replication.throttled.replicas</code>: topic 受 leader 速率限制的 partition:replica 列表</li>
+<li><code>follower.replication.throttled.replicas</code>: topic 受 follower 速率限制的 partition:replica 列表</li>
+</ul>
+</li>
+</ul>
+<p>查看参数：</p>
+<div class="highlight"><pre><span></span><code>$ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type brokers
 
-<span class="na">advertised.listeners</span><span class="o">=</span><span class="s">BROKER_DATA://kafka1:9090,BROKER_CONTROL://kafka1:9091,EXT_CLIENT://203.0.113.100:9092</span>
-
-<span class="na">listener.security.protocol.map</span><span class="o">=</span><span class="s">BROKER_DATA:PLAINTEXT,BROKER_CONTROL:PLAINTEXT,EXT_CLIENT:PLAINTEXT</span>
-
-<span class="c1"># broker data 内部交互</span>
-<span class="na">inter.broker.listener.name</span><span class="o">=</span><span class="s">BROKER_DATA</span>
-
-<span class="c1"># broker control 内部交互</span>
-<span class="na">control.plane.listener.name</span><span class="o">=</span><span class="s">BROKER_CONTROL</span>
+$ kafka-configs.sh --describe --bootstrap-server ${BOOTSTRAP_SERVER} --entity-type topics
 </code></pre></div>
-<p>这里每个 broker 开放了 3 个监听端口，以 kafka1 节点为例：</p>
-<ol>
-<li>BROKER_DATA: 9090 用于 broker 内部数据交互，注册地址是 <code>kafka1:9090</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
-<li>BROKER_CONTROL: 9091 用于 controller 请求，注册地址是 <code>kafka1:9091</code>，<code>kafka1</code> 也可以用 kafka1 节点的内网 ip</li>
-<li>EXT_CLIENT: 9092 用于外网客户端请求，注册地址是 <code>203.0.113.100:9092</code>，这里直接注册代理地址。同样地，之后会用同一个主机的 nginx 代理所有 kafka broker，所以需要使用端口区分不同 broker，每个 broker EXT_CLIENT 配置的端口需要不同，如果可以做到 nginx 代理机器和 kafka broker 数量一致，则 EXT_CLIENT 端口可以和其他 broker 相同。</li>
-</ol>
-<h3 id="nginx_1">配置 nginx 代理</h3>
-<p>与方法 1 的 nginx 配置相同。</p>
-<h3 id="_3">配置客户端机器</h3>
-<p>不需要进行额外配置。</p>
+<p>限流设置规则：</p>
+<ul>
+<li>主题重新分配分区前所有副本均设置 leader 限流（其中任何一个副本都可能成为分区 leader）</li>
+<li>主题重新分配分区后新增的副本均设置 follower 限流</li>
+<li>对涉及设置 leader 限流的副本所在节点设置 <code>leader.replication.throttled.rate</code></li>
+<li>对涉及设置 follower 限流的副本所在节点设置 <code>follower.replication.throttled.rate</code></li>
+</ul>
+<p>例如：Topic A 分区 0 副本分布从 101,102 到 102,103，设置限流 2048 B/s，会在 101, 102 上应用 leader 限流，在 103 上限制 follower 限流</p>
+<p>对 Topic A 设置配置：</p>
+<div class="highlight"><pre><span></span><code>leader.replication.throttled.replicas=0:101,0:102
+follower.replication.throttled.replicas=0:103
+</code></pre></div>
+<p>对 broker 101，102 设置配置：</p>
+<div class="highlight"><pre><span></span><code>leader.replication.throttled.rate=2048
+</code></pre></div>
+<p>对 broker 103 设置配置：</p>
+<div class="highlight"><pre><span></span><code>follower.replication.throttled.rate=2048
+</code></pre></div>
+<h2 id="kip">相关 KIP</h2>
+<ul>
+<li>副本限速 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-73+Replication+Quotas">KIP-73</a> 0.10.1.0</li>
+<li>同 broker 不同磁盘之间移动副本 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-113%3A+Support+replicas+movement+between+log+directories">KIP-113</a> 1.1.0</li>
+<li>管理 API, 追加/取消任务 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-455%3A+Create+an+Administrative+API+for+Replica+Reassignment">KIP-455</a> 2.6</li>
+</ul>
 
 
 
 
 
 
-
-  
-  
 
 
 
